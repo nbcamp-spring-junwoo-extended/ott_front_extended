@@ -2,12 +2,18 @@ import { Button, Form, FormProps, Input, Space } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../../core/apis/authApi.ts';
+import { login, LoginForm } from '../../core/apis/authApi.ts';
 import { userActions } from '../../reducer/userSlice.ts';
 
-export type LoginForm = {
-  username: string;
-  password: string;
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 14 },
+  },
 };
 
 const Login = () => {
@@ -28,12 +34,14 @@ const Login = () => {
 
   return (
     <Form
+      {...formItemLayout}
       name="normal_login"
-      className="login-form"
+      className="auth-form"
       initialValues={{ username: 'user1', password: 'password' }}
       onFinish={onFinish}
     >
       <Form.Item
+        label="username"
         name="username"
         rules={[{ required: true, message: 'Please input your Username!' }]}
       >
@@ -43,6 +51,7 @@ const Login = () => {
         />
       </Form.Item>
       <Form.Item
+        label="password"
         name="password"
         rules={[{ required: true, message: 'Please input your Password!' }]}
       >

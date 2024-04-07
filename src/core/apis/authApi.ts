@@ -1,5 +1,4 @@
 import authClient from './client.ts';
-import { LoginForm } from '../../pages/auth/Login.tsx';
 
 export const login = async (request: LoginForm) => {
   const response = await authClient.post('/api/v1/login', {
@@ -22,4 +21,9 @@ export const signup = async (
     born,
   });
   return response.data;
+};
+
+export type LoginForm = {
+  username: string;
+  password: string;
 };

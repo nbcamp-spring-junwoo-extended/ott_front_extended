@@ -1,5 +1,3 @@
-// noinspection TypeScriptValidateTypes
-
 import { configureStore } from '@reduxjs/toolkit';
 import userSlice from './userSlice.ts';
 

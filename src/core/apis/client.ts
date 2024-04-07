@@ -1,4 +1,5 @@
 import axios, { AxiosHeaders } from 'axios';
+import { useSelector } from 'react-redux';
 
 const authClient = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -15,7 +16,7 @@ authClient.interceptors.request.use((config) => {
   return config;
 });
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
   headers: new AxiosHeaders({
@@ -24,19 +25,8 @@ const apiClient = axios.create({
   }),
 });
 
-authClient.interceptors.response.use((config) => {
-  if (typeof config.headers.authorization !== 'undefined') {
-    return config;
-  }
-
-  const accessToken = config.headers.authorization.slice(7);
-  localStorage.setItem('access_token', accessToken);
-
-  return config;
-});
-
 apiClient.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = useSelector((state) => state.user.token);
 
   if (accessToken && config.headers) {
     config.headers.Authorization = `Bearer ${accessToken}`;
