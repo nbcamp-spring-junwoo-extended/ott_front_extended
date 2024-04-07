@@ -2,6 +2,7 @@ import { Button, Form, FormProps, Input, Space } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import React from 'react';
 import { login, LoginForm } from '../../core/apis/authApi.ts';
 import { userActions } from '../../reducer/userSlice.ts';
 
@@ -16,7 +17,7 @@ const formItemLayout = {
   },
 };
 
-const Login = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

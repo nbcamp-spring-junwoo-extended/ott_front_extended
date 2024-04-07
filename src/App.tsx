@@ -3,24 +3,37 @@ import { Route, Routes } from 'react-router-dom';
 import { Button, Flex, Layout } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
+import { useSelector } from 'react-redux';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
-import Login from './pages/auth/Login.tsx';
-import Home from './pages/home.tsx';
 import './App.css';
+import Login from './pages/auth/Login.tsx';
 import Sidebar from './components/Sidebar.tsx';
 import Topbar from './components/Topbar.tsx';
 import Signup from './pages/auth/Signup.tsx';
 import Logout from './pages/auth/Logout.tsx';
+import Home from './pages/home.tsx';
+import { UserSliceType } from './reducer/userSlice.ts';
 
 const App: React.FC = () => {
+  const user: UserSliceType = useSelector((state) => state.user);
   const [collapsed, setCollapsed] = useState(false);
 
+  console.log(user.isLogin);
+
+  if (!user.isLogin) {
+    return (
+      <Layout className="default">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </Layout>
+    );
+  }
+
   return (
-    <Layout
-      className="swiper-pagination-progressbar-fill"
-      style={{ width: '100vw', overflow: 'auto' }}
-    >
+    <Layout className="default">
       <Sider
         theme="light"
         trigger={null}
@@ -46,9 +59,7 @@ const App: React.FC = () => {
           <Flex>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="/signup" element={<Signup />} />
             </Routes>
           </Flex>
         </Content>

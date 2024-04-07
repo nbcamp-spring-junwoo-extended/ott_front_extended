@@ -1,9 +1,9 @@
 import { apiClient } from './client.ts';
 
 type UserProfile = {
-  name;
+  name: string;
 };
 
-export const myProfile = async () => {
+export const myProfile: UserProfile = async () => {
   const response = await apiClient.get('/api/v1/users/my-info');
 };

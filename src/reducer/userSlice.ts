@@ -30,5 +30,11 @@ const userSlice = createSlice({
   },
 });
 
+export type UserSliceType = {
+  username: string;
+  token: string;
+  isLogin: boolean;
+};
+
 export const userActions = userSlice.actions;
 export default userSlice.reducer;

@@ -5,7 +5,8 @@ import {
   MailOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signup } from '../../core/apis/authApi.ts';
 
 export type SignupForm = {
   username: string;
@@ -26,8 +27,10 @@ const formItemLayout = {
 };
 
 const Signup = () => {
+  const navigate = useNavigate();
   const onFinish: FormProps<SignupForm>['onFinish'] = async (values) => {
-    console.log('Received values of form: ', values);
+    await signup(values);
+    navigate('/');
   };
 
   return (
@@ -40,6 +43,7 @@ const Signup = () => {
         username: 'user1',
         password: 'password',
         email: 'user1@email.com',
+        born: '1994-11-03',
       }}
       onFinish={onFinish}
     >
@@ -80,13 +84,12 @@ const Signup = () => {
 
       <Form.Item
         label="Birthday"
-        name="DatePicker"
+        name="born"
         rules={[{ required: true, message: 'Please input your Birthday!' }]}
       >
         <Input
           prefix={<CalendarOutlined className="site-form-item-icon" />}
           type="date"
-          placeholder="born"
         />
       </Form.Item>
 
