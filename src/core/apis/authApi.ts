@@ -1,5 +1,17 @@
 import authClient from './client.ts';
 
+export type LoginForm = {
+  username: string;
+  password: string;
+};
+
+export type SignupForm = {
+  username: string;
+  password: string;
+  email: string;
+  born: string;
+};
+
 export const login = async (request: LoginForm) => {
   const response = await authClient.post('/api/v1/login', {
     username: request.username,
@@ -16,16 +28,4 @@ export const signup = async (request: SignupForm) => {
     born: request.born,
   });
   return response;
-};
-
-export type LoginForm = {
-  username: string;
-  password: string;
-};
-
-export type SignupForm = {
-  username: string;
-  password: string;
-  email: string;
-  born: string;
 };

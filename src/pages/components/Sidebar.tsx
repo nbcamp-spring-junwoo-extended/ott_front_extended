@@ -55,7 +55,7 @@ const Sidebar: React.FC = () => {
         onClick={(e) => handleNavigate(e)}
         mode="inline"
         className="menu-bar"
-        defaultselectedkeys={['1']}
+        defaultSelectedKeys={['/']}
         items={items}
       />
     </div>

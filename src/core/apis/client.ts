@@ -1,5 +1,4 @@
 import axios, { AxiosHeaders } from 'axios';
-import { useSelector } from 'react-redux';
 
 const authClient = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -26,11 +25,12 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-  const accessToken = useSelector((state) => state.user.token);
+  const accessToken = localStorage.getItem('access_token');
 
   if (accessToken && config.headers) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
+  console.log(`Bearer ${accessToken}`);
   return config;
 });
 
