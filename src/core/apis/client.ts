@@ -34,3 +34,16 @@ apiClient.interceptors.request.use((config) => {
 });
 
 export default authClient;
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const accessToken = error?.response?.headers?.authorization.slice(7);
+
+    if (accessToken) {
+      localStorage.setItem('access_token', accessToken);
+    }
+
+    return error;
+  },
+);
