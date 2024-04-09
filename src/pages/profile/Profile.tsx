@@ -18,7 +18,7 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     myProfile().then((response) => setUserProfile(response.data.data));
-    myCards().then((response) => setCards(response.data.data));
+    myCards().then((response) => setCards(response?.data?.data));
   }, []);
 
   return (

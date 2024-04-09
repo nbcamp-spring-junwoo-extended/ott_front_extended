@@ -1,6 +1,7 @@
-import { Button, Card, Typography } from 'antd';
+import { Button, Card, Flex, List, Space, Typography } from 'antd';
 
 import React, { useState } from 'react';
+import { CreditCardOutlined } from '@ant-design/icons';
 import style from '../Profile.module.css';
 import CreateCardForm from './CreateCardForm.tsx';
 
@@ -25,17 +26,48 @@ const CardsCardTitle: React.FC = () => {
   );
 };
 
-const CardsCardList = ({ cards }) => (
-  <div>
-    {cards.map((card, index) => (
-      <Typography.Text>{index}</Typography.Text>
-    ))}
-  </div>
-);
+const CardCard: React.FC = ({ card }) => {
+  console.table(Object.entries(card));
+  return (
+    <Card>
+      <Flex align="start" gap={24}>
+        <CreditCardOutlined />
+        <Space direction="horizontal" size="middle" />
+        <Typography.Text strong>카드 번호: </Typography.Text>
+        <Space direction="horizontal" size="middle" />
+        <Typography.Text>
+          {card.cardNumber
+            .split('')
+            .map((num, index) => (index <= 10 ? num : '*'))
+            .join('')}
+        </Typography.Text>
+      </Flex>
+    </Card>
+  );
+};
+
+const CardsCardList = ({ cards }) => {
+  console.table(cards);
+  return (
+    <div>
+      <List gap={10}>
+        {cards.map((card) => (
+          <List.Item style={{ width: 'max-content' }}>
+            <CardCard card={card} />
+          </List.Item>
+        ))}
+      </List>
+    </div>
+  );
+};
 
 const CardsCard = ({ cards }) => (
   <Card title={<CardsCardTitle />}>
-    {cards.length === 0 ? '카드가 없습니다. 등록해주세요.' : <CardsCardList />}
+    {cards.length === 0 ? (
+      '카드가 없습니다. 등록해주세요.'
+    ) : (
+      <CardsCardList cards={cards} />
+    )}
   </Card>
 );
 

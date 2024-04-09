@@ -28,7 +28,6 @@ export const myCards = async () => {
 };
 
 export const createCard = async (props) => {
-  console.table(props);
   const response = await apiClient.post('/api/v1/users/me/cards', props);
   return response;
 };
