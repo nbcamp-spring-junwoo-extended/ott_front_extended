@@ -26,7 +26,7 @@ const Login: React.FC = () => {
       dispatch(
         userActions.login({
           username: values.username,
-          token: response.headers.authorization.slice(7),
+          token: response.headers?.authorization?.slice(7),
         }),
       );
       navigate('/');

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { Button, Layout } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 import './App.css';
@@ -13,13 +13,20 @@ import Topbar from './pages/components/Topbar.tsx';
 import Signup from './pages/auth/Signup.tsx';
 import Logout from './pages/auth/Logout.tsx';
 import Home from './pages/home.tsx';
-import { UserSliceType } from './reducer/userSlice.ts';
+import { userActions, UserSliceType } from './reducer/userSlice.ts';
 import Profile from './pages/profile/Profile.tsx';
 import Subscribe from './pages/subscription/Subscribe.tsx';
 
 const App: React.FC = () => {
   const user: UserSliceType = useSelector((state) => state.user);
   const [collapsed, setCollapsed] = useState(false);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!user.isLogin) {
+      dispatch(userActions.checkLogin());
+    }
+  }, [dispatch, user.isLogin]);
 
   if (!user.isLogin) {
     return (

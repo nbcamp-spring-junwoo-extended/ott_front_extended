@@ -8,10 +8,21 @@ const userSlice = createSlice({
     isLogin: false,
   },
   reducers: {
+    checkLogin: (state) => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        state.token = token;
+        state.isLogin = true;
+      }
+
+      return state;
+    },
     login: (state, action) => {
       state.username = action.payload.username;
+
       state.token = action.payload.token;
       localStorage.setItem('access_token', state.token);
+
       state.isLogin = true;
 
       return state;

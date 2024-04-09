@@ -30,7 +30,6 @@ apiClient.interceptors.request.use((config) => {
   if (accessToken && config.headers) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
-  console.log(`Bearer ${accessToken}`);
   return config;
 });
 

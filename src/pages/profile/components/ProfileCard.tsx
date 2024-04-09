@@ -3,11 +3,25 @@ import { Button, Card, List, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { UserProfile } from '../../../core/apis/userApi.ts';
 
-import style from './ProfileCard.module.css';
+import style from '../Profile.module.css';
 
 interface ProfileCardProps {
   userProfile?: UserProfile;
 }
+
+const ProfileCardTitle = () => (
+  <div>
+    <Typography.Title level={5}>프로필</Typography.Title>
+    <Button
+      type="primary"
+      className={style.postCards}
+      onClick={() => alert('TODO')}
+      // TODO: Implement the onClick event
+    >
+      수정
+    </Button>
+  </div>
+);
 
 const ProfileCard: React.FC = ({ userProfile }) => {
   const navigation = useNavigate();
@@ -15,30 +29,28 @@ const ProfileCard: React.FC = ({ userProfile }) => {
     navigation('/subscribe');
   };
 
-  console.log(userProfile);
   const item = [
     {
-      title: 'Username',
+      title: '닉네임',
       content: userProfile?.username,
     },
     {
-      title: 'Email',
+      title: '이메일',
       content: userProfile?.email,
     },
     {
-      title: 'Birthday',
+      title: '생년월일',
       content: userProfile?.born,
     },
     {
-      title: 'MembershipType',
+      title: '멤버쉽 등급',
       content: userProfile?.membershipType.substring(5),
     },
   ];
-  console.table(item);
 
   return (
     <div>
-      <Card title="Profile" className={style.card}>
+      <Card title={<ProfileCardTitle />}>
         <List
           size="small"
           className={style.list}
@@ -48,7 +60,7 @@ const ProfileCard: React.FC = ({ userProfile }) => {
               <Typography.Text>
                 {i.title}: {i.content}
               </Typography.Text>
-              {i.title === 'MembershipType' && i.content === 'NORMAL' ? (
+              {i.content === 'NORMAL' ? (
                 <Button danger type="primary" onClick={onSubscriptionClick}>
                   구독
                 </Button>
