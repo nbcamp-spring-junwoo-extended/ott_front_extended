@@ -26,7 +26,7 @@ const formItemLayout = {
   },
 };
 
-const Signup = () => {
+const SignupScreen = () => {
   const navigate = useNavigate();
   const onFinish: FormProps<SignupForm>['onFinish'] = async (values) => {
     await signup(values);
@@ -109,4 +109,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupScreen;

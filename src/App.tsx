@@ -7,15 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 import './App.css';
-import Login from './pages/auth/Login.tsx';
+import LoginScreen from './pages/auth/LoginScreen.tsx';
 import Sidebar from './pages/components/Sidebar.tsx';
 import Topbar from './pages/components/Topbar.tsx';
-import Signup from './pages/auth/Signup.tsx';
-import Logout from './pages/auth/Logout.tsx';
-import Home from './pages/home.tsx';
+import SignupScreen from './pages/auth/SignupScreen.tsx';
+import LogoutScreen from './pages/auth/LogoutScreen.tsx';
+import HomeScreen from './pages/HomeScreen.tsx';
 import { userActions, UserSliceType } from './reducer/userSlice.ts';
-import Profile from './pages/profile/Profile.tsx';
-import Subscribe from './pages/subscription/Subscribe.tsx';
+import ProfileScreen from './pages/profile/ProfileScreen.tsx';
+import SubscriptionScreen from './pages/subscription/SubscriptionScreen.tsx';
 
 const App: React.FC = () => {
   const user: UserSliceType = useSelector((state) => state.user);
@@ -26,15 +26,15 @@ const App: React.FC = () => {
     if (!user.isLogin) {
       dispatch(userActions.checkLogin());
     }
-  }, [dispatch, user.isLogin]);
+  }, [user.isLogin]);
 
   if (!user.isLogin) {
     return (
       <Layout className="default">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<LoginScreen />} />
           <Route path="/logout" element={<Link to="/" />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<SignupScreen />} />
         </Routes>
       </Layout>
     );
@@ -65,10 +65,10 @@ const App: React.FC = () => {
         </Header>
         <Content className="content">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/subscribe" element={<Subscribe />} />
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/logout" element={<LogoutScreen />} />
+            <Route path="/profile" element={<ProfileScreen />} />
+            <Route path="/subscribe" element={<SubscriptionScreen />} />
           </Routes>
         </Content>
       </Layout>

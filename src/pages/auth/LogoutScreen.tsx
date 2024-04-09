@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from '../../reducer/userSlice.ts';
 
-const Logout = () => {
+const LogoutScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,4 +19,4 @@ const Logout = () => {
   );
 };
 
-export default Logout;
+export default LogoutScreen;

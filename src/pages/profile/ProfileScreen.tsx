@@ -7,7 +7,7 @@ import CardsCard from './components/CardsCard.tsx';
 import { userActions } from '../../reducer/userSlice.ts';
 import { cardActions } from '../../reducer/cardSlice.ts';
 
-const Profile: React.FC = () => {
+const ProfileScreen: React.FC = () => {
   const [userProfile, setUserProfile] = useState<UserProfile>({
     userId: 0,
     username: '',
@@ -29,11 +29,10 @@ const Profile: React.FC = () => {
     });
     myCards().then((response) => {
       const responseCards = response?.data?.data;
-      console.log(responseCards);
       dispatch(cardActions.updateCards({ cards: responseCards }));
       setCards(responseCards);
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <Row gutter={[16, 16]}>
@@ -47,4 +46,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ProfileScreen;

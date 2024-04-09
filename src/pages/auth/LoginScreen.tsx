@@ -17,7 +17,7 @@ const formItemLayout = {
   },
 };
 
-const Login: React.FC = () => {
+const LoginScreen: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -79,4 +79,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default LoginScreen;

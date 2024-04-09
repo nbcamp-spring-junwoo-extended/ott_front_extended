@@ -47,7 +47,7 @@ const SubscribeRequestForm: React.FC = ({ membershipType }) => {
         <Select placeholder="쿠폰을 선택 해주세요." />
       </Form.Item>
 
-      <Typography.Title level={5} bold underline className={style.formTitle}>
+      <Typography.Title level={5} underline className={style.formTitle}>
         가격: {membershipType.price}₩
       </Typography.Title>
     </Form>

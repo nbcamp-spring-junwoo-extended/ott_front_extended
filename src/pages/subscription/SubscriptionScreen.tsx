@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getMemberships } from '../../core/apis/membershipApi.ts';
 import SubscribeCard, { membershipType } from './components/SubscribeCard.tsx';
 
-const Subscribe = () => {
+const SubscriptionScreen = () => {
   const [memberships, setMemberships] = useState<membershipType[]>();
 
   useEffect(() => {
@@ -23,4 +23,4 @@ const Subscribe = () => {
   );
 };
 
-export default Subscribe;
+export default SubscriptionScreen;
