@@ -1,3 +1,15 @@
 .title {
   margin: 0;
 }
+
+.subscribeCard:hover {
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.formTitle {
+  margin: 0;
+  position: relative;
+  right: 10px;
+  text-align: end;
+}

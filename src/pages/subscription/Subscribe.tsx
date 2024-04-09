@@ -7,13 +7,15 @@ const Subscribe = () => {
   const [memberships, setMemberships] = useState<membershipType[]>();
 
   useEffect(() => {
-    getMemberships().then((data) => setMemberships(data));
+    getMemberships().then((data) => {
+      setMemberships(data);
+    });
   }, []);
 
   return (
     <Row gutter={[16, 16]}>
       {memberships?.map((membership, index) => (
-        <Col xs={24} md={6} id={index.toString()}>
+        <Col xs={24} xl={12} key={index.toString()}>
           <SubscribeCard subscriptionInfo={membership} />
         </Col>
       ))}

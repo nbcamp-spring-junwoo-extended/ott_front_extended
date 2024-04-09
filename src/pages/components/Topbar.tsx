@@ -12,7 +12,7 @@ const Topbar: React.FC = () => {
         onClick={() => navigate('/')}
         type="warning"
       >
-        이㈜누 주식회사 상폐 25일 전
+        이㈜누 주식회사
       </Typography.Title>
     </div>
   );

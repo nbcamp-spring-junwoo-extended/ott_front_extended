@@ -26,40 +26,34 @@ const CardsCardTitle: React.FC = () => {
   );
 };
 
-const CardCard: React.FC = ({ card }) => {
-  console.table(Object.entries(card));
-  return (
-    <Card>
-      <Flex align="start" gap={24}>
-        <CreditCardOutlined />
-        <Space direction="horizontal" size="middle" />
-        <Typography.Text strong>카드 번호: </Typography.Text>
-        <Space direction="horizontal" size="middle" />
-        <Typography.Text>
-          {card.cardNumber
-            .split('')
-            .map((num, index) => (index <= 10 ? num : '*'))
-            .join('')}
-        </Typography.Text>
-      </Flex>
-    </Card>
-  );
-};
+const CardCard: React.FC = ({ card }) => (
+  <Card>
+    <Flex align="start" gap={24}>
+      <CreditCardOutlined />
+      <Space direction="horizontal" size="middle" />
+      <Typography.Text strong>카드 번호: </Typography.Text>
+      <Space direction="horizontal" size="middle" />
+      <Typography.Text>
+        {card.cardNumber
+          .split('')
+          .map((num, index) => (index <= 10 ? num : '*'))
+          .join('')}
+      </Typography.Text>
+    </Flex>
+  </Card>
+);
 
-const CardsCardList = ({ cards }) => {
-  console.table(cards);
-  return (
-    <div>
-      <List gap={10}>
-        {cards.map((card) => (
-          <List.Item style={{ width: 'max-content' }}>
-            <CardCard card={card} />
-          </List.Item>
-        ))}
-      </List>
-    </div>
-  );
-};
+const CardsCardList = ({ cards }) => (
+  <div>
+    <List gap={10}>
+      {cards.map((card, index) => (
+        <List.Item style={{ width: 'max-content' }} key={index}>
+          <CardCard card={card} />
+        </List.Item>
+      ))}
+    </List>
+  </div>
+);
 
 const CardsCard = ({ cards }) => (
   <Card title={<CardsCardTitle />}>

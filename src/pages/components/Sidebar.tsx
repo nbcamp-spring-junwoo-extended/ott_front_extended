@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
+  BellOutlined,
   HomeOutlined,
   LogoutOutlined,
   RiseOutlined,
@@ -22,6 +23,11 @@ const Sidebar: React.FC = () => {
       icon: <HomeOutlined />,
       key: '/',
       label: 'Home',
+    },
+    {
+      icon: <BellOutlined />,
+      key: '/notification',
+      label: 'Notification',
     },
     {
       icon: <SearchOutlined />,

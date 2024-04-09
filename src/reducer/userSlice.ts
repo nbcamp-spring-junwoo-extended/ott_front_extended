@@ -4,6 +4,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     username: '',
+    userId: 0,
     token: '',
     isLogin: false,
   },
@@ -30,6 +31,10 @@ const userSlice = createSlice({
     updateToken: (state, action) => {
       state.token = action.payload.token;
 
+      return state;
+    },
+    updateUserId: (state, action) => {
+      state.userId = action.payload.userId;
       return state;
     },
     clearUser: (state) => {
