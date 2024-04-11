@@ -1,6 +1,3 @@
-import React from 'react';
-import { Flex, Menu } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import {
   BellOutlined,
   HomeOutlined,
@@ -9,9 +6,14 @@ import {
   SearchOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import { Flex, Menu } from 'antd';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleNavigate = (e) => {
     if (e.key) {
       navigate(e.key);

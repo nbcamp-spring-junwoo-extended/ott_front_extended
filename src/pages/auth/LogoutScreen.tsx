@@ -1,14 +1,10 @@
-import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { userActions } from '../../reducer/userSlice.ts';
 
 const LogoutScreen = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(userActions.clearUser());
     navigate('/');
   });
 
@@ -20,3 +16,9 @@ const LogoutScreen = () => {
 };
 
 export default LogoutScreen;
+
+// 1. 쉬운방법
+// setInterval
+
+// 2. 어려운방법, 정확한 방법
+// axios

@@ -1,4 +1,4 @@
-import authClient from '../di/client.ts';
+import { authClient } from '../di/client.ts';
 
 export type LoginForm = {
   username: string;

@@ -15,7 +15,7 @@ authClient.interceptors.request.use((config) => {
   return config;
 });
 
-export const apiClient = axios.create({
+const apiClient = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
   headers: new AxiosHeaders({
@@ -25,8 +25,12 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-  console.log('REQUEST', config.url);
-  const accessToken = localStorage.getItem('access_token');
+  // todo: access_token 갱신 가능성 검증
+  if (import.meta.env.DEV) {
+    console.log('REQUEST', config.url);
+  }
+
+  const accessToken: string = localStorage.getItem('access_token');
 
   if (accessToken && config.headers) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -34,17 +38,17 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-export default authClient;
+apiClient.interceptors.response.use(undefined, (error) => {
+  const accessToken = error?.response?.headers?.authorization?.slice(7);
 
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const accessToken = error?.response?.headers?.authorization?.slice(7);
+  if (accessToken) {
+    localStorage.setItem('access_token', accessToken);
 
-    if (accessToken) {
-      localStorage.setItem('access_token', accessToken);
-    }
+    error.config.headers.Authorization = `Bearer ${accessToken}`;
+    return apiClient.request(error.config);
+  }
 
-    return error;
-  },
-);
+  return error;
+});
+
+export { apiClient, authClient };

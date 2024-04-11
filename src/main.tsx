@@ -1,27 +1,20 @@
+import './index.css';
+
+import { ConfigProvider } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { DevSupport } from '@react-buddy/ide-toolbox';
-import { ConfigProvider } from 'antd';
-
-import store from './reducer/store.ts';
-import { ComponentPreviews, useInitial } from './dev';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.tsx';
-import './index.css';
+import store from './reducer/store.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ConfigProvider locale="ko_KR">
       <Provider store={store}>
         <BrowserRouter>
-          <DevSupport
-            ComponentPreviews={ComponentPreviews}
-            useInitialHook={useInitial}
-          >
-            <App />
-          </DevSupport>
+          <App />
         </BrowserRouter>
       </Provider>
     </ConfigProvider>

@@ -1,11 +1,12 @@
+import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Col, Row } from 'antd';
+
 import { myCards, myProfile, UserProfile } from '../../core/apis/userApi.ts';
-import ProfileCard from './components/ProfileCard.tsx';
-import CardsCard from './components/CardsCard.tsx';
-import { userActions } from '../../reducer/userSlice.ts';
 import { cardActions } from '../../reducer/cardSlice.ts';
+import { userActions } from '../../reducer/userSlice.ts';
+import CardsCard from './components/CardsCard.tsx';
+import ProfileCard from './components/ProfileCard.tsx';
 
 const ProfileScreen: React.FC = () => {
   const [userProfile, setUserProfile] = useState<UserProfile>({
@@ -22,10 +23,9 @@ const ProfileScreen: React.FC = () => {
 
   useEffect(() => {
     myProfile().then((response) => {
-      dispatch(
-        userActions.updateUserId({ userId: response?.data?.data?.userId }),
-      );
-      setUserProfile(response.data.data);
+      const _userProfile = response?.data?.data;
+      dispatch(userActions.updateUserId({ userId: _userProfile?.userId }));
+      setUserProfile(_userProfile);
     });
     myCards().then((response) => {
       const responseCards = response?.data?.data;

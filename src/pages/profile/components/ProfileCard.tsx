@@ -1,8 +1,8 @@
-import React from 'react';
 import { Button, Card, List, Typography } from 'antd';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserProfile } from '../../../core/apis/userApi.ts';
 
+import { UserProfile } from '../../../core/apis/userApi.ts';
 import style from '../Profile.module.css';
 
 interface ProfileCardProps {
@@ -23,7 +23,11 @@ const ProfileCardTitle = () => (
   </div>
 );
 
-const ProfileCard: React.FC = ({ userProfile }) => {
+interface ProfileCardProps {
+  userProfile?: UserProfile;
+}
+
+const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
   const navigation = useNavigate();
   const onSubscriptionClick = () => {
     navigation('/subscribe');
@@ -32,6 +36,7 @@ const ProfileCard: React.FC = ({ userProfile }) => {
   const item = [
     {
       title: '닉네임',
+
       content: userProfile?.username,
     },
     {
