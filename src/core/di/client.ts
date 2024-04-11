@@ -25,6 +25,7 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
+  console.log('REQUEST', config.url);
   const accessToken = localStorage.getItem('access_token');
 
   if (accessToken && config.headers) {
@@ -38,7 +39,7 @@ export default authClient;
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    const accessToken = error?.response?.headers?.authorization.slice(7);
+    const accessToken = error?.response?.headers?.authorization?.slice(7);
 
     if (accessToken) {
       localStorage.setItem('access_token', accessToken);

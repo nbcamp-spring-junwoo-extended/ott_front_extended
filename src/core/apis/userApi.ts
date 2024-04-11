@@ -1,4 +1,4 @@
-import { apiClient } from './client.ts';
+import { apiClient } from '../di/client.ts';
 
 export type UserProfile = {
   userId: number;

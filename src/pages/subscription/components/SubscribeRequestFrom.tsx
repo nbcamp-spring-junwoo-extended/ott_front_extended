@@ -1,8 +1,8 @@
 import React from 'react';
-import { Form, Select, Typography } from 'antd';
+import { Button, Flex, Form, Select, Typography } from 'antd';
 import { useSelector } from 'react-redux';
-
 import style from './SubscribeCard.module.css';
+import { requestSubscription } from '../../../core/apis/subscriptionApi.ts';
 
 const formItemLayout = {
   labelCol: {
@@ -15,20 +15,36 @@ const formItemLayout = {
   },
 };
 
-const MembershipTitle: React.FC = ({ membershipType }) => (
-  <Typography.Text underline>{membershipType.slice(5)}</Typography.Text>
-);
+interface SubscribeRequestFormProps {
+  SubscriptionInfo: {
+    membershipType: string;
+    price: number;
+  };
+  FormData: unknown;
+}
 
-const SubscribeRequestForm: React.FC = ({ membershipType }) => {
+const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({
+  SubscriptionInfo,
+}) => {
   const cards = useSelector((state) => state.card.cards);
-  const [form] = Form.useForm();
+  const userId = useSelector((state) => state.user.userId);
+
+  const onSubscriptionRequest = (data) => {
+    const { cardId } = cards.filter((card) => card.cardNumber === data.card)[0];
+    // TODO
+    requestSubscription(userId, cardId, SubscriptionInfo.membershipType)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+  };
 
   return (
-    <Form {...formItemLayout}>
-      <Form.Item name="membership" label="멤버쉽" rules={[{ required: true }]}>
+    <Form {...formItemLayout} onFinish={onSubscriptionRequest}>
+      <Form.Item label="멤버쉽">
         <Select
           placeholder={
-            <MembershipTitle membershipType={membershipType.membershipType} />
+            <Typography.Text underline>
+              {SubscriptionInfo?.membershipType?.slice(5)}
+            </Typography.Text>
           }
           disabled
         />
@@ -47,9 +63,14 @@ const SubscribeRequestForm: React.FC = ({ membershipType }) => {
         <Select placeholder="쿠폰을 선택 해주세요." />
       </Form.Item>
 
-      <Typography.Title level={5} underline className={style.formTitle}>
-        가격: {membershipType.price}₩
-      </Typography.Title>
+      <Flex align="baseline" justify="flex-end">
+        <Typography.Title level={5} underline className={style.formTitle}>
+          가격: {SubscriptionInfo.price}₩
+        </Typography.Title>
+        <Button type="primary" htmlType="submit">
+          신청
+        </Button>
+      </Flex>
     </Form>
   );
 };

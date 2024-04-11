@@ -3,12 +3,6 @@ import { Card, Divider, Modal, Typography } from 'antd';
 import style from './SubscribeCard.module.css';
 import SubscribeRequestForm from './SubscribeRequestFrom.tsx';
 
-export interface membershipType {
-  membershipType: string;
-  price: number;
-  detail: string;
-}
-
 const SubscribeCard: React.FC = ({ subscriptionInfo }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -37,8 +31,11 @@ const SubscribeCard: React.FC = ({ subscriptionInfo }) => {
         onCancel={() => setIsModalVisible(false)}
         centered="vertical"
         title="구독 신청"
+        cancelText="취소"
+        okText="신청"
+        footer={[]}
       >
-        <SubscribeRequestForm membershipType={subscriptionInfo} />
+        <SubscribeRequestForm SubscriptionInfo={subscriptionInfo} />
       </Modal>
     </>
   );
