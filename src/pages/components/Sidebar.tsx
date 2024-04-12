@@ -46,8 +46,8 @@ const Sidebar: React.FC = () => {
     },
     {
       icon: <RiseOutlined />,
-      key: '/top10',
-      label: 'Top 10',
+      key: '/ranking',
+      label: 'Ranking',
     },
     {
       icon: <UserOutlined />,

@@ -2,11 +2,11 @@ import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
 
 import { getMemberships } from '../../core/apis/membershipApi.ts';
-import { PaymentTypes } from '../../core/types/paymentTypes.ts';
+import { Payment } from '../../core/types/payment.d.ts';
 import SubscribeCard from './components/SubscribeCard.tsx';
 
 const SubscriptionScreen = () => {
-  const [memberships, setMemberships] = useState<PaymentTypes[]>();
+  const [memberships, setMemberships] = useState<Payment[]>();
 
   useEffect(() => {
     getMemberships().then((data) => {
@@ -17,7 +17,7 @@ const SubscriptionScreen = () => {
   return (
     <Row gutter={[16, 16]}>
       {memberships?.map((membership, index) => (
-        <Col xs={24} xl={12} key={index.toString()}>
+        <Col key={index.toString()} xl={12} xs={24}>
           <SubscribeCard subscriptionInfo={membership} />
         </Col>
       ))}

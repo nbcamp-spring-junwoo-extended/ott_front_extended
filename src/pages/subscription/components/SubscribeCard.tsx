@@ -1,12 +1,12 @@
 import { Card, Divider, Modal, Typography } from 'antd';
 import React, { useState } from 'react';
 
-import { PaymentTypes } from '../../../core/types/paymentTypes.ts';
+import { Payment } from '../../../core/types/payment.d.ts';
 import style from './SubscribeCard.module.css';
 import SubscribeRequestForm from './SubscribeRequestFrom.tsx';
 
 interface SubscribeCardProps {
-  subscriptionInfo: PaymentTypes;
+  subscriptionInfo: Payment;
 }
 
 const SubscribeCard: React.FC<SubscribeCardProps> = ({ subscriptionInfo }) => {
@@ -21,12 +21,14 @@ const SubscribeCard: React.FC<SubscribeCardProps> = ({ subscriptionInfo }) => {
   return (
     <>
       <Card
-        title={subscriptionInfo.membershipType.slice(5)}
-        onClick={onCardClick}
         className={style.subscribeCard}
+        onClick={onCardClick}
+        title={subscriptionInfo.membershipType.slice(5)}
       >
-        <Typography.Title underline strong level={3} className={style.title}>
-          {subscriptionInfo.price}₩
+        <Typography.Title className={style.title} level={2} strong>
+          {new Intl.NumberFormat('ko-KR', { currency: 'KRW', style: 'currency' }).format(
+            subscriptionInfo.price,
+          )}
         </Typography.Title>
         <Divider />
         <Typography.Text>
@@ -36,13 +38,13 @@ const SubscribeCard: React.FC<SubscribeCardProps> = ({ subscriptionInfo }) => {
         </Typography.Text>
       </Card>
       <Modal
-        open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        centered="vertical"
-        title="구독 신청"
         cancelText="취소"
-        okText="신청"
+        centered="vertical"
         footer={[]}
+        okText="신청"
+        onCancel={() => setIsModalVisible(false)}
+        open={isModalVisible}
+        title="구독 신청"
       >
         <SubscribeRequestForm SubscriptionInfo={subscriptionInfo} />
       </Modal>
