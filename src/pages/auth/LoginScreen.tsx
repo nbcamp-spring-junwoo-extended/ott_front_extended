@@ -1,8 +1,9 @@
-import { Button, Form, FormProps, Input, Space } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Button, Form, FormProps, Input, Space } from 'antd';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
 import { login, LoginForm } from '../../core/apis/authApi.ts';
 import { userActions } from '../../reducer/userSlice.ts';
 
@@ -46,10 +47,7 @@ const LoginScreen: React.FC = () => {
         name="username"
         rules={[{ required: true, message: 'Please input your Username!' }]}
       >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
-        />
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
       </Form.Item>
       <Form.Item
         label="password"
@@ -65,11 +63,7 @@ const LoginScreen: React.FC = () => {
 
       <Form.Item>
         <Space direction="horizontal" size="large">
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
+          <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
           <Link to="/signup">Sign up</Link>

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { myCards, myProfile, UserProfile } from '../../core/apis/userApi.ts';
-import { cardActions } from '../../reducer/cardSlice.ts';
 import { userActions } from '../../reducer/userSlice.ts';
 import CardsCard from './components/CardsCard.tsx';
 import ProfileCard from './components/ProfileCard.tsx';
@@ -17,8 +16,8 @@ const ProfileScreen: React.FC = () => {
     email: '',
     membershipType: '',
   });
+  const [cards, setCards] = useState<any[]>([]);
 
-  const [cards, setCards] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,9 +27,8 @@ const ProfileScreen: React.FC = () => {
       setUserProfile(_userProfile);
     });
     myCards().then((response) => {
-      const responseCards = response?.data?.data;
-      dispatch(cardActions.updateCards({ cards: responseCards }));
-      setCards(responseCards);
+      const _cards = response?.data?.data;
+      setCards(_cards);
     });
   }, [dispatch]);
 

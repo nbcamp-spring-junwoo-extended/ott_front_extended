@@ -1,12 +1,49 @@
-import { Button, Card, Flex, List, Space, Typography } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { useQuery } from '@tanstack/react-query';
+import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { Button, Card, Col, List, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
 
-import React, { useState } from 'react';
-import { CreditCardOutlined } from '@ant-design/icons';
 import style from '../Profile.module.css';
-import CreateCardForm from './CreateCardForm.tsx';
+
+const CLIENT_KEY = import.meta.env.VITE_TOSSPAYMENTS_CLIENTKEY;
+const CUSTOMER_KEY = '12341234';
+
+interface CardProps {
+  cardNumber: string;
+  cardNickname: string;
+}
+
+interface CardsCardProps {
+  cards: CardProps[];
+}
+
+const usePaymentWidget = (clientKey: string) =>
+  useQuery({
+    queryKey: ['#payment-widget', clientKey],
+    queryFn: () =>
+      // ------  결제위젯 초기화 ------
+      // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
+      loadTossPayments(clientKey),
+  });
 
 const CardsCardTitle: React.FC = () => {
-  const [cardCreateModal, setCardCreateModal] = useState(false);
+  const { data: paymentSdk } = usePaymentWidget(CLIENT_KEY);
+  const [isCreateCardVisible, setIsCreateCardVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (paymentSdk == null || !isCreateCardVisible) {
+      return;
+    }
+
+    paymentSdk
+      .requestBillingAuth('카드', {
+        customerKey: CUSTOMER_KEY,
+        successUrl: `${window.location.origin}/profile/newcard/success`,
+        failUrl: `${window.location.origin}/profile/card/fail`,
+      })
+      .catch(() => setIsCreateCardVisible(false));
+  }, [paymentSdk, isCreateCardVisible]);
 
   return (
     <div>
@@ -14,54 +51,39 @@ const CardsCardTitle: React.FC = () => {
       <Button
         type="primary"
         className={style.postCards}
-        onClick={() => setCardCreateModal(true)}
+        onClick={() => setIsCreateCardVisible(true)}
       >
         등록
       </Button>
-      <CreateCardForm
-        cardCreateModal={cardCreateModal}
-        setCardCreateModal={setCardCreateModal}
-      />
     </div>
   );
 };
 
-const CardCard: React.FC = ({ card }) => (
-  <Card>
-    <Flex align="start" gap={24}>
-      <CreditCardOutlined />
-      <Space direction="horizontal" size="middle" />
-      <Typography.Text strong>카드 번호: </Typography.Text>
-      <Space direction="horizontal" size="middle" />
-      <Typography.Text>
-        {card.cardNumber
-          .split('')
-          .map((num, index) => (index <= 10 ? num : '*'))
-          .join('')}
-      </Typography.Text>
-    </Flex>
-  </Card>
-);
-
-const CardsCardList = ({ cards }) => (
-  <div>
-    <List gap={10}>
-      {cards.map((card, index) => (
-        <List.Item style={{ width: 'max-content' }} key={index}>
-          <CardCard card={card} />
-        </List.Item>
-      ))}
-    </List>
-  </div>
-);
-
-const CardsCard = ({ cards }) => (
+const CardsCard: React.FC<CardsCardProps> = ({ cards }) => (
   <Card title={<CardsCardTitle />}>
-    {cards.length === 0 ? (
-      '카드가 없습니다. 등록해주세요.'
-    ) : (
-      <CardsCardList cards={cards} />
-    )}
+    <List
+      bordered
+      dataSource={cards}
+      renderItem={(item) => (
+        <List.Item>
+          <Col span={4}>
+            <Typography.Text>{item.cardNickname}</Typography.Text>
+          </Col>
+          <Col span={1}>:</Col>
+          <Col span={15}>
+            <Typography.Text>{item.cardNumber}</Typography.Text>
+          </Col>
+          <Col span={2}>
+            {/* TODO: onClick event to modify card */}
+            <EditOutlined onClick={() => alert('수정 버튼 미구현')} />
+          </Col>
+          <Col span={2}>
+            {/* TODO: onClick event to delete card */}
+            <DeleteOutlined onClick={() => alert('삭제 버튼 미구현')} style={{ color: 'red' }} />
+          </Col>
+        </List.Item>
+      )}
+    />
   </Card>
 );
 

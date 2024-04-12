@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userSlice from './userSlice.ts';
+
 import cardSlice from './cardSlice.ts';
+import userSlice, { userActions } from './userSlice.ts';
 
 const store = configureStore({
   reducer: {
@@ -8,5 +9,7 @@ const store = configureStore({
     card: cardSlice,
   },
 });
+
+store.dispatch(userActions.checkLogin());
 
 export default store;

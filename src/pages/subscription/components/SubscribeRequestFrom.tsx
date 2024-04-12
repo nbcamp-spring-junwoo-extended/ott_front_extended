@@ -1,8 +1,12 @@
-import React from 'react';
 import { Button, Flex, Form, Select, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import style from './SubscribeCard.module.css';
+import { useNavigate } from 'react-router-dom';
+
 import { requestSubscription } from '../../../core/apis/subscriptionApi.ts';
+import { myCards } from '../../../core/apis/userApi.ts';
+import { UserCard } from '../../../reducer/cardSlice.ts';
+import style from './SubscribeCard.module.css';
 
 const formItemLayout = {
   labelCol: {
@@ -20,22 +24,40 @@ interface SubscribeRequestFormProps {
     membershipType: string;
     price: number;
   };
-  FormData: unknown;
 }
 
-const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({
-  SubscriptionInfo,
-}) => {
-  const cards = useSelector((state) => state.card.cards);
+const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ SubscriptionInfo }) => {
   const userId = useSelector((state) => state.user.userId);
+  const [cards, setCards] = useState<UserCard[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    myCards().then((response) => {
+      const _cards = response.data?.data;
+      setCards(_cards);
+    });
+  }, []);
 
   const onSubscriptionRequest = (data) => {
     const { cardId } = cards.filter((card) => card.cardNumber === data.card)[0];
-    // TODO
+    // TODO: implement coupons
     requestSubscription(userId, cardId, SubscriptionInfo.membershipType)
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        navigate('/profile');
+      })
       .catch((error) => console.log(error));
   };
+
+  const cardOptions = () => (
+    <>
+      {cards.map((card) => (
+        <Select.Option key={card.cardNumber} value={card.cardNumber}>
+          {card.cardNickname}: {card.cardNumber}
+        </Select.Option>
+      ))}
+    </>
+  );
 
   return (
     <Form {...formItemLayout} onFinish={onSubscriptionRequest}>
@@ -50,12 +72,10 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({
         />
       </Form.Item>
       <Form.Item name="card" label="카드" rules={[{ required: true }]}>
-        <Select placeholder="카드를 선택 해주세요.">
-          {cards.map((card) => (
-            <Select.Option key={card.cardNumber} value={card.cardNumber}>
-              {card.cardNumber}
-            </Select.Option>
-          ))}
+        <Select
+          placeholder={cards.length > 0 ? '카드를 선택 해주세요.' : '카드를 먼저 등록 해주세요'}
+        >
+          {cardOptions()}
         </Select>
       </Form.Item>
 

@@ -1,6 +1,6 @@
-import axios, { AxiosHeaders } from 'axios';
+import axios, { AxiosHeaders, AxiosInstance } from 'axios';
 
-const authClient = axios.create({
+const authClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
   headers: new AxiosHeaders({
@@ -15,7 +15,7 @@ authClient.interceptors.request.use((config) => {
   return config;
 });
 
-const apiClient = axios.create({
+const apiClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   withCredentials: true,
   headers: new AxiosHeaders({
@@ -25,7 +25,6 @@ const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config) => {
-  // todo: access_token 갱신 가능성 검증
   if (import.meta.env.DEV) {
     console.log('REQUEST', config.url);
   }

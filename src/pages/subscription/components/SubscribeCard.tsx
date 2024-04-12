@@ -1,19 +1,28 @@
-import React, { useState } from 'react';
 import { Card, Divider, Modal, Typography } from 'antd';
+import React, { useState } from 'react';
+
+import { PaymentTypes } from '../../../core/types/paymentTypes.ts';
 import style from './SubscribeCard.module.css';
 import SubscribeRequestForm from './SubscribeRequestFrom.tsx';
 
-const SubscribeCard: React.FC = ({ subscriptionInfo }) => {
+interface SubscribeCardProps {
+  subscriptionInfo: PaymentTypes;
+}
+
+const SubscribeCard: React.FC<SubscribeCardProps> = ({ subscriptionInfo }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const onCardClick = () => {
+    if (subscriptionInfo.price !== 0) {
+      setIsModalVisible(true);
+    }
+  };
 
   return (
     <>
       <Card
         title={subscriptionInfo.membershipType.slice(5)}
-        bordered={false}
-        onClick={() => {
-          setIsModalVisible(true);
-        }}
+        onClick={onCardClick}
         className={style.subscribeCard}
       >
         <Typography.Title underline strong level={3} className={style.title}>

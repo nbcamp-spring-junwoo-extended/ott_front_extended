@@ -1,5 +1,6 @@
 import { Alert, Button, Form, FormInstance, Input, Modal, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
+
 import { createCard, CreateCardFormProps } from '../../../core/apis/userApi.ts';
 import style from '../Profile.module.css';
 
@@ -8,10 +9,7 @@ interface SubmitButtonProps {
   setCardCreateModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({
-  form,
-  setCardCreateModal,
-}) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({ form, setCardCreateModal }) => {
   const [submittable, setSubmittable] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
 
@@ -32,12 +30,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
 
   return (
     <>
-      <Button
-        type="primary"
-        htmlType="submit"
-        disabled={!submittable}
-        onClick={() => onSubmit()}
-      >
+      <Button type="primary" htmlType="submit" disabled={!submittable} onClick={() => onSubmit()}>
         등록
       </Button>
       {errorVisible ? (
@@ -98,9 +91,7 @@ const CreateCardForm = ({ cardCreateModal, setCardCreateModal }) => {
             className={style.cardExpiration}
             name="cardExpirationYear"
             label="카드 만료 년(2자리)"
-            rules={[
-              { required: true, len: 2, message: '2자리를 입력해주세요.' },
-            ]}
+            rules={[{ required: true, len: 2, message: '2자리를 입력해주세요.' }]}
           >
             <Input />
           </Form.Item>
@@ -109,9 +100,7 @@ const CreateCardForm = ({ cardCreateModal, setCardCreateModal }) => {
             style={{ marginLeft: '10px' }}
             name="cardExpirationMonth"
             label="카드 만료 월(2자리)"
-            rules={[
-              { required: true, len: 2, message: '2자리를 입력해주세요.' },
-            ]}
+            rules={[{ required: true, len: 2, message: '2자리를 입력해주세요.' }]}
           >
             <Input />
           </Form.Item>

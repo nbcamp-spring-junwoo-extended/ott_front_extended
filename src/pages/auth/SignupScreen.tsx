@@ -1,11 +1,7 @@
+import { CalendarOutlined, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, FormProps, Input, Space } from 'antd';
-import {
-  CalendarOutlined,
-  LockOutlined,
-  MailOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { signup } from '../../core/apis/authApi.ts';
 
 export type SignupForm = {
@@ -52,10 +48,7 @@ const SignupScreen = () => {
         name="username"
         rules={[{ required: true, message: 'Please input your Username!' }]}
       >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
-        />
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
       </Form.Item>
 
       <Form.Item
@@ -87,19 +80,12 @@ const SignupScreen = () => {
         name="born"
         rules={[{ required: true, message: 'Please input your Birthday!' }]}
       >
-        <Input
-          prefix={<CalendarOutlined className="site-form-item-icon" />}
-          type="date"
-        />
+        <Input prefix={<CalendarOutlined className="site-form-item-icon" />} type="date" />
       </Form.Item>
 
       <Form.Item>
         <Space direction="horizontal" size="large">
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
+          <Button type="primary" htmlType="submit" className="login-form-button">
             Sign up
           </Button>
           <Link to="/">back</Link>

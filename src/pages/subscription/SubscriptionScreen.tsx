@@ -1,10 +1,12 @@
 import { Col, Row } from 'antd';
 import { useEffect, useState } from 'react';
+
 import { getMemberships } from '../../core/apis/membershipApi.ts';
-import SubscribeCard, { membershipType } from './components/SubscribeCard.tsx';
+import { PaymentTypes } from '../../core/types/paymentTypes.ts';
+import SubscribeCard from './components/SubscribeCard.tsx';
 
 const SubscriptionScreen = () => {
-  const [memberships, setMemberships] = useState<membershipType[]>();
+  const [memberships, setMemberships] = useState<PaymentTypes[]>();
 
   useEffect(() => {
     getMemberships().then((data) => {

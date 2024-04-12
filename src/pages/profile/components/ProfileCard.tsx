@@ -22,15 +22,17 @@ const ProfileCardTitle = () => (
     </Button>
   </div>
 );
-
-interface ProfileCardProps {
-  userProfile?: UserProfile;
-}
-
 const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
   const navigation = useNavigate();
-  const onSubscriptionClick = () => {
-    navigation('/subscribe');
+  const onSubscriptionClick = (e) => {
+    switch (e.target.innerText) {
+      case '구독':
+        navigation('/subscribe');
+        break;
+      case '구독 취소':
+        /* TODO: implement subscription cancel logic */
+        alert('TODO');
+    }
   };
 
   const item = [
@@ -59,17 +61,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
         <List
           size="small"
           className={style.list}
+          bordered
           dataSource={item}
           renderItem={(i) => (
             <List.Item className={style.item}>
               <Typography.Text>
                 {i.title}: {i.content}
               </Typography.Text>
-              {i.content === 'NORMAL' ? (
+              {i.title === '멤버쉽 등급' && (
                 <Button danger type="primary" onClick={onSubscriptionClick}>
-                  구독
+                  {i.content === 'NORMAL' ? '구독' : '구독 취소'}
                 </Button>
-              ) : null}
+              )}
             </List.Item>
           )}
         />

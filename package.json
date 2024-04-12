@@ -14,8 +14,13 @@
     "@react-buddy/ide-toolbox": "^2.4.0",
     "@react-buddy/palette-antd": "^5.3.0",
     "@reduxjs/toolkit": "^2.2.3",
+    "@tanstack/react-query": "^5.29.0",
+    "@tosspayments/brandpay-sdk": "^1.5.2",
+    "@tosspayments/payment-sdk": "^1.7.1",
+    "@tosspayments/payment-widget-sdk": "^0.10.2",
     "antd": "^5.16.1",
     "axios": "^1.6.8",
+    "axios-retry": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.2",
@@ -27,7 +32,6 @@
     "swiper": "^11.1.0"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20.12.5",
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.24",
@@ -43,6 +47,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "typescript": "^5.4.4",
@@ -59,6 +64,7 @@
       "^~/components/(.*)$",
       "^~/utils/(.*)$",
       "^[./]"
-    ]
+    ],
+    "printWidth": 100
   }
 }

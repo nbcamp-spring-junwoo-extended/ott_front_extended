@@ -11,12 +11,20 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { userActions } from '../../reducer/userSlice.ts';
+
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleNavigate = (e) => {
-    if (e.key) {
-      navigate(e.key);
+    switch (e.key) {
+      case '/logout':
+        dispatch(userActions.clearUser());
+        navigate('/');
+        break;
+      default:
+        navigate(e.key);
+        break;
     }
   };
 

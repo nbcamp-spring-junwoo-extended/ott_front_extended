@@ -14,7 +14,9 @@ import SignupScreen from './pages/auth/SignupScreen.tsx';
 import Sidebar from './pages/components/Sidebar.tsx';
 import Topbar from './pages/components/Topbar.tsx';
 import HomeScreen from './pages/HomeScreen.tsx';
+import { CreateCardSuccessScreen } from './pages/profile/billing/CreateCardSuccessScreen.tsx';
 import ProfileScreen from './pages/profile/ProfileScreen.tsx';
+import SearchScreen from './pages/search/SearchScreen.tsx';
 import SubscriptionScreen from './pages/subscription/SubscriptionScreen.tsx';
 import { UserSliceType } from './reducer/userSlice.ts';
 
@@ -22,7 +24,7 @@ const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const user: UserSliceType = useSelector((state) => state.user);
 
-  const dispatch = useDispatch();
+  useDispatch();
 
   if (!user.isLogin) {
     return (
@@ -38,13 +40,7 @@ const App: React.FC = () => {
 
   return (
     <Layout className="default">
-      <Sider
-        theme="light"
-        trigger={null}
-        collapsible
-        collapsed={collapsed}
-        className="sider"
-      >
+      <Sider theme="light" trigger={null} collapsible collapsed={collapsed} className="sider">
         <Sidebar />
       </Sider>
 
@@ -56,10 +52,6 @@ const App: React.FC = () => {
       />
 
       <Layout>
-        <Routes>
-          <Route path="/billing" element={<BillingCheckout />} />
-        </Routes>
-
         <Header className="header">
           <Topbar />
         </Header>
@@ -68,6 +60,8 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
+            <Route path="/profile/newcard/success" element={<CreateCardSuccessScreen />} />
+            <Route path="/search" element={<SearchScreen />} />
             <Route path="/subscribe" element={<SubscriptionScreen />} />
           </Routes>
         </Content>
