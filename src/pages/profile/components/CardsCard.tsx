@@ -10,8 +10,8 @@ const CLIENT_KEY = import.meta.env.VITE_TOSSPAYMENTS_CLIENTKEY;
 const CUSTOMER_KEY = '12341234';
 
 interface CardProps {
-  cardNumber: string;
   cardNickname: string;
+  cardNumber: string;
 }
 
 interface CardsCardProps {
@@ -20,11 +20,11 @@ interface CardsCardProps {
 
 const usePaymentWidget = (clientKey: string) =>
   useQuery({
-    queryKey: ['#payment-widget', clientKey],
     queryFn: () =>
       // ------  결제위젯 초기화 ------
       // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
       loadTossPayments(clientKey),
+    queryKey: ['#payment-widget', clientKey],
   });
 
 const CardsCardTitle: React.FC = () => {
@@ -39,8 +39,8 @@ const CardsCardTitle: React.FC = () => {
     paymentSdk
       .requestBillingAuth('카드', {
         customerKey: CUSTOMER_KEY,
-        successUrl: `${window.location.origin}/profile/newcard/success`,
         failUrl: `${window.location.origin}/profile/card/fail`,
+        successUrl: `${window.location.origin}/profile/newcard/success`,
       })
       .catch(() => setIsCreateCardVisible(false));
   }, [paymentSdk, isCreateCardVisible]);
@@ -49,9 +49,9 @@ const CardsCardTitle: React.FC = () => {
     <div>
       <Typography.Title level={5}>카드</Typography.Title>
       <Button
-        type="primary"
         className={style.postCards}
         onClick={() => setIsCreateCardVisible(true)}
+        type="primary"
       >
         등록
       </Button>

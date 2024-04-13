@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
-  name: 'user',
   initialState: {
-    username: '',
-    userId: 0,
-    token: '',
     isLogin: false,
+    token: '',
+    userId: 0,
+    username: '',
   },
+  name: 'user',
   reducers: {
     checkLogin: (state) => {
       const token = localStorage.getItem('access_token');
@@ -15,6 +15,14 @@ const userSlice = createSlice({
         state.token = token;
         state.isLogin = true;
       }
+
+      return state;
+    },
+    clearUser: (state) => {
+      state.username = '';
+      state.token = '';
+      localStorage.removeItem('access_token');
+      state.isLogin = false;
 
       return state;
     },
@@ -37,21 +45,13 @@ const userSlice = createSlice({
       state.userId = action.payload.userId;
       return state;
     },
-    clearUser: (state) => {
-      state.username = '';
-      state.token = '';
-      localStorage.removeItem('access_token');
-      state.isLogin = false;
-
-      return state;
-    },
   },
 });
 
 export type UserSliceType = {
-  username: string;
-  token: string;
   isLogin: boolean;
+  token: string;
+  username: string;
 };
 
 export const userActions = userSlice.actions;

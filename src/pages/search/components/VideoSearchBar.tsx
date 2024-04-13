@@ -1,8 +1,9 @@
 import { AutoComplete, Select, Space } from 'antd';
+import useDebounce from 'antd/es/form/hooks/useDebounce';
 import Search from 'antd/es/input/Search';
 import React, { useState } from 'react';
 
-import { getSearchComplete, searchVideos } from '../../../core/apis/videoApi.ts';
+import { searchVideos } from '../../../core/apis/videoApi.ts';
 import { VideoSearchResult } from '../../../core/types/video';
 
 export interface VideoSearchBarProps {
@@ -63,24 +64,23 @@ const VideoSearchBar: React.FC<VideoSearchBarProps> = ({
   stateLoading: { isLoading, setIsLoading },
   stateValidInput: { isValidInput, setIsValidInput },
 }) => {
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedSearchType, setSelectedSearchType] = useState<string>('제목');
   const [searchAutoComplete, setSearchAutoComplete] =
     useState<AutoCompleteOption[]>(fakeAutoComplete);
+
+  const handleSearchTermChange = ({ target: { value } }) => {
+    setIsValidInput(!!value.length);
+  };
+
+  const debouncedSearchTerm = useDebounce();
+
   const handleSearch = (value) => {
     if (!value) return;
     setIsLoading(true);
     searchVideos(selectedSearchType, value)
       .then(({ data }) => setSearchResults(data?.data ?? []))
       .finally(() => setIsLoading(false));
-  };
-
-  const handleSearchValueChange = ({ target: { value } }) => {
-    if (value.length > 1) {
-      getSearchComplete(value).then(({ data }) =>
-        setSearchAutoComplete(data?.map((item) => item.title)),
-      );
-    }
-    setIsValidInput(!!value.length);
   };
 
   return (
@@ -92,7 +92,7 @@ const VideoSearchBar: React.FC<VideoSearchBarProps> = ({
             allowClear
             enterButton="Search"
             loading={isLoading}
-            onChange={handleSearchValueChange}
+            onChange={handleSearchTermChange}
             onSearch={handleSearch}
             placeholder="검색어를 입력 해주세요"
             size="large"

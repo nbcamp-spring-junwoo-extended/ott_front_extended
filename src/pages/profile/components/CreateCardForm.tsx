@@ -1,7 +1,7 @@
 import { Alert, Button, Form, FormInstance, Input, Modal, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-import { createCard, CreateCardFormProps } from '../../../core/apis/userApi.ts';
+import { CreateCardFormProps, createCard } from '../../../core/apis/userApi.ts';
 import style from '../Profile.module.css';
 
 interface SubmitButtonProps {
@@ -30,17 +30,17 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ form, setCardCreateModal })
 
   return (
     <>
-      <Button type="primary" htmlType="submit" disabled={!submittable} onClick={() => onSubmit()}>
+      <Button disabled={!submittable} htmlType="submit" onClick={() => onSubmit()} type="primary">
         등록
       </Button>
       {errorVisible ? (
         <Alert
-          type="error"
           banner
-          message="카드 등록에 실패했습니다"
-          style={{ width: 'auto', marginTop: '10px' }}
           closable
+          message="카드 등록에 실패했습니다"
           onClose={() => setErrorVisible(false)}
+          style={{ marginTop: '10px', width: 'auto' }}
+          type="error"
         />
       ) : undefined}
     </>
@@ -52,35 +52,35 @@ const CreateCardForm = ({ cardCreateModal, setCardCreateModal }) => {
 
   return (
     <Modal
-      title="카드 등록"
       centered
-      open={cardCreateModal}
-      onCancel={() => setCardCreateModal(false)}
       footer={null}
       initialValues={{
-        customerName: '이주누',
-        cardNumber: '1234123412341234',
-        cardExpirationYear: '12',
         cardExpirationMonth: '12',
+        cardExpirationYear: '12',
+        cardNumber: '1234123412341234',
         cardPassword: '12',
+        customerName: '이주누',
       }}
+      onCancel={() => setCardCreateModal(false)}
+      open={cardCreateModal}
+      title="카드 등록"
     >
-      <Form form={form} name="username" layout="vertical" autoComplete="off">
+      <Form autoComplete="off" form={form} layout="vertical" name="username">
         <Form.Item
-          name="customerName"
           label="카드에 적힌 이름"
-          rules={[{ required: true, message: '필수 값입니다.' }]}
+          name="customerName"
+          rules={[{ message: '필수 값입니다.', required: true }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          name="cardNumber"
           label="카드 번호(16자리)"
+          name="cardNumber"
           rules={[
             {
-              required: true,
               len: 16,
               message: '16자리를 입력해주세요.',
+              required: true,
             },
           ]}
         >
@@ -89,31 +89,31 @@ const CreateCardForm = ({ cardCreateModal, setCardCreateModal }) => {
         <Form.Item>
           <Form.Item
             className={style.cardExpiration}
-            name="cardExpirationYear"
             label="카드 만료 년(2자리)"
-            rules={[{ required: true, len: 2, message: '2자리를 입력해주세요.' }]}
+            name="cardExpirationYear"
+            rules={[{ len: 2, message: '2자리를 입력해주세요.', required: true }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             className={style.cardExpiration}
-            style={{ marginLeft: '10px' }}
-            name="cardExpirationMonth"
             label="카드 만료 월(2자리)"
-            rules={[{ required: true, len: 2, message: '2자리를 입력해주세요.' }]}
+            name="cardExpirationMonth"
+            rules={[{ len: 2, message: '2자리를 입력해주세요.', required: true }]}
+            style={{ marginLeft: '10px' }}
           >
             <Input />
           </Form.Item>
         </Form.Item>
         <Form.Item
           className={style.cardExpiration}
-          name="cardPassword"
           label="카드 비밀번호 앞 2자리"
+          name="cardPassword"
           rules={[
             {
-              required: true,
               len: 2,
               message: '2자리를 입력해주세요.',
+              required: true,
             },
           ]}
         >

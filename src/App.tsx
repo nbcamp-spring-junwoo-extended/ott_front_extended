@@ -1,22 +1,21 @@
-import './App.css';
-
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Layout } from 'antd';
-import { Content, Header } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
+import { Content, Header } from 'antd/es/layout/layout';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
+import './App.css';
+import HomeScreen from './pages/HomeScreen.tsx';
 import LoginScreen from './pages/auth/LoginScreen.tsx';
 import LogoutScreen from './pages/auth/LogoutScreen.tsx';
 import SignupScreen from './pages/auth/SignupScreen.tsx';
 import Sidebar from './pages/components/Sidebar.tsx';
 import Topbar from './pages/components/Topbar.tsx';
-import HomeScreen from './pages/HomeScreen.tsx';
 import NotificationScreen from './pages/notification/NotificationScreen.tsx';
-import { CreateCardSuccessScreen } from './pages/profile/billing/CreateCardSuccessScreen.tsx';
 import ProfileScreen from './pages/profile/ProfileScreen.tsx';
+import { CreateCardSuccessScreen } from './pages/profile/billing/CreateCardSuccessScreen.tsx';
 import RankingScreen from './pages/ranking/RankingScreen.tsx';
 import SearchScreen from './pages/search/SearchScreen.tsx';
 import SubscriptionScreen from './pages/subscription/SubscriptionScreen.tsx';
@@ -32,9 +31,9 @@ const App: React.FC = () => {
     return (
       <Layout className="default">
         <Routes>
-          <Route path="/" element={<LoginScreen />} />
-          <Route path="/logout" element={<LogoutScreen />} />
-          <Route path="/signup" element={<SignupScreen />} />
+          <Route element={<LoginScreen />} path="/" />
+          <Route element={<LogoutScreen />} path="/logout" />
+          <Route element={<SignupScreen />} path="/signup" />
         </Routes>
       </Layout>
     );
@@ -42,15 +41,15 @@ const App: React.FC = () => {
 
   return (
     <Layout className="default">
-      <Sider theme="light" trigger={null} collapsible collapsed={collapsed} className="sider">
+      <Sider className="sider" collapsed={collapsed} collapsible theme="light" trigger={null}>
         <Sidebar />
       </Sider>
 
       <Button
-        type="text"
+        className="sider-trigger"
         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         onClick={() => setCollapsed(!collapsed)}
-        className="sider-trigger"
+        type="text"
       />
 
       <Layout>
@@ -60,14 +59,13 @@ const App: React.FC = () => {
 
         <Content className="content">
           <Routes>
-            <Route path="/" element={<HomeScreen />} />
-            <Route path="/profile" element={<ProfileScreen />} />
-            <Route path="/profile/newcard/success" element={<CreateCardSuccessScreen />} />
-            <Route path="/ranking" element={<RankingScreen />} />
-            <Route path="/notification" element={<NotificationScreen />} />
-            <Route path="/profile/newcard/success" element={<CreateCardSuccessScreen />} />
-            <Route path="/search" element={<SearchScreen />} />
-            <Route path="/subscribe" element={<SubscriptionScreen />} />
+            <Route element={<HomeScreen />} path="/" />
+            <Route element={<ProfileScreen />} path="/profile" />
+            <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
+            <Route element={<RankingScreen />} path="/ranking" />
+            <Route element={<NotificationScreen />} path="/notification" />
+            <Route element={<SearchScreen />} path="/search" />
+            <Route element={<SubscriptionScreen />} path="/subscribe" />
           </Routes>
         </Content>
       </Layout>

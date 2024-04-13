@@ -2,8 +2,8 @@ import { apiClient } from '../di/client.ts';
 
 export const postBillingKey = async (customerKey: string, authKey: string) =>
   apiClient.post('/api/v1/users/me/billing/key', {
-    customerKey,
     authKey,
+    customerKey,
   });
 
 export const requestSubscription = async (
@@ -15,7 +15,7 @@ export const requestSubscription = async (
   apiClient.post(`/api/v1/users/${userId}/subscriptions`, null, {
     params: {
       card: cardId,
-      membership: membershipType,
       coupon: couponId,
+      membership: membershipType,
     },
   });

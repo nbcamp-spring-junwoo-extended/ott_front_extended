@@ -13,9 +13,9 @@ const ProfileCardTitle = () => (
   <div>
     <Typography.Title level={5}>프로필</Typography.Title>
     <Button
-      type="primary"
       className={style.postCards}
       onClick={() => alert('TODO')}
+      type="primary"
       // TODO: Implement the onClick event
     >
       수정
@@ -37,21 +37,21 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
 
   const item = [
     {
-      title: '닉네임',
-
       content: userProfile?.username,
+
+      title: '닉네임',
     },
     {
-      title: '이메일',
       content: userProfile?.email,
+      title: '이메일',
     },
     {
-      title: '생년월일',
       content: userProfile?.born,
+      title: '생년월일',
     },
     {
-      title: '멤버쉽 등급',
       content: userProfile?.membershipType.substring(5),
+      title: '멤버쉽 등급',
     },
   ];
 
@@ -59,9 +59,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
     <div>
       <Card title={<ProfileCardTitle />}>
         <List
-          size="small"
-          className={style.list}
           bordered
+          className={style.list}
           dataSource={item}
           renderItem={(i) => (
             <List.Item className={style.item}>
@@ -69,12 +68,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
                 {i.title}: {i.content}
               </Typography.Text>
               {i.title === '멤버쉽 등급' && (
-                <Button danger type="primary" onClick={onSubscriptionClick}>
+                <Button danger onClick={onSubscriptionClick} type="primary">
                   {i.content === 'NORMAL' ? '구독' : '구독 취소'}
                 </Button>
               )}
             </List.Item>
           )}
+          size="small"
         />
       </Card>
     </div>

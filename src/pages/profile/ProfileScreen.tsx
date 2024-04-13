@@ -2,19 +2,19 @@ import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { myCards, myProfile, UserProfile } from '../../core/apis/userApi.ts';
+import { UserProfile, myCards, myProfile } from '../../core/apis/userApi.ts';
 import { userActions } from '../../reducer/userSlice.ts';
 import CardsCard from './components/CardsCard.tsx';
 import ProfileCard from './components/ProfileCard.tsx';
 
 const ProfileScreen: React.FC = () => {
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    userId: 0,
-    username: '',
-    born: '',
     authorityType: '',
+    born: '',
     email: '',
     membershipType: '',
+    userId: 0,
+    username: '',
   });
   const [cards, setCards] = useState<any[]>([]);
 
@@ -34,10 +34,10 @@ const ProfileScreen: React.FC = () => {
 
   return (
     <Row gutter={[16, 16]}>
-      <Col xs={24} xl={12}>
+      <Col xl={12} xs={24}>
         <ProfileCard userProfile={userProfile} />
       </Col>
-      <Col xs={24} xl={12}>
+      <Col xl={12} xs={24}>
         <CardsCard cards={cards} />
       </Col>
     </Row>

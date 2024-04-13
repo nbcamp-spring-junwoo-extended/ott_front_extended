@@ -10,12 +10,12 @@ import style from './SubscribeCard.module.css';
 
 const formItemLayout = {
   labelCol: {
-    xs: { span: 24 },
     sm: { span: 6 },
+    xs: { span: 24 },
   },
   wrapperCol: {
-    xs: { span: 24 },
     sm: { span: 16 },
+    xs: { span: 24 },
   },
 };
 
@@ -63,15 +63,15 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ Subscriptio
     <Form {...formItemLayout} onFinish={onSubscriptionRequest}>
       <Form.Item label="멤버쉽">
         <Select
+          disabled
           placeholder={
             <Typography.Text underline>
               {SubscriptionInfo?.membershipType?.slice(5)}
             </Typography.Text>
           }
-          disabled
         />
       </Form.Item>
-      <Form.Item name="card" label="카드" rules={[{ required: true }]}>
+      <Form.Item label="카드" name="card" rules={[{ required: true }]}>
         <Select
           placeholder={cards.length > 0 ? '카드를 선택 해주세요.' : '카드를 먼저 등록 해주세요'}
         >
@@ -79,15 +79,15 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ Subscriptio
         </Select>
       </Form.Item>
 
-      <Form.Item name="coupon" label="쿠폰">
+      <Form.Item label="쿠폰" name="coupon">
         <Select placeholder="쿠폰을 선택 해주세요." />
       </Form.Item>
 
       <Flex align="baseline" justify="flex-end">
-        <Typography.Title level={5} underline className={style.formTitle}>
+        <Typography.Title className={style.formTitle} level={5} underline>
           가격: {SubscriptionInfo.price}₩
         </Typography.Title>
-        <Button type="primary" htmlType="submit">
+        <Button htmlType="submit" type="primary">
           신청
         </Button>
       </Flex>

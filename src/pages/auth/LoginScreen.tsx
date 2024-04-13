@@ -4,17 +4,17 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { login, LoginForm } from '../../core/apis/authApi.ts';
+import { LoginForm, login } from '../../core/apis/authApi.ts';
 import { userActions } from '../../reducer/userSlice.ts';
 
 const formItemLayout = {
   labelCol: {
-    xs: { span: 24 },
     sm: { span: 6 },
+    xs: { span: 24 },
   },
   wrapperCol: {
-    xs: { span: 24 },
     sm: { span: 14 },
+    xs: { span: 24 },
   },
 };
 
@@ -26,8 +26,8 @@ const LoginScreen: React.FC = () => {
     login(values).then((response) => {
       dispatch(
         userActions.login({
-          username: values.username,
           token: response.headers?.authorization?.slice(7),
+          username: values.username,
         }),
       );
       navigate('/');
@@ -37,33 +37,33 @@ const LoginScreen: React.FC = () => {
   return (
     <Form
       {...formItemLayout}
-      name="normal_login"
       className="auth-form"
-      initialValues={{ username: 'user1', password: 'password' }}
+      initialValues={{ password: 'password', username: 'user1' }}
+      name="normal_login"
       onFinish={onFinish}
     >
       <Form.Item
         label="username"
         name="username"
-        rules={[{ required: true, message: 'Please input your Username!' }]}
+        rules={[{ message: 'Please input your Username!', required: true }]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input placeholder="Username" prefix={<UserOutlined className="site-form-item-icon" />} />
       </Form.Item>
       <Form.Item
         label="password"
         name="password"
-        rules={[{ required: true, message: 'Please input your Password!' }]}
+        rules={[{ message: 'Please input your Password!', required: true }]}
       >
         <Input
+          placeholder="Password"
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
-          placeholder="Password"
         />
       </Form.Item>
 
       <Form.Item>
         <Space direction="horizontal" size="large">
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button className="login-form-button" htmlType="submit" type="primary">
             Log in
           </Button>
           <Link to="/signup">Sign up</Link>

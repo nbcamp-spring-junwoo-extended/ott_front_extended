@@ -68,11 +68,11 @@ const Sidebar: React.FC = () => {
       </Flex>
 
       <Menu
-        onClick={(e) => handleNavigate(e)}
-        mode="inline"
         className="menu-bar"
         defaultSelectedKeys={['/']}
         items={items}
+        mode="inline"
+        onClick={(e) => handleNavigate(e)}
       />
     </div>
   );

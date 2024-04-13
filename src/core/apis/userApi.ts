@@ -1,20 +1,20 @@
 import { apiClient } from '../di/client.ts';
 
 export type UserProfile = {
+  authorityType: string;
+  born: string;
+  email: string;
+  membershipType: string;
   userId: number;
   username: string;
-  email: string;
-  born: string;
-  authorityType: string;
-  membershipType: string;
 };
 
 export interface CreateCardFormProps {
-  customerName: string;
-  cardNumber: string;
-  cardExpirationYear: string;
   cardExpirationMonth: string;
+  cardExpirationYear: string;
+  cardNumber: string;
   cardPassword: string;
+  customerName: string;
 }
 
 export const myProfile = async () => {

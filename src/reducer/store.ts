@@ -5,8 +5,8 @@ import userSlice, { userActions } from './userSlice.ts';
 
 const store = configureStore({
   reducer: {
-    user: userSlice,
     card: cardSlice,
+    user: userSlice,
   },
 });
 

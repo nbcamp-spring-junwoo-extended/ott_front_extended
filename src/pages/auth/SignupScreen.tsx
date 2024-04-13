@@ -5,20 +5,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../core/apis/authApi.ts';
 
 export type SignupForm = {
-  username: string;
-  password: string;
-  email: string;
   born: string;
+  email: string;
+  password: string;
+  username: string;
 };
 
 const formItemLayout = {
   labelCol: {
-    xs: { span: 24 },
     sm: { span: 6 },
+    xs: { span: 24 },
   },
   wrapperCol: {
-    xs: { span: 24 },
     sm: { span: 14 },
+    xs: { span: 24 },
   },
 };
 
@@ -32,60 +32,60 @@ const SignupScreen = () => {
   return (
     <Form
       {...formItemLayout}
-      label=""
-      name="normal_login"
       className="auth-form"
       initialValues={{
-        username: 'user1',
-        password: 'password',
-        email: 'user1@email.com',
         born: '1994-11-03',
+        email: 'user1@email.com',
+        password: 'password',
+        username: 'user1',
       }}
+      label=""
+      name="normal_login"
       onFinish={onFinish}
     >
       <Form.Item
         label="Username"
         name="username"
-        rules={[{ required: true, message: 'Please input your Username!' }]}
+        rules={[{ message: 'Please input your Username!', required: true }]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input placeholder="Username" prefix={<UserOutlined className="site-form-item-icon" />} />
       </Form.Item>
 
       <Form.Item
         label="Password"
         name="password"
-        rules={[{ required: true, message: 'Please input your Password!' }]}
+        rules={[{ message: 'Please input your Password!', required: true }]}
       >
         <Input
+          placeholder="Password"
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
-          placeholder="Password"
         />
       </Form.Item>
 
       <Form.Item
         label="Email"
         name="email"
-        rules={[{ required: true, message: 'Please input your Email!' }]}
+        rules={[{ message: 'Please input your Email!', required: true }]}
       >
         <Input
+          placeholder="Email"
           prefix={<MailOutlined className="site-form-item-icon" />}
           type="email"
-          placeholder="Email"
         />
       </Form.Item>
 
       <Form.Item
         label="Birthday"
         name="born"
-        rules={[{ required: true, message: 'Please input your Birthday!' }]}
+        rules={[{ message: 'Please input your Birthday!', required: true }]}
       >
         <Input prefix={<CalendarOutlined className="site-form-item-icon" />} type="date" />
       </Form.Item>
 
       <Form.Item>
         <Space direction="horizontal" size="large">
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button className="login-form-button" htmlType="submit" type="primary">
             Sign up
           </Button>
           <Link to="/">back</Link>
