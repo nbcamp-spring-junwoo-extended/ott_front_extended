@@ -1,10 +1,10 @@
 import { AutoComplete, Select, Space } from 'antd';
-import useDebounce from 'antd/es/form/hooks/useDebounce';
 import Search from 'antd/es/input/Search';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { searchVideos } from '../../../core/apis/videoApi.ts';
+import { getSearchComplete, searchVideos } from '../../../core/apis/videoApi.ts';
 import { VideoSearchResult } from '../../../core/types/video';
+import { useDebounce } from '../../../hooks/useDebounce.ts';
 
 export interface VideoSearchBarProps {
   setSearchResults: (value: VideoSearchResult) => void;
@@ -70,11 +70,21 @@ const VideoSearchBar: React.FC<VideoSearchBarProps> = ({
     useState<AutoCompleteOption[]>(fakeAutoComplete);
 
   const handleSearchTermChange = ({ target: { value } }) => {
+    setSearchTerm(value);
     setIsValidInput(!!value.length);
   };
 
-  const debouncedSearchTerm = useDebounce();
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  useEffect(() => {
+    if (!debouncedSearchTerm) return;
 
+    const response = getSearchComplete(debouncedSearchTerm);
+    const newAutoComplete: AutoCompleteOption[] = response?.data?.data.titles.map((title) => ({
+      label: title,
+      value: title,
+    }));
+    setSearchAutoComplete(newAutoComplete);
+  }, [debouncedSearchTerm]);
   const handleSearch = (value) => {
     if (!value) return;
     setIsLoading(true);
