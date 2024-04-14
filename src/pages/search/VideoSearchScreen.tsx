@@ -1,14 +1,14 @@
-import { Flex, Typography } from 'antd';
+import { Flex } from 'antd';
 import React, { useState } from 'react';
 
-import { VideoSearchResult } from '../../core/types/video.d.ts';
+import { VideoReadResponse } from '../../core/types/video.d.ts';
 import SearchResultList from './components/SearchResultList.tsx';
 import VideoSearchBar from './components/VideoSearchBar.tsx';
 
-const SearchScreen: React.FC = () => {
+const VideoSearchScreen: React.FC = () => {
   const [isValidInput, setIsValidInput] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [searchResults, setSearchResults] = useState<VideoSearchResult | null>(null);
+  const [searchResults, setSearchResults] = useState<VideoReadResponse[]>([]);
 
   return (
     <Flex align="center" gap="large" justify="center" vertical>
@@ -17,14 +17,9 @@ const SearchScreen: React.FC = () => {
         stateLoading={{ isLoading, setIsLoading }}
         stateValidInput={{ isValidInput, setIsValidInput }}
       />
-
-      {searchResults ? (
-        <SearchResultList searchResult={searchResults} />
-      ) : (
-        <Typography.Title level={3}>검색어를 입력 해주세요</Typography.Title>
-      )}
+      <SearchResultList searchResult={searchResults} />
     </Flex>
   );
 };
 
-export default SearchScreen;
+export default VideoSearchScreen;

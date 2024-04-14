@@ -1,9 +1,9 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { Button, Layout } from 'antd';
+import { Button, Layout, message } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { Content, Header } from 'antd/es/layout/layout';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
@@ -17,59 +17,67 @@ import NotificationScreen from './pages/notification/NotificationScreen.tsx';
 import ProfileScreen from './pages/profile/ProfileScreen.tsx';
 import { CreateCardSuccessScreen } from './pages/profile/billing/CreateCardSuccessScreen.tsx';
 import RankingScreen from './pages/ranking/RankingScreen.tsx';
-import SearchScreen from './pages/search/SearchScreen.tsx';
+import VideoSearchScreen from './pages/search/VideoSearchScreen.tsx';
 import SubscriptionScreen from './pages/subscription/SubscriptionScreen.tsx';
+import VideoScreen from './pages/video/VideoScreen.tsx';
 import { UserSliceType } from './reducer/userSlice.ts';
 
 const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const user: UserSliceType = useSelector((state) => state.user);
-
-  useDispatch();
+  const [messageApi, contextHolder] = message.useMessage();
 
   if (!user.isLogin) {
     return (
-      <Layout className="default">
-        <Routes>
-          <Route element={<LoginScreen />} path="/" />
-          <Route element={<LogoutScreen />} path="/logout" />
-          <Route element={<SignupScreen />} path="/signup" />
-        </Routes>
-      </Layout>
+      <>
+        {contextHolder}
+        <Layout className="default" style={{ alignItems: 'center' }}>
+          <Routes>
+            <Route element={<LoginScreen messageApi={messageApi} />} path="/" />
+            <Route element={<LogoutScreen />} path="/logout" />
+            <Route element={<SignupScreen messageApi={messageApi} />} path="/signup" />
+          </Routes>
+        </Layout>
+      </>
     );
   }
 
   return (
-    <Layout className="default">
-      <Sider className="sider" collapsed={collapsed} collapsible theme="light" trigger={null}>
-        <Sidebar />
-      </Sider>
+    <>
+      {contextHolder}
 
-      <Button
-        className="sider-trigger"
-        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        onClick={() => setCollapsed(!collapsed)}
-        type="text"
-      />
+      <Layout className="default">
+        <Sider className="sider" collapsed={collapsed} collapsible theme="light" trigger={null}>
+          <Sidebar />
+        </Sider>
 
-      <Layout>
-        <Header className="header">
-          <Topbar />
-        </Header>
+        <Button
+          className="sider-trigger"
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          onClick={() => setCollapsed(!collapsed)}
+          type="text"
+        />
 
-        <Content className="content">
-          <Routes>
-            <Route element={<HomeScreen />} path="/" />
-            <Route element={<ProfileScreen />} path="/profile" />
-            <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
-            <Route element={<RankingScreen />} path="/ranking" />
-            <Route element={<NotificationScreen />} path="/notification" />
-            <Route element={<SearchScreen />} path="/search" />
-            <Route element={<SubscriptionScreen />} path="/subscribe" />
-          </Routes>
-        </Content>
+        <Layout>
+          <Header className="header">
+            <Topbar />
+          </Header>
+
+          <Content className="content">
+            <Routes>
+              <Route element={<HomeScreen />} path="/" />
+              <Route element={<VideoScreen />} path="/videos/:id" />
+              <Route element={<ProfileScreen />} path="/profile" />
+              <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
+              <Route element={<RankingScreen />} path="/ranking" />
+              <Route element={<NotificationScreen />} path="/notification" />
+              <Route element={<VideoSearchScreen />} path="/search" />
+              <Route element={<SubscriptionScreen />} path="/subscribe" />
+            </Routes>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+    </>
   );
 };
 

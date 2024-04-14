@@ -1,42 +1,45 @@
-import { FileImageOutlined } from '@ant-design/icons';
-import { Flex, List, Skeleton, Typography } from 'antd';
+import { Flex, List, Typography } from 'antd';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
-import { VideoSearchResult } from '../../../core/types/video.d.ts';
-import styles from './SearchResultList.module.css';
+import { VideoReadResponse } from '../../../core/types/video.d.ts';
+import SearchResultItem from './components/SearchResultItem.tsx';
 
 interface SearchResultListProps {
-  searchResult: VideoSearchResult;
+  searchResult: VideoReadResponse[];
 }
 
+const listGrid = {
+  gutter: 4,
+  lg: 4,
+  md: 4,
+  sm: 2,
+  xl: 6,
+  xs: 1,
+  xxl: 8,
+};
 const SearchResultList: React.FC<SearchResultListProps> = ({ searchResult }) => {
-  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const input = params.get('input');
+
+  const handleRenderItem = (item: VideoReadResponse) => <SearchResultItem item={item} />;
+
   return (
     <List
       bordered
-      dataSource={searchResult?.content}
-      grid={{ column: 4, gutter: 8 }}
+      dataSource={searchResult}
+      grid={listGrid}
       header={
-        <Flex vertical>
-          <Typography.Title level={3}>검색 결과</Typography.Title>
-          <Typography.Text style={{ textAlign: 'right' }}>
-            총 {searchResult?.totalElements}개의 검색 결과
-          </Typography.Text>
-        </Flex>
+        input && (
+          <Flex vertical>
+            <Typography.Title level={3}>"{input}" 에 대한 검색 결과</Typography.Title>
+            <Typography.Text style={{ textAlign: 'right' }}>
+              총 {searchResult?.length}건의 검색 결과
+            </Typography.Text>
+          </Flex>
+        )
       }
-      renderItem={(item) => (
-        <List.Item className={styles.listItems} onClick={() => navigate(`/videos/${item.videoId}`)}>
-          <List.Item.Meta
-            description={<Typography.Title level={5}>{item.title}</Typography.Title>}
-            title={
-              <Skeleton active loading>
-                <FileImageOutlined />
-              </Skeleton>
-            }
-          />
-        </List.Item>
-      )}
+      renderItem={handleRenderItem}
       size="large"
       style={{ padding: 24, width: '100%' }}
     />

@@ -1,5 +1,7 @@
 import { CalendarOutlined, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, FormProps, Input, Space } from 'antd';
+import { Button, Divider, Form, FormProps, Input, Space } from 'antd';
+import { MessageInstance } from 'antd/es/message/interface';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { signup } from '../../core/apis/authApi.ts';
@@ -22,11 +24,34 @@ const formItemLayout = {
   },
 };
 
-const SignupScreen = () => {
+interface SignupScreenProps {
+  messageApi: MessageInstance;
+}
+
+const SignupScreen: React.FC<SignupScreenProps> = ({ messageApi }) => {
   const navigate = useNavigate();
-  const onFinish: FormProps<SignupForm>['onFinish'] = async (values) => {
-    await signup(values);
-    navigate('/');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onFinish: FormProps<SignupForm>['onFinish'] = (values) => {
+    setIsLoading(true);
+
+    signup(values)
+      .then(() =>
+        messageApi.open({
+          content: '회원가입 성공',
+          type: 'success',
+        }),
+      )
+      .then(() => navigate('/'))
+      .catch((reason) =>
+        messageApi.open({
+          content: reason?.response?.data?.message,
+          type: 'error',
+        }),
+      )
+      .finally(() => setIsLoading(false));
+
+    setIsLoading(false);
   };
 
   return (
@@ -83,9 +108,14 @@ const SignupScreen = () => {
         <Input prefix={<CalendarOutlined className="site-form-item-icon" />} type="date" />
       </Form.Item>
 
-      <Form.Item>
-        <Space direction="horizontal" size="large">
-          <Button className="login-form-button" htmlType="submit" type="primary">
+      <Form.Item wrapperCol>
+        <Space align="center" split={<Divider type="vertical" />}>
+          <Button
+            className="login-form-button"
+            htmlType="submit"
+            loading={isLoading}
+            type="primary"
+          >
             Sign up
           </Button>
           <Link to="/">back</Link>

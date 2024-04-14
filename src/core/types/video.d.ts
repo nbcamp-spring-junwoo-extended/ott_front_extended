@@ -1,4 +1,4 @@
-import { Pageable } from './common.d.ts';
+import { Page } from './common';
 
 export interface VideoType {
   description: string;
@@ -8,14 +8,25 @@ export interface VideoType {
   videoId: number;
 }
 
-export interface VideoSearchResult {
-  content: VideoType[];
-  empty: boolean;
-  first: boolean;
-  last: boolean;
-  number: number;
-  numberOfElements: number;
-  pageable: Pageable;
-  totalElements: number;
-  totalPages: number;
+export interface VideoReadResponse {
+  poster_url: string;
+  title: string;
+  video_id: number;
+}
+
+export interface Episode {
+  description: string;
+  episodeId: number;
+  releasedAt: string;
+  title: string;
+}
+
+export interface VideoDetailsResponse {
+  description: string;
+  episodeResponseDtoPage: Page<Episode>;
+  genreTypeList: string[];
+  posterUrl: string;
+  releasedAt: string;
+  title: string;
+  videoId: number;
 }
