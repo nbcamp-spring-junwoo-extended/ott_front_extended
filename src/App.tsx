@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
+import { UserSliceType } from './core/reducer/userSlice.ts';
 import HomeScreen from './pages/HomeScreen.tsx';
 import LoginScreen from './pages/auth/LoginScreen.tsx';
 import LogoutScreen from './pages/auth/LogoutScreen.tsx';
@@ -20,7 +21,6 @@ import RankingScreen from './pages/ranking/RankingScreen.tsx';
 import VideoSearchScreen from './pages/search/VideoSearchScreen.tsx';
 import SubscriptionScreen from './pages/subscription/SubscriptionScreen.tsx';
 import VideoScreen from './pages/video/VideoScreen.tsx';
-import { UserSliceType } from './reducer/userSlice.ts';
 
 const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);

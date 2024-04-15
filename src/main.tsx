@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.tsx';
+import store from './core/reducer/store.ts';
 import './index.css';
-import store from './reducer/store.ts';
 
 const queryClient = new QueryClient();
 

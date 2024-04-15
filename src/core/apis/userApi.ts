@@ -1,22 +1,5 @@
 import { apiClient } from '../di/client.ts';
 
-export type UserProfile = {
-  authorityType: string;
-  born: string;
-  email: string;
-  membershipType: string;
-  userId: number;
-  username: string;
-};
-
-export interface CreateCardFormProps {
-  cardExpirationMonth: string;
-  cardExpirationYear: string;
-  cardNumber: string;
-  cardPassword: string;
-  customerName: string;
-}
-
 export const myProfile = async () => {
   const response = await apiClient.get('/api/v1/users/me');
   return response;

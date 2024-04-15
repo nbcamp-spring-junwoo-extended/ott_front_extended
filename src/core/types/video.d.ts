@@ -17,6 +17,7 @@ export interface VideoReadResponse {
 export interface Episode {
   description: string;
   episodeId: number;
+  episodeUrl: string;
   releasedAt: string;
   title: string;
 }
@@ -29,4 +30,11 @@ export interface VideoDetailsResponse {
   releasedAt: string;
   title: string;
   videoId: number;
+}
+
+export interface RankingReadResponse {
+  poster_url: string;
+  videoDescription: string;
+  videoId: number;
+  videoTitle: string;
 }

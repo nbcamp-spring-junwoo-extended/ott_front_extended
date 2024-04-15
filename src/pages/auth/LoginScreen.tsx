@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { LoginForm, login } from '../../core/apis/authApi.ts';
-import { userActions } from '../../reducer/userSlice.ts';
+import { userActions } from '../../core/reducer/userSlice.ts';
 
 const formItemLayout = {
   labelCol: {

@@ -11,7 +11,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { userActions } from '../../reducer/userSlice.ts';
+import { userActions } from '../../core/reducer/userSlice.ts';
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();

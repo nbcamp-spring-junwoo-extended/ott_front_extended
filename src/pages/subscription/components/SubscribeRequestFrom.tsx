@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { requestSubscription } from '../../../core/apis/subscriptionApi.ts';
 import { myCards } from '../../../core/apis/userApi.ts';
-import { UserCard } from '../../../reducer/cardSlice.ts';
+import { UserCard } from '../../../core/reducer/cardSlice.ts';
 import style from './SubscribeCard.module.css';
 
 const formItemLayout = {

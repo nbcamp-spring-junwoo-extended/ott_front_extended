@@ -1,6 +1,9 @@
-const HomeScreen = () => (
+import { Typography } from 'antd';
+import React from 'react';
+
+const HomeScreen: React.FC = () => (
   <div>
-    <h1>Home</h1>
+    <Typography.Title>Home</Typography.Title>
   </div>
 );
 

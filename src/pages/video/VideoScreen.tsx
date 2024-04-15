@@ -18,10 +18,7 @@ const VideoScreen: React.FC = () => {
     }
     setIsCardLoading(true);
     getVideo(Number(id))
-      .then((r): VideoDetailsResponse => {
-        console.log(r?.data?.data);
-        return r?.data?.data;
-      })
+      .then((r): VideoDetailsResponse => r?.data?.data)
       .then(setVideoDetails)
       .then(() => setIsCardLoading(false));
   }, [id]);
@@ -41,8 +38,7 @@ const VideoScreen: React.FC = () => {
                 <Image fallback={FALLBACK_IMAGE} preview={false} src={videoDetails.posterUrl} />
               }
             >
-              {/* TODO: 출시일 입력 필요 */}
-              <Card.Meta title="출시일 입력 필요" />
+              <Card.Meta title={videoDetails.releasedAt} />
             </Card>
           </Col>
           <Col md={16} style={{ display: 'flex' }} xl={18} xs={24}>

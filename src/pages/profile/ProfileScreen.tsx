@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { UserProfile, myCards, myProfile } from '../../core/apis/userApi.ts';
-import { userActions } from '../../reducer/userSlice.ts';
+import { userActions } from '../../core/reducer/userSlice.ts';
 import CardsCard from './components/CardsCard.tsx';
 import ProfileCard from './components/ProfileCard.tsx';
 

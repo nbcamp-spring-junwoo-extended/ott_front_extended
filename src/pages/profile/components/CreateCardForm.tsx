@@ -1,7 +1,7 @@
 import { Alert, Button, Form, FormInstance, Input, Modal, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-import { CreateCardFormProps, createCard } from '../../../core/apis/userApi.ts';
+import { createCard } from '../../../core/apis/userApi.ts';
 import style from '../Profile.module.css';
 
 interface SubmitButtonProps {
@@ -46,6 +46,14 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ form, setCardCreateModal })
     </>
   );
 };
+
+export interface CreateCardFormProps {
+  cardExpirationMonth: string;
+  cardExpirationYear: string;
+  cardNumber: string;
+  cardPassword: string;
+  customerName: string;
+}
 
 const CreateCardForm = ({ cardCreateModal, setCardCreateModal }) => {
   const [form] = Form.useForm<CreateCardFormProps>();
