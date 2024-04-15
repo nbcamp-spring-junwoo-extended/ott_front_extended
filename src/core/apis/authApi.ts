@@ -1,4 +1,4 @@
-import { authClient } from '../di/client.ts';
+import { authClient } from '../di/authClient.ts';
 
 export type LoginForm = {
   password: string;
@@ -12,20 +12,16 @@ export type SignupForm = {
   username: string;
 };
 
-export const login = async (request: LoginForm) => {
-  const response = await authClient.post('/api/v1/login', {
+export const login = (request: LoginForm) =>
+  authClient.post('/api/v1/login', {
     password: request.password,
     username: request.username,
   });
-  return response;
-};
 
-export const signup = async (request: SignupForm) => {
-  const response = await authClient.post('/api/v1/signup', {
+export const signup = (request: SignupForm) =>
+  authClient.post('/api/v1/signup', {
     born: request.born,
     email: request.email,
     password: request.password,
     username: request.username,
   });
-  return response;
-};

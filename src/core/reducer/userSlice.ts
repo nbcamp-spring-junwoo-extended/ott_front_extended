@@ -1,7 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export type UserSlice = {
+  isLogin: boolean;
+  token: string;
+  userId: number;
+  username: string;
+};
+
 const userSlice = createSlice({
-  initialState: {
+  initialState: <UserSlice>{
     isLogin: false,
     token: '',
     userId: 0,
@@ -47,12 +54,6 @@ const userSlice = createSlice({
     },
   },
 });
-
-export type UserSliceType = {
-  isLogin: boolean;
-  token: string;
-  username: string;
-};
 
 export const userActions = userSlice.actions;
 export default userSlice.reducer;

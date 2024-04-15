@@ -33,8 +33,8 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ Subscriptio
 
   useEffect(() => {
     myCards().then((response) => {
-      const _cards = response.data?.data;
-      setCards(_cards);
+      const responseCards: UserCard[] = response.data?.data;
+      setCards(responseCards);
     });
   }, []);
 
@@ -42,8 +42,7 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ Subscriptio
     const { cardId } = cards.filter((card) => card.cardNumber === data.card)[0];
     // TODO: implement coupons
     requestSubscription(userId, cardId, SubscriptionInfo.membershipType)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         navigate('/profile');
       })
       .catch((error) => console.log(error));

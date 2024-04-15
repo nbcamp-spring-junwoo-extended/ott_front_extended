@@ -1,4 +1,4 @@
-import { apiClient } from '../di/client.ts';
+import { apiClient } from '../di/apiClient.ts';
 
 export const myProfile = async () => {
   const response = await apiClient.get('/api/v1/users/me');

@@ -1,20 +1,5 @@
 import axios, { AxiosHeaders, AxiosInstance } from 'axios';
 
-const authClient: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-  headers: new AxiosHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
-  }),
-  withCredentials: true,
-});
-
-authClient.interceptors.request.use((config) => {
-  localStorage.removeItem('access_token');
-
-  return config;
-});
-
 const apiClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
   headers: new AxiosHeaders({
@@ -23,11 +8,8 @@ const apiClient: AxiosInstance = axios.create({
   }),
   withCredentials: true,
 });
-
 apiClient.interceptors.request.use((config) => {
-  if (import.meta.env.DEV) {
-    console.log('REQUEST', config.url);
-  }
+  if (import.meta.env.DEV) console.log('REQUEST', config.url);
 
   const accessToken: string = localStorage.getItem('access_token');
 
@@ -50,4 +32,4 @@ apiClient.interceptors.response.use(undefined, (error) => {
   return error;
 });
 
-export { apiClient, authClient };
+export { apiClient };

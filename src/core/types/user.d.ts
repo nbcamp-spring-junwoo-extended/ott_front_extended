@@ -6,3 +6,9 @@ export type UserProfile = {
   userId: number;
   username: string;
 };
+
+export type UserCard = {
+  cardId: number;
+  cardNickname: string;
+  cardNumber: string;
+};

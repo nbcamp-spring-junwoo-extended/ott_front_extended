@@ -1,4 +1,4 @@
-import { apiClient } from '../di/client.ts';
+import { apiClient } from '../di/apiClient.ts';
 
 export const postBillingKey = async (customerKey: string, authKey: string) =>
   apiClient.post('/api/v1/users/me/billing/key', {

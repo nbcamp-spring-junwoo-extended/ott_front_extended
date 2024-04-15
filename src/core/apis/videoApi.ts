@@ -1,4 +1,6 @@
-import { apiClient } from '../di/client.ts';
+import { apiClient } from '../di/apiClient.ts';
+
+export const getVideo = (videoId: number) => apiClient.get(`/api/v1/videos/${videoId}`);
 
 export const getSearchComplete = (title: string) =>
   apiClient.get('/api/v2/complete/search', {
@@ -13,7 +15,5 @@ export const searchVideos = (searchOption: string, title: string) =>
       input: title,
     },
   });
-
-export const getVideo = (videoId: number) => apiClient.get(`/api/v1/videos/${videoId}`);
 
 export const getRankingVideos = () => apiClient.get(`/api/v1/chart`);

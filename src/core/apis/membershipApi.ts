@@ -1,4 +1,4 @@
-import { apiClient } from '../di/client.ts';
+import { apiClient } from '../di/apiClient.ts';
 import { Payment } from '../types/payment.d.ts';
 
 export const getMemberships = async (): Promise<Payment[]> => {
