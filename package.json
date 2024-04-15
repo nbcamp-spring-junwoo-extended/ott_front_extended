@@ -52,19 +52,5 @@
     "prettier": "^3.2.5",
     "typescript": "^5.4.4",
     "vite": "^5.2.8"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "importOrder": [
-      "^react",
-      "^next",
-      "<THIRD_PARTY_MODULES>",
-      "^~/api/(.*)$",
-      "^~/hooks/(.*)$",
-      "^~/components/(.*)$",
-      "^~/utils/(.*)$",
-      "^[./]"
-    ],
-    "printWidth": 100
   }
 }
