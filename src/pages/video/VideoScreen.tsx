@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { FALLBACK_IMAGE } from '../../constants/global.ts';
 import { getVideo } from '../../core/apis/videoApi.ts';
-import { VideoDetailsResponse } from '../../core/types/video';
+import { VideoDetailsResponse } from '../../core/types/video.ts';
 import EpisodeList from './components/EpisodeList.tsx';
 
 const VideoScreen: React.FC = () => {
@@ -34,9 +34,7 @@ const VideoScreen: React.FC = () => {
           <Col md={8} xl={6} xs={12}>
             <Card
               bordered={false}
-              cover={
-                <Image fallback={FALLBACK_IMAGE} preview={false} src={videoDetails.posterUrl} />
-              }
+              cover={<Image fallback={FALLBACK_IMAGE} preview={false} src={videoDetails.posterUrl} />}
             >
               <Card.Meta title={videoDetails.releasedAt} />
             </Card>

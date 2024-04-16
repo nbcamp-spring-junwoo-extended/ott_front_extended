@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConfigProvider } from 'antd';
+import koKR from 'antd/es/locale/ko_KR';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -13,7 +14,7 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ConfigProvider locale="ko_KR">
+    <ConfigProvider locale={koKR}>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <BrowserRouter>

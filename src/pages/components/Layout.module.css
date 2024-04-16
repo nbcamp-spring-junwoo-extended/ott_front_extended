@@ -1,0 +1,7 @@
+.titleText {
+  align-self: center;
+  cursor: pointer;
+  display: flex;
+  margin: 0;
+  text-align: start;
+}

@@ -3,11 +3,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FALLBACK_IMAGE } from '../../../../constants/global.ts';
-import { VideoReadResponse } from '../../../../core/types/video';
+import { VideoSearchDto } from '../../../../core/types/video.ts';
 import styles from '../SearchResultList.module.css';
 
 interface SearchResultItemProps {
-  item: VideoReadResponse;
+  item: VideoSearchDto;
 }
 
 const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
@@ -31,13 +31,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
         hoverable
         style={{ cursor: 'pointer' }}
       >
-        <Card.Meta
-          title={
-            <Typography.Text level={5} style={{ overflow: 'visible' }}>
-              {item.title}
-            </Typography.Text>
-          }
-        />
+        <Card.Meta title={<Typography.Text style={{ overflow: 'visible' }}>{item.title}</Typography.Text>} />
       </Card>
     </List.Item>
   );

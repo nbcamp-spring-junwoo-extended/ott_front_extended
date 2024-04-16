@@ -1,16 +1,9 @@
 import { apiClient } from '../di/apiClient.ts';
+import { CommonResponse } from '../types/common.ts';
+import { UserCard, UserCustomerKey, UserProfile } from '../types/user.ts';
 
-export const myProfile = async () => {
-  const response = await apiClient.get('/api/v1/users/me');
-  return response;
-};
+export const myProfile = async () => apiClient.get<CommonResponse<UserProfile>>('/api/v1/users/me');
 
-export const myCards = async () => {
-  const response = await apiClient.get('/api/v1/users/me/cards');
-  return response;
-};
+export const myCards = async () => apiClient.get<CommonResponse<UserCard[]>>('/api/v1/users/me/cards');
 
-export const createCard = async (props) => {
-  const response = await apiClient.post('/api/v1/users/me/cards', props);
-  return response;
-};
+export const myCustomerKey = async () => apiClient.get<CommonResponse<UserCustomerKey>>('/api/v1/users/me/key');

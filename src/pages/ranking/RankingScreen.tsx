@@ -2,7 +2,7 @@ import { List, Typography, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { getRankingVideos } from '../../core/apis/videoApi.ts';
-import { RankingReadResponse } from '../../core/types/video';
+import { RankingReadResponse } from '../../core/types/video.ts';
 import RankingVideoListItem from './components/RankingVideoListItem.tsx';
 
 const RankingScreen: React.FC = () => {
@@ -13,11 +13,9 @@ const RankingScreen: React.FC = () => {
     const fetchVideos = async () => {
       setIsLoading(true);
       try {
-        // 비디오 목록을 불러오는 API 호출
         const response = await getRankingVideos();
         const data: RankingReadResponse[] = await response?.data;
         setVideos(data);
-        console.log(data[0]);
       } catch (error) {
         message.open({
           content: '비디오 목록을 불러오는 중 문제가 발생했습니다.',
@@ -28,7 +26,7 @@ const RankingScreen: React.FC = () => {
       }
     };
 
-    fetchVideos();
+    fetchVideos().then();
   }, []);
 
   return (

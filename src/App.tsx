@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
+import { RootState } from './core/reducer/store.ts';
 import { UserSlice } from './core/reducer/userSlice.ts';
 import HomeScreen from './pages/HomeScreen.tsx';
 import LoginScreen from './pages/auth/LoginScreen.tsx';
@@ -24,7 +25,7 @@ import VideoScreen from './pages/video/VideoScreen.tsx';
 
 const App: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const user: UserSlice = useSelector((state) => state.user);
+  const user: UserSlice = useSelector((state: RootState) => state.user);
   const [messageApi, contextHolder] = message.useMessage();
 
   if (!user.isLogin) {

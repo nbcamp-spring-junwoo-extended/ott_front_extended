@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -8,15 +9,17 @@ export const CreateCardSuccessScreen: React.FC = () => {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    postBillingKey(searchParams.get('customerKey'), searchParams.get('authKey')).then(
-      (response) => {
-        console.log(response);
-        if (response.status.toString().startsWith('2')) {
-          navigate('/profile');
-        }
-      },
-    );
-  }, []);
+    const customerKey = searchParams.get('customerKey') ?? '';
+    const authKey = searchParams.get('authKey') ?? '';
+
+    if (!customerKey || !authKey) {
+      return;
+    }
+
+    postBillingKey(customerKey, authKey)
+      .then(() => navigate('/profile'))
+      .catch((error) => message.error(error));
+  }, [navigate, searchParams]);
 
   return <>카드 등록 성공</>;
 };

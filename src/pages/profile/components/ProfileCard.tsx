@@ -2,55 +2,44 @@ import { Button, Card, List, Typography } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UserProfile } from '../../../core/apis/userApi.ts';
-import style from '../Profile.module.css';
+import { UserProfile } from '../../../core/types/user.ts';
+import styles from '../Profile.module.css';
+import { ProfileCardTitle } from './components/ProfileCardTitle.tsx';
 
 interface ProfileCardProps {
-  userProfile?: UserProfile;
+  userProfile: UserProfile;
 }
 
-const ProfileCardTitle = () => (
-  <div>
-    <Typography.Title level={5}>프로필</Typography.Title>
-    <Button
-      className={style.postCards}
-      onClick={() => alert('TODO')}
-      type="primary"
-      // TODO: Implement the onClick event
-    >
-      수정
-    </Button>
-  </div>
-);
 const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
   const navigation = useNavigate();
-  const onSubscriptionClick = (e) => {
-    switch (e.target.innerText) {
+  const onSubscriptionClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    switch (e.target.valueOf()) {
       case '구독':
         navigation('/subscribe');
         break;
       case '구독 취소':
+      default:
         /* TODO: implement subscription cancel logic */
         alert('TODO');
+        break;
     }
   };
 
-  const item = [
+  const listItem = [
     {
-      content: userProfile?.username,
-
+      content: userProfile.username,
       title: '닉네임',
     },
     {
-      content: userProfile?.email,
+      content: userProfile.email,
       title: '이메일',
     },
     {
-      content: userProfile?.born,
+      content: userProfile.born,
       title: '생년월일',
     },
     {
-      content: userProfile?.membershipType.substring(5),
+      content: userProfile.membershipType.substring(5),
       title: '멤버쉽 등급',
     },
   ];
@@ -60,10 +49,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
       <Card title={<ProfileCardTitle />}>
         <List
           bordered
-          className={style.list}
-          dataSource={item}
+          className={styles.postCards}
+          dataSource={listItem}
           renderItem={(i) => (
-            <List.Item className={style.item}>
+            <List.Item className={styles.item}>
               <Typography.Text>
                 {i.title}: {i.content}
               </Typography.Text>

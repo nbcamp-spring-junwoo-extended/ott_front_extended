@@ -1,3 +1,11 @@
+export type UserCard = {
+  cardId: number;
+  cardNickname: string;
+  cardNumber: string;
+};
+
+export type UserCustomerKey = string;
+
 export type UserProfile = {
   authorityType: string;
   born: string;
@@ -5,10 +13,4 @@ export type UserProfile = {
   membershipType: string;
   userId: number;
   username: string;
-};
-
-export type UserCard = {
-  cardId: number;
-  cardNickname: string;
-  cardNumber: string;
 };

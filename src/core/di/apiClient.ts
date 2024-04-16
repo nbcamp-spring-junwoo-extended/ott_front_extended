@@ -11,7 +11,7 @@ const apiClient: AxiosInstance = axios.create({
 apiClient.interceptors.request.use((config) => {
   if (import.meta.env.DEV) console.log('REQUEST', config.url);
 
-  const accessToken: string = localStorage.getItem('access_token');
+  const accessToken: string = localStorage.getItem('access_token') ?? '';
 
   if (accessToken && config.headers) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -19,17 +19,20 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-apiClient.interceptors.response.use(undefined, (error) => {
-  const accessToken = error?.response?.headers?.authorization?.slice(7);
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const accessToken = error?.response?.headers?.authorization?.slice(7);
 
-  if (accessToken) {
-    localStorage.setItem('access_token', accessToken);
+    if (accessToken) {
+      localStorage.setItem('access_token', accessToken);
 
-    error.config.headers.Authorization = `Bearer ${accessToken}`;
-    return apiClient.request(error.config);
-  }
+      error.config.headers.Authorization = `Bearer ${accessToken}`;
+      return apiClient.request(error.config);
+    }
 
-  return error;
-});
+    return error;
+  },
+);
 
 export { apiClient };

@@ -1,4 +1,4 @@
-import { Page } from './common';
+import { Page } from './common.ts';
 
 export interface VideoType {
   description: string;
@@ -6,12 +6,6 @@ export interface VideoType {
   ratingType: string;
   title: string;
   videoId: number;
-}
-
-export interface VideoReadResponse {
-  poster_url: string;
-  title: string;
-  video_id: number;
 }
 
 export interface Episode {
@@ -38,3 +32,21 @@ export interface RankingReadResponse {
   videoId: number;
   videoTitle: string;
 }
+
+export interface SearchResponse {
+  titles: string[];
+}
+
+export type VideoSearchDto = {
+  description: string;
+  poster_url: string;
+  released_at: string;
+  title: string;
+  video_id: number;
+};
+
+export type VideoSearchResponseDto = {
+  totalPage: number;
+  totalSize: number;
+  videoReadResponseDtoList: VideoSearchDto[];
+};

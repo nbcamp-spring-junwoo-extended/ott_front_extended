@@ -1,13 +1,16 @@
 import { AutoComplete, Select, Space } from 'antd';
 import Search from 'antd/es/input/Search';
+import { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getSearchComplete, searchVideos } from '../../../core/apis/videoApi.ts';
+import { CommonResponse } from '../../../core/types/common.ts';
+import { SearchResponse, VideoSearchDto } from '../../../core/types/video.ts';
 import { useDebounce } from '../../../hooks/useDebounce.ts';
 
 interface VideoSearchBarProps {
-  setSearchResults: (value: unknown) => void;
+  setSearchResults: (value: VideoSearchDto[]) => void;
   stateLoading: {
     isLoading: boolean;
     setIsLoading: (value: boolean) => void;
@@ -37,7 +40,7 @@ const SelectSearchType: React.FC<SelectSearchTypeProps> = ({ setSelectedSearchOp
   return (
     <Select
       defaultValue="제목"
-      onChange={(e) => setSelectedSearchOption(e.value)}
+      onChange={(e) => setSelectedSearchOption(e.valueOf())}
       options={searchOptions}
       style={{ minHeight: 40, minWidth: 100, top: 4, width: 'fit-content' }}
     />
@@ -54,30 +57,33 @@ const VideoSearchBar: React.FC<VideoSearchBarProps> = ({
   const [_, setParams] = useSearchParams();
   const [searchAutoComplete, setSearchAutoComplete] = useState<AutoCompleteOption[]>([]);
 
-  const handleSearchTermChange = ({ target: { value } }) => {
+  // console.log(value);
+  const handleSearchTermChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(value);
-    setIsValidInput(!!value.length);
+    setIsValidInput(Boolean(value.length));
   };
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   useEffect(() => {
     if (!debouncedSearchTerm) return;
 
-    getSearchComplete(debouncedSearchTerm).then((response) => {
-      const newAutoComplete: AutoCompleteOption[] = response?.data?.data.titles.map((title) => ({
+    getSearchComplete(debouncedSearchTerm).then((response: AxiosResponse<CommonResponse<SearchResponse>>) => {
+      const { titles } = response.data.data;
+      const newAutoComplete: AutoCompleteOption[] = titles.map((title) => ({
         label: title,
         value: title,
       }));
+
       setSearchAutoComplete(newAutoComplete);
     });
   }, [debouncedSearchTerm]);
-  const handleSearch = (value) => {
+  const handleSearch = (value: string) => {
     if (!value) return;
     setIsLoading(true);
     setParams({ input: value });
     searchVideos(selectedSearchType, value)
-      .then((_response) => _response?.data?.data?.videoReadResponseDtoList)
-      .then((_data) => setSearchResults(_data))
+      .then((response) => response.data.data.videoReadResponseDtoList)
+      .then((responseSearchResults) => setSearchResults(responseSearchResults))
       .finally(() => setIsLoading(false));
   };
 

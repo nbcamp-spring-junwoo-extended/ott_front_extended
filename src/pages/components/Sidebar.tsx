@@ -16,14 +16,16 @@ import { userActions } from '../../core/reducer/userSlice.ts';
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleNavigate = (e) => {
-    switch (e.key) {
+
+  const handleNavigate = ({ key }: { key: string }) => {
+    console.log(key);
+    switch (key) {
       case '/logout':
         dispatch(userActions.clearUser());
         navigate('/');
         break;
       default:
-        navigate(e.key);
+        navigate(key);
         break;
     }
   };
@@ -67,13 +69,7 @@ const Sidebar: React.FC = () => {
         <div>Sidebar</div>
       </Flex>
 
-      <Menu
-        className="menu-bar"
-        defaultSelectedKeys={['/']}
-        items={items}
-        mode="inline"
-        onClick={(e) => handleNavigate(e)}
-      />
+      <Menu className="menu-bar" defaultSelectedKeys={['/']} items={items} mode="inline" onClick={handleNavigate} />
     </div>
   );
 };

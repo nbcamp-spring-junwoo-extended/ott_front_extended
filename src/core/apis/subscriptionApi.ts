@@ -1,6 +1,12 @@
-import { apiClient } from '../di/apiClient.ts';
+import { AxiosResponse } from 'axios';
 
-export const postBillingKey = async (customerKey: string, authKey: string) =>
+import { apiClient } from '../di/apiClient.ts';
+import { CommonResponse } from '../types/common.ts';
+
+export const postBillingKey = async (
+  authKey: string,
+  customerKey: string = '',
+): Promise<AxiosResponse<CommonResponse<null>>> =>
   apiClient.post('/api/v1/users/me/billing/key', {
     authKey,
     customerKey,
@@ -11,7 +17,7 @@ export const requestSubscription = async (
   cardId: number,
   membershipType: string,
   couponId?: number,
-) =>
+): Promise<AxiosResponse<CommonResponse<null>>> =>
   apiClient.post(`/api/v1/users/${userId}/subscriptions`, null, {
     params: {
       card: cardId,

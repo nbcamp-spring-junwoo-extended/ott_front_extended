@@ -26,3 +26,7 @@ export interface Page<T> {
   totalElements: number;
   totalPages: number;
 }
+
+export type CommonResponse<T> = {
+  data: T;
+};
