@@ -18,7 +18,7 @@ const VideoScreen: React.FC = () => {
     }
     setIsCardLoading(true);
     getVideo(Number(id))
-      .then((r): VideoDetailsResponse => r?.data?.data)
+      .then((r): VideoDetailsResponse => r.data.data)
       .then(setVideoDetails)
       .then(() => setIsCardLoading(false));
   }, [id]);

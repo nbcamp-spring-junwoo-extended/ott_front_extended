@@ -2,7 +2,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, FormProps, Input, Space } from 'antd';
 import { MessageInstance } from 'antd/es/message/interface';
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -25,10 +25,12 @@ interface LoginScreenProps {
 }
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ messageApi }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const onFinish: FormProps<LoginForm>['onFinish'] = async (values) => {
     try {
+      setIsLoading(true);
       const response = await login(values);
       dispatch(
         userActions.login({
@@ -41,14 +43,20 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ messageApi }) => {
       if (axios.isAxiosError(e)) {
         messageApi.error(e.message || '로그인 실패');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const loginInitialValues = import.meta.env.DEV
+    ? { password: 'password', username: 'user1' }
+    : { password: '', username: '' };
 
   return (
     <Form
       {...formItemLayout}
       className="auth-form"
-      initialValues={{ password: 'password', username: 'user1' }}
+      initialValues={loginInitialValues}
       name="normal_login"
       onFinish={onFinish}
     >
@@ -70,7 +78,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ messageApi }) => {
 
       <Form.Item>
         <Space direction="horizontal" size="large">
-          <Button className="login-form-button" htmlType="submit" type="primary">
+          <Button className="login-form-button" htmlType="submit" loading={isLoading} type="primary">
             Log in
           </Button>
           <Link to="/signup">Sign up</Link>

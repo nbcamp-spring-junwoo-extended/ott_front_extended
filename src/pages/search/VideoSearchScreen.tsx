@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Card, Flex, Typography } from 'antd';
 import React, { useState } from 'react';
 
 import { VideoSearchDto } from '../../core/types/video.ts';
@@ -11,14 +11,16 @@ const VideoSearchScreen: React.FC = () => {
   const [searchResults, setSearchResults] = useState<VideoSearchDto[]>([]);
 
   return (
-    <Flex align="center" gap="large" justify="center" vertical>
-      <VideoSearchBar
-        setSearchResults={setSearchResults}
-        stateLoading={{ isLoading, setIsLoading }}
-        stateValidInput={{ isValidInput, setIsValidInput }}
-      />
-      <SearchResultList searchResult={searchResults} />
-    </Flex>
+    <Card title={<Typography.Title>🔍 검색</Typography.Title>}>
+      <Flex align="center" gap="large" justify="center" vertical>
+        <VideoSearchBar
+          setSearchResults={setSearchResults}
+          stateLoading={{ isLoading, setIsLoading }}
+          stateValidInput={{ isValidInput, setIsValidInput }}
+        />
+        <SearchResultList searchResult={searchResults} />
+      </Flex>
+    </Card>
   );
 };
 

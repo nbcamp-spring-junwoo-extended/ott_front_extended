@@ -14,3 +14,11 @@ export type UserProfile = {
   userId: number;
   username: string;
 };
+
+export type UserCoupon = {
+  couponId: number;
+  couponType: string;
+  description: string;
+  discount: number;
+  membershipType: string;
+};

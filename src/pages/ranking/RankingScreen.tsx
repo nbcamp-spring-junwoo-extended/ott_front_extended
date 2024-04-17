@@ -1,12 +1,12 @@
-import { List, Typography, message } from 'antd';
+import { Card, List, Typography, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { getRankingVideos } from '../../core/apis/videoApi.ts';
-import { RankingReadResponse } from '../../core/types/video.ts';
+import { ChartResponseDto } from '../../core/types/video.ts';
 import RankingVideoListItem from './components/RankingVideoListItem.tsx';
 
 const RankingScreen: React.FC = () => {
-  const [videos, setVideos] = useState<RankingReadResponse[]>([]);
+  const [videos, setVideos] = useState<ChartResponseDto[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -14,8 +14,8 @@ const RankingScreen: React.FC = () => {
       setIsLoading(true);
       try {
         const response = await getRankingVideos();
-        const data: RankingReadResponse[] = await response?.data;
-        setVideos(data);
+        const responseVideos: ChartResponseDto[] = response.data.data;
+        setVideos(responseVideos);
       } catch (error) {
         message.open({
           content: '비디오 목록을 불러오는 중 문제가 발생했습니다.',
@@ -30,15 +30,16 @@ const RankingScreen: React.FC = () => {
   }, []);
 
   return (
-    <List
-      bordered
-      dataSource={videos}
-      header={<Typography.Title level={3}>📈 랭킹</Typography.Title>}
-      itemLayout="vertical"
-      loading={isLoading}
-      renderItem={(video, index) => <RankingVideoListItem rank={index + 1} video={video} />}
-      size="large"
-    />
+    <Card title={<Typography.Title>📈 랭킹</Typography.Title>}>
+      <List
+        bordered
+        dataSource={videos}
+        itemLayout="vertical"
+        loading={isLoading}
+        renderItem={(video, index) => <RankingVideoListItem rank={index + 1} video={video} />}
+        size="large"
+      />
+    </Card>
   );
 };
 

@@ -1,12 +1,10 @@
 import { AutoComplete, Select, Space } from 'antd';
 import Search from 'antd/es/input/Search';
-import { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getSearchComplete, searchVideos } from '../../../core/apis/videoApi.ts';
-import { CommonResponse } from '../../../core/types/common.ts';
-import { SearchResponse, VideoSearchDto } from '../../../core/types/video.ts';
+import { VideoSearchDto } from '../../../core/types/video.ts';
 import { useDebounce } from '../../../hooks/useDebounce.ts';
 
 interface VideoSearchBarProps {
@@ -57,7 +55,6 @@ const VideoSearchBar: React.FC<VideoSearchBarProps> = ({
   const [_, setParams] = useSearchParams();
   const [searchAutoComplete, setSearchAutoComplete] = useState<AutoCompleteOption[]>([]);
 
-  // console.log(value);
   const handleSearchTermChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(value);
     setIsValidInput(Boolean(value.length));
@@ -67,7 +64,7 @@ const VideoSearchBar: React.FC<VideoSearchBarProps> = ({
   useEffect(() => {
     if (!debouncedSearchTerm) return;
 
-    getSearchComplete(debouncedSearchTerm).then((response: AxiosResponse<CommonResponse<SearchResponse>>) => {
+    getSearchComplete(debouncedSearchTerm).then((response) => {
       const { titles } = response.data.data;
       const newAutoComplete: AutoCompleteOption[] = titles.map((title) => ({
         label: title,

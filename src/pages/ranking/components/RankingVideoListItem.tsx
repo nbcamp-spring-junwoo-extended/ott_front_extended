@@ -2,11 +2,11 @@ import { Image, List, Typography } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { RankingReadResponse } from '../../../core/types/video.ts';
+import { ChartResponseDto } from '../../../core/types/video.ts';
 
 interface RankingVideoListItemProps {
   rank: number;
-  video: RankingReadResponse;
+  video: ChartResponseDto;
 }
 
 const RankingVideoListItem: React.FC<RankingVideoListItemProps> = ({ rank, video }) => {

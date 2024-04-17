@@ -1,31 +1,57 @@
-import { Button, Card, List, Typography } from 'antd';
-import React from 'react';
+import { Button, Card, List, Typography, message } from 'antd';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { myProfile } from '../../../core/apis/userApi.ts';
 import { UserProfile } from '../../../core/types/user.ts';
 import styles from '../Profile.module.css';
 import { ProfileCardTitle } from './components/ProfileCardTitle.tsx';
 
-interface ProfileCardProps {
-  userProfile: UserProfile;
-}
+const initialUserState = {
+  authorityType: '',
+  born: '',
+  email: '',
+  membershipType: '',
+  userId: 0,
+  username: '',
+};
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
+const ProfileCard: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile>(initialUserState);
+
   const navigation = useNavigate();
-  const onSubscriptionClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    switch (e.target.valueOf()) {
+
+  useEffect(() => {
+    myProfile()
+      .then((response) => setUserProfile(response.data.data))
+      .catch((error) => {
+        if (axios.isAxiosError(error)) {
+          message.error(error.message).then();
+        }
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+  const onSubscriptionClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const target = e.target as HTMLButtonElement;
+
+    switch (target.innerText) {
       case '구독':
         navigation('/subscribe');
         break;
       case '구독 취소':
       default:
         /* TODO: implement subscription cancel logic */
-        alert('TODO');
+        // alert('TODO');
         break;
     }
   };
 
-  const listItem = [
+  const listItem: { content: string; title: string }[] = [
     {
       content: userProfile.username,
       title: '닉네임',
@@ -46,19 +72,18 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ userProfile }) => {
 
   return (
     <div>
-      <Card title={<ProfileCardTitle />}>
+      <Card loading={isLoading} title={<ProfileCardTitle />}>
         <List
           bordered
-          className={styles.postCards}
           dataSource={listItem}
-          renderItem={(i) => (
+          renderItem={(item) => (
             <List.Item className={styles.item}>
               <Typography.Text>
-                {i.title}: {i.content}
+                {item.title}: {item.content}
               </Typography.Text>
-              {i.title === '멤버쉽 등급' && (
+              {item.title === '멤버쉽 등급' && (
                 <Button danger onClick={onSubscriptionClick} type="primary">
-                  {i.content === 'NORMAL' ? '구독' : '구독 취소'}
+                  {item.content === 'NORMAL' ? '구독' : '구독 취소'}
                 </Button>
               )}
             </List.Item>

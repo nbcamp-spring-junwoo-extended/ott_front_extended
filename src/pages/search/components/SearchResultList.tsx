@@ -32,7 +32,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({ searchResult }) => 
       header={
         input && (
           <Flex vertical>
-            <Typography.Title level={3}>"{input}" 에 대한 검색 결과</Typography.Title>
+            <Typography.Title level={3}>&quot;{input}&quot; 에 대한 검색 결과</Typography.Title>
             <Typography.Text style={{ textAlign: 'right' }}>총 {searchResult?.length}건의 검색 결과</Typography.Text>
           </Flex>
         )

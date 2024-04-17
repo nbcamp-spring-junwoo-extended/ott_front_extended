@@ -26,7 +26,7 @@ export interface VideoDetailsResponse {
   videoId: number;
 }
 
-export interface RankingReadResponse {
+export interface ChartResponseDto {
   poster_url: string;
   videoDescription: string;
   videoId: number;

@@ -1,20 +1,20 @@
-import { Card, Divider, Modal, Typography } from 'antd';
+import { Card, Divider, Typography } from 'antd';
 import React, { useState } from 'react';
 
 import { Payment } from '../../../core/types/payment.ts';
 import style from './SubscribeCard.module.css';
-import SubscribeRequestForm from './SubscribeRequestFrom.tsx';
+import { SubscribeModal } from './components/SubscribeModal.tsx';
 
 interface SubscribeCardProps {
   subscriptionInfo: Payment;
 }
 
 const SubscribeCard: React.FC<SubscribeCardProps> = ({ subscriptionInfo }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCardClick = () => {
     if (subscriptionInfo.price !== 0) {
-      setIsModalVisible(true);
+      setIsModalOpen(true);
     }
   };
 
@@ -31,16 +31,7 @@ const SubscribeCard: React.FC<SubscribeCardProps> = ({ subscriptionInfo }) => {
           ))}
         </Typography.Text>
       </Card>
-      <Modal
-        cancelText="취소"
-        centered
-        okText="신청"
-        onCancel={() => setIsModalVisible(false)}
-        open={isModalVisible}
-        title="구독 신청"
-      >
-        <SubscribeRequestForm {...subscriptionInfo} />
-      </Modal>
+      <SubscribeModal onCancel={() => setIsModalOpen(false)} open={isModalOpen} subscriptionInfo={subscriptionInfo} />
     </>
   );
 };

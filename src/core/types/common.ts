@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 interface Sort {
   empty: boolean;
   sorted: boolean;
@@ -30,3 +32,5 @@ export interface Page<T> {
 export type CommonResponse<T> = {
   data: T;
 };
+
+export type ApiResponse<T> = Promise<AxiosResponse<CommonResponse<T>>>;
