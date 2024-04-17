@@ -5,10 +5,7 @@ import { useEffect } from 'react';
 import { myCards } from '../../../core/apis/userApi.ts';
 import { UserCard } from '../../../core/types/user.ts';
 
-type useProfileScreenProps = {
-  setCards: (value: UserCard[]) => void;
-};
-export const useProfileScreenHooks = ({ setCards }: useProfileScreenProps) => {
+export const useCardListCard = (setCards: (value: UserCard[]) => void) => {
   useEffect(() => {
     const fetchProfileAndCards = async () => {
       try {

@@ -54,16 +54,25 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ messageApi }) => {
     setIsLoading(false);
   };
 
-  return (
-    <Form
-      {...formItemLayout}
-      className="auth-form"
-      initialValues={{
+  const initialValues = import.meta.env.DEV
+    ? {
         born: '1994-11-03',
         email: 'user1@email.com',
         password: 'password',
         username: 'user1',
-      }}
+      }
+    : {
+        born: '',
+        email: '',
+        password: '',
+        username: '',
+      };
+
+  return (
+    <Form
+      {...formItemLayout}
+      className="auth-form"
+      initialValues={initialValues}
       name="normal_login"
       onFinish={onFinish}
     >

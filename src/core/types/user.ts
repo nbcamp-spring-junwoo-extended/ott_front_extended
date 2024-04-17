@@ -4,7 +4,9 @@ export type UserCard = {
   cardNumber: string;
 };
 
-export type UserCustomerKey = string;
+export type UserCustomerKey = {
+  customerKey: string;
+};
 
 export type UserProfile = {
   authorityType: string;

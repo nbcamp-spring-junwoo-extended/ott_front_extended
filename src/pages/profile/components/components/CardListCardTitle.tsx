@@ -1,12 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
-import { Button, Typography, message } from 'antd';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { Button, Typography } from 'antd';
+import React, { useState } from 'react';
 
-import { myCustomerKey } from '../../../../core/apis/userApi.ts';
-import { UserCustomerKey } from '../../../../core/types/user.ts';
 import style from '../../Profile.module.css';
+import useCardListCardTitle from './useCardListCardTitle.tsx';
 
 const CLIENT_KEY = import.meta.env.VITE_TOSSPAYMENTS_CLIENTKEY;
 
@@ -17,47 +15,25 @@ const usePaymentWidget = (clientKey: string) =>
       loadTossPayments(clientKey),
     queryKey: ['#payment-widget', clientKey],
   });
+
 export const CardListCardTitle: React.FC = () => {
-  const [customerKey, setCustomerKey] = useState<UserCustomerKey>('');
   const { data: paymentSdk } = usePaymentWidget(CLIENT_KEY);
   const [isCreateCardVisible, setIsCreateCardVisible] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchCustomerKey = async () => {
-      try {
-        const response = await myCustomerKey();
-        setCustomerKey(response.data.data);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          message.error(error.message);
-        }
-        console.error(error);
-      }
-    };
+  useCardListCardTitle({
+    paymentSdk,
+    stateCreateCardVisible: { isCreateCardVisible, setIsCreateCardVisible },
+  });
 
-    fetchCustomerKey().then();
-  }, []);
-
-  useEffect(() => {
-    if (paymentSdk == null || !isCreateCardVisible) {
-      return;
-    }
-
-    paymentSdk
-      .requestBillingAuth('카드', {
-        customerKey,
-        failUrl: `${window.location.origin}/profile/card/fail`,
-        successUrl: `${window.location.origin}/profile/newcard/success`,
-      })
-      .catch(() => setIsCreateCardVisible(false));
-  }, [paymentSdk, isCreateCardVisible, customerKey]);
+  const handleOnClick = () => setIsCreateCardVisible(true);
 
   return (
     <>
       <Typography.Title level={5}>카드</Typography.Title>
-      <Button className={style.postCards} onClick={() => setIsCreateCardVisible(true)} type="primary">
+      <Button className={style.postCards} onClick={handleOnClick} type="primary">
         등록
       </Button>
+      <div className="payment-widget" />
     </>
   );
 };
