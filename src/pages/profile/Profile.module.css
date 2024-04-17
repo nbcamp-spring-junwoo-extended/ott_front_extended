@@ -14,7 +14,3 @@
   right: 12px;
 }
 
-.cardExpiration {
-  display: inline-block;
-  width: calc(50% - 10px);
-}

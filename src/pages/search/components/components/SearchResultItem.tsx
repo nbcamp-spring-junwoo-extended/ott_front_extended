@@ -14,7 +14,6 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
   const navigate = useNavigate();
 
   const handleClick = () => navigate(`/videos/${item.video_id}`);
-  console.table(item.poster_url);
 
   return (
     <List.Item className={styles.listItem} onClick={handleClick} style={{ padding: 2 }}>
