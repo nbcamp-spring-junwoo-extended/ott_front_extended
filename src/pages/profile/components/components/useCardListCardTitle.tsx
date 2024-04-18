@@ -17,26 +17,14 @@ const useCardListCardTitle = ({
   stateCreateCardVisible: { isCreateCardVisible, setIsCreateCardVisible },
 }: useCardListCardTitleProps) => {
   useEffect(() => {
-    if (!isCreateCardVisible) {
-      return;
-    }
-
-    const fetchCustomerKey = async () => {};
-
-    fetchCustomerKey().then();
-  }, [isCreateCardVisible]);
-
-  useEffect(() => {
     if (paymentSdk == null || !isCreateCardVisible) {
       return;
     }
 
     const fetchWidget = async () => {
       try {
-        const responseCustomerKey = await myCustomerKey();
-        const { customerKey } = responseCustomerKey.data.data;
-        console.log(customerKey);
-
+        const customerKeyResponse = await myCustomerKey();
+        const { customerKey } = customerKeyResponse.data.data;
         await paymentSdk.requestBillingAuth('카드', {
           customerKey,
           failUrl: `${window.location.origin}/profile/card/fail`,
@@ -50,7 +38,6 @@ const useCardListCardTitle = ({
         console.error(error);
       }
     };
-
     fetchWidget().then();
   }, [paymentSdk, isCreateCardVisible]);
 };

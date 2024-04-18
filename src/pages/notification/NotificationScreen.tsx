@@ -1,5 +1,12 @@
 import { Card, Typography } from 'antd';
+import React from 'react';
 
-const NotificationScreen = () => <Card title={<Typography.Title>🔔 공지사항</Typography.Title>} />;
+import NotificationList from './components/NotificationList.tsx';
+
+const NotificationScreen: React.FC = () => (
+  <Card title={<Typography.Title>🔔 공지사항</Typography.Title>}>
+    <NotificationList />
+  </Card>
+);
 
 export default NotificationScreen;

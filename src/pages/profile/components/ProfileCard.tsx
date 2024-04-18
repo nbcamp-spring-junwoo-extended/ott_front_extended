@@ -46,7 +46,7 @@ const ProfileCard: React.FC = () => {
       case '구독 취소':
       default:
         /* TODO: implement subscription cancel logic */
-        // alert('TODO');
+        alert('TODO');
         break;
     }
   };
@@ -65,7 +65,7 @@ const ProfileCard: React.FC = () => {
       title: '생년월일',
     },
     {
-      content: userProfile.membershipType.substring(5),
+      content: userProfile.membershipType.slice(5),
       title: '멤버쉽 등급',
     },
   ];

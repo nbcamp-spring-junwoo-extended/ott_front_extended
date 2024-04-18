@@ -15,6 +15,7 @@ import SignupScreen from './pages/auth/SignupScreen.tsx';
 import Sidebar from './pages/components/Sidebar.tsx';
 import Topbar from './pages/components/Topbar.tsx';
 import HomeScreen from './pages/home/HomeScreen.tsx';
+import NotificationDetailsScreen from './pages/notification/NotificationDetailsScreen.tsx';
 import NotificationScreen from './pages/notification/NotificationScreen.tsx';
 import ProfileScreen from './pages/profile/ProfileScreen.tsx';
 import { CreateCardSuccessScreen } from './pages/profile/billing/CreateCardSuccessScreen.tsx';
@@ -72,6 +73,7 @@ const App: React.FC = () => {
               <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
               <Route element={<RankingScreen />} path="/ranking" />
               <Route element={<NotificationScreen />} path="/notification" />
+              <Route element={<NotificationDetailsScreen />} path="/notification/:id" />
               <Route element={<VideoSearchScreen />} path="/search" />
               <Route element={<SubscriptionScreen />} path="/subscribe" />
             </Routes>

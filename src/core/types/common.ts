@@ -1,21 +1,21 @@
 import { AxiosResponse } from 'axios';
 
-interface Sort {
+type Sort = {
   empty: boolean;
   sorted: boolean;
   unsorted: boolean;
-}
+};
 
-export interface Pageable {
+export type Pageable = {
   offset: number;
   pageNumber: number;
   pageSize: number;
   paged: boolean;
   sort: Sort;
   unpaged: boolean;
-}
+};
 
-export interface Page<T> {
+export type Page<T> = {
   content: T[];
   empty: boolean;
   first: boolean;
@@ -27,7 +27,7 @@ export interface Page<T> {
   sort: Sort;
   totalElements: number;
   totalPages: number;
-}
+};
 
 export type CommonResponse<T> = {
   data: T;
