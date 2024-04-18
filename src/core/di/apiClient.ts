@@ -26,9 +26,20 @@ apiClient.interceptors.response.use(
 
     if (accessToken) {
       localStorage.setItem('access_token', accessToken);
-
       error.config.headers.Authorization = `Bearer ${accessToken}`;
-      return apiClient.request(error.config);
+
+      const retry = async () => {
+        try {
+          return await apiClient.request(error.config);
+        } catch (e) {
+          console.error(e);
+          localStorage.removeItem('access_token');
+
+          return e;
+        }
+      };
+
+      return retry().then((r) => r);
     }
 
     return error;
