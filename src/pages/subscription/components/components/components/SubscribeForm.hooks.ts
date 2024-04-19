@@ -16,7 +16,6 @@ export const useSubscribeForm = ({ setCards, setCoupons }: useSubscribeFromProps
       try {
         const [responseCards, responseCoupons] = await Promise.all([myCards(), myCoupons()]);
         setCards(responseCards.data.data);
-        console.log(responseCoupons.data.data);
         setCoupons(responseCoupons.data.data.content);
       } catch (error) {
         if (axios.isAxiosError(error)) {

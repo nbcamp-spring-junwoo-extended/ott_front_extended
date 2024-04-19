@@ -1,4 +1,4 @@
-import { Card, List } from 'antd';
+import { Card, List, Typography } from 'antd';
 import React, { useState } from 'react';
 
 import { UserCoupon } from '../../../core/types/user.ts';
@@ -14,7 +14,16 @@ const CouponListCard: React.FC = () => {
 
   return (
     <Card title={<CouponListCardTitle />}>
-      <List bordered dataSource={coupons} renderItem={(coupon) => <CouponItem coupon={coupon} />} />
+      <List
+        bordered
+        dataSource={coupons}
+        header={
+          <Typography.Paragraph style={{ marginBottom: 0, textAlign: 'end' }}>
+            총 {coupons.length}개의 쿠폰 보유중
+          </Typography.Paragraph>
+        }
+        renderItem={(coupon) => <CouponItem coupon={coupon} />}
+      />
     </Card>
   );
 };

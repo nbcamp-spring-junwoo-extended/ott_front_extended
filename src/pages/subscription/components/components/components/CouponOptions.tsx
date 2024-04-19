@@ -10,8 +10,8 @@ type CouponOptionsProps = {
 export const CouponOptions: React.FC<CouponOptionsProps> = ({ coupons }) => (
   <Form.Item label="쿠폰" name="coupon">
     <Select placeholder="쿠폰을 선택 해주세요.">
-      {coupons.map((coupon) => (
-        <Select.Option key={coupon.couponId} value={coupon.couponId}>
+      {coupons.map((coupon, index) => (
+        <Select.Option key={coupon.couponId * index} value={coupon.couponId}>
           <Space>
             <Typography.Text>{coupon.description}:</Typography.Text>
             <Typography.Text>

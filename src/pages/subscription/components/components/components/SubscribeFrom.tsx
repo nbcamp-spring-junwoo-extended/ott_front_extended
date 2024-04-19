@@ -63,7 +63,8 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipT
       </Form.Item>
 
       <CardOptions cards={cards} />
-      <CouponOptions coupons={coupons} />
+
+      <CouponOptions coupons={coupons.filter((c) => c.membershipType === membershipType)} />
 
       <Flex align="baseline" justify="flex-end">
         <Typography.Title className={style.formTitle} level={5} underline>

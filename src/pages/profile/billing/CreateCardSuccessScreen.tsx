@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Button, Result, message } from 'antd';
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -21,5 +21,19 @@ export const CreateCardSuccessScreen: React.FC = () => {
       .catch((error) => message.error(error));
   }, [navigate, searchParams]);
 
-  return <>카드 등록 성공</>;
+  const handleNavigateClick = () => {
+    navigate('/');
+  };
+
+  return (
+    <Result
+      extra={[
+        <Button key="console" onClick={handleNavigateClick} type="primary">
+          홈으로 이동
+        </Button>,
+      ]}
+      status="success"
+      title="카드 등록 성공!"
+    />
+  );
 };

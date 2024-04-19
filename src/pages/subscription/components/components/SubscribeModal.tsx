@@ -19,6 +19,7 @@ export const SubscribeModal: React.FC<SubscriptionRequestModalProps> = ({ onCanc
       cancelText="취소"
       centered
       confirmLoading={isConfirmLoading}
+      footer={null}
       okText="신청"
       onCancel={onCancel}
       open={open}

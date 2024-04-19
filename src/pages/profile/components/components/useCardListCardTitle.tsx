@@ -39,7 +39,7 @@ const useCardListCardTitle = ({
       }
     };
     fetchWidget().then();
-  }, [paymentSdk, isCreateCardVisible]);
+  }, [paymentSdk]);
 };
 
 export default useCardListCardTitle;

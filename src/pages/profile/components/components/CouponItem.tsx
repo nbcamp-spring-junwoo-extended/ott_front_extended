@@ -2,12 +2,13 @@ import { Flex, List, Typography } from 'antd';
 import React from 'react';
 
 import { UserCoupon } from '../../../../core/types/user.ts';
+import { dateArrayToString } from '../../../../utils/dateUtil.ts';
 
 type CouponItemProps = {
   coupon: UserCoupon;
 };
 export const CouponItem: React.FC<CouponItemProps> = ({ coupon }) => {
-  const { couponType, description, discount, membershipType } = coupon;
+  const { couponType, description, discount, endAt, membershipType, startAt } = coupon;
   const couponTypeString = couponType === 'RATIO' ? '%' : '원';
   return (
     <List.Item>
@@ -19,7 +20,9 @@ export const CouponItem: React.FC<CouponItemProps> = ({ coupon }) => {
               {couponTypeString}
               할인
             </Typography.Text>
-            <Typography.Text />
+            <Typography.Text>
+              {dateArrayToString(startAt)}~{dateArrayToString(endAt)}
+            </Typography.Text>
           </Flex>
         }
         title={
