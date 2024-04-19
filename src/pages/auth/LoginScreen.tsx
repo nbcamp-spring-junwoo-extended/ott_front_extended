@@ -1,24 +1,14 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, FormProps, Input, Space } from 'antd';
+import { FormProps, Image, Space, Typography } from 'antd';
 import { MessageInstance } from 'antd/es/message/interface';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-import { LoginForm, login } from '../../core/apis/authApi.ts';
+import { LoginFormValues, login } from '../../core/apis/authApi.ts';
 import { userActions } from '../../core/reducer/userSlice.ts';
-
-const formItemLayout = {
-  labelCol: {
-    sm: { span: 6 },
-    xs: { span: 24 },
-  },
-  wrapperCol: {
-    sm: { span: 14 },
-    xs: { span: 24 },
-  },
-};
+import { calculateEndDate } from '../../utils/dateUtil.ts';
+import styles from './Auth.module.css';
+import { LoginForm } from './components/LoginForm.tsx';
 
 interface LoginScreenProps {
   messageApi: MessageInstance;
@@ -28,9 +18,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ messageApi }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const onFinish: FormProps<LoginForm>['onFinish'] = async (values) => {
+  const onFinish: FormProps<LoginFormValues>['onFinish'] = async (values) => {
+    console.log(values);
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const response = await login(values);
       dispatch(
         userActions.login({
@@ -48,43 +39,20 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ messageApi }) => {
     }
   };
 
-  const loginInitialValues = import.meta.env.DEV
-    ? { password: 'password', username: 'user1' }
-    : { password: '', username: '' };
-
   return (
-    <Form
-      {...formItemLayout}
-      className="auth-form"
-      initialValues={loginInitialValues}
-      name="normal_login"
-      onFinish={onFinish}
-    >
-      <Form.Item label="username" name="username" rules={[{ message: 'Please input your Username!', required: true }]}>
-        <Input
-          placeholder="Username"
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          style={{ display: 'flex' }}
-        />
-      </Form.Item>
-      <Form.Item label="password" name="password" rules={[{ message: 'Please input your Password!', required: true }]}>
-        <Input
-          placeholder="Password"
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          style={{ display: 'flex' }}
-          type="password"
-        />
-      </Form.Item>
-
-      <Form.Item>
-        <Space direction="horizontal" size="large">
-          <Button className="login-form-button" htmlType="submit" loading={isLoading} type="primary">
-            Log in
-          </Button>
-          <Link to="/signup">Sign up</Link>
+    <Space className={styles.section}>
+      <div className={styles.container}>
+        <Space className={styles.header} direction="vertical">
+          <Image
+            preview={false}
+            src="https://private-user-images.githubusercontent.com/48433827/317222121-02eaa19f-e5fa-4d30-9c41-fc86488b33f8.svg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTM1Mjg5NTcsIm5iZiI6MTcxMzUyODY1NywicGF0aCI6Ii80ODQzMzgyNy8zMTcyMjIxMjEtMDJlYWExOWYtZTVmYS00ZDMwLTljNDEtZmM4NjQ4OGIzM2Y4LnN2Zz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA0MTklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwNDE5VDEyMTA1N1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTBmZDgwMWMyM2QwZjhiZGIxOGQ4ZWEzZDE1YjkxMTlhMDkwMzkwOTE3ZTE2N2VjOWUxN2NmODExNzJmNmI0MjEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.1kQA2o6aXm3FaeuVbVxri5toOhB7AM6ivKiB_NmNfQM"
+            style={{ maxWidth: 200, minWidth: 100 }}
+          />
+          <Typography.Text className={styles.text}>이㈜누 주식회사{calculateEndDate()}</Typography.Text>
         </Space>
-      </Form.Item>
-    </Form>
+        <LoginForm loading={isLoading} onFinish={onFinish} />
+      </div>
+    </Space>
   );
 };
 

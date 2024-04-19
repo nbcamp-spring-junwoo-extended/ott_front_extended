@@ -1,10 +1,26 @@
-import { CalendarOutlined, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Divider, Form, FormProps, Input, Space } from 'antd';
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, DatePicker, Divider, Form, FormProps, Input, Space } from 'antd';
 import { MessageInstance } from 'antd/es/message/interface';
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { signup } from '../../core/apis/authApi.ts';
+import { SignupFormValues, signup } from '../../core/apis/authApi.ts';
+
+const DATE_FORMAT = 'YYYY/MM/DD';
+
+const initialValues = import.meta.env.DEV
+  ? {
+      email: 'user1@email.com',
+      password: 'password',
+      username: 'user1',
+    }
+  : {
+      born: '',
+      email: '',
+      password: '',
+      username: '',
+    };
 
 const formItemLayout = {
   labelCol: {
@@ -17,13 +33,6 @@ const formItemLayout = {
   },
 };
 
-export type SignupForm = {
-  born: string;
-  email: string;
-  password: string;
-  username: string;
-};
-
 interface SignupScreenProps {
   messageApi: MessageInstance;
 }
@@ -32,7 +41,8 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ messageApi }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onFinish: FormProps<SignupForm>['onFinish'] = (values) => {
+  const onFinish: FormProps<SignupFormValues>['onFinish'] = (values) => {
+    console.log('Received values of form: ', values);
     setIsLoading(true);
 
     signup(values)
@@ -53,20 +63,6 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ messageApi }) => {
 
     setIsLoading(false);
   };
-
-  const initialValues = import.meta.env.DEV
-    ? {
-        born: '1994-11-03',
-        email: 'user1@email.com',
-        password: 'password',
-        username: 'user1',
-      }
-    : {
-        born: '',
-        email: '',
-        password: '',
-        username: '',
-      };
 
   return (
     <Form
@@ -89,11 +85,11 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ messageApi }) => {
       </Form.Item>
 
       <Form.Item label="Birthday" name="born" rules={[{ message: 'Please input your Birthday!', required: true }]}>
-        <Input prefix={<CalendarOutlined className="site-form-item-icon" />} type="date" />
+        <DatePicker defaultValue={dayjs('1995-01-01', DATE_FORMAT)} style={{ display: 'flex' }} />
       </Form.Item>
 
-      <Form.Item>
-        <Space align="center" split={<Divider type="vertical" />}>
+      <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
+        <Space split={<Divider type="vertical" />} style={{ margin: 'auto' }}>
           <Button className="login-form-button" htmlType="submit" loading={isLoading} type="primary">
             Sign up
           </Button>

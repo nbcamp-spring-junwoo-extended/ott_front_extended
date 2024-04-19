@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { DateArray } from '../core/types/common.ts';
 
 export const dateArrayToString = (dateArray: DateArray): string => {
@@ -11,4 +13,14 @@ export const dateArrayToString = (dateArray: DateArray): string => {
     month: '2-digit',
     year: 'numeric',
   });
+};
+
+export const calculateEndDate = (): string => {
+  const endDate = dayjs('2024-05-2');
+  const now = dayjs();
+
+  if (endDate.isBefore(now)) {
+    return ' 상폐 -완-';
+  }
+  return ` 상폐 ${endDate.diff(now, 'days').toString()}일 전`;
 };

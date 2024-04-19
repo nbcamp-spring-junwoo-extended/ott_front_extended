@@ -12,6 +12,7 @@ import { UserSlice } from './core/reducer/userSlice.ts';
 import LoginScreen from './pages/auth/LoginScreen.tsx';
 import LogoutScreen from './pages/auth/LogoutScreen.tsx';
 import SignupScreen from './pages/auth/SignupScreen.tsx';
+import NotFound from './pages/common/NotFound.tsx';
 import Sidebar from './pages/components/Sidebar.tsx';
 import Topbar from './pages/components/Topbar.tsx';
 import HomeScreen from './pages/home/HomeScreen.tsx';
@@ -67,6 +68,8 @@ const App: React.FC = () => {
 
           <Content className="content">
             <Routes>
+              <Route element={<NotFound />} path="/*" />
+
               <Route element={<HomeScreen />} path="/" />
               <Route element={<VideoScreen />} path="/videos/:id" />
               <Route element={<ProfileScreen />} path="/profile" />
