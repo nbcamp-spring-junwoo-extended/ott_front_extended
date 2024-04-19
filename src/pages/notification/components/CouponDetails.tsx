@@ -1,4 +1,4 @@
-import { Card, message } from 'antd';
+import { Card, Modal, message } from 'antd';
 import Meta from 'antd/es/card/Meta';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -19,9 +19,14 @@ export const CouponDetails: React.FC<CouponDetailsProps> = ({ coupon }) => {
   const [isPostCouponLoading, setIsPostCouponLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCouponIssued, setIsCouponIssued] = useState(false);
+  const [isCouponIssuedModalVisible, setIsCouponIssuedModalVisible] = useState(false);
 
   const handleCouponClick = async () => {
-    if (isPostCouponLoading || isCouponIssued) return;
+    if (isPostCouponLoading) return;
+    if (isCouponIssued) {
+      setIsCouponIssuedModalVisible(true);
+      return;
+    }
     setIsModalVisible(true);
     setIsPostCouponLoading(true);
 
@@ -45,12 +50,7 @@ export const CouponDetails: React.FC<CouponDetailsProps> = ({ coupon }) => {
 
   return (
     <>
-      <Card
-        hoverable
-        onClick={handleCouponClick}
-        style={{ alignSelf: 'center', aspectRatio: '16/9', backgroundColor: '#48D1CC', maxWidth: '480px' }}
-        type="inner"
-      >
+      <Card className={styles.card} hoverable onClick={handleCouponClick} type="inner">
         <Meta
           className={styles.bgColor}
           description={<CouponDetailsContent {...restProps} style={{ height: '100%' }} />}
@@ -64,6 +64,14 @@ export const CouponDetails: React.FC<CouponDetailsProps> = ({ coupon }) => {
         isPostCouponLoading={isPostCouponLoading}
         onCancel={handleModalClose}
         open={isModalVisible}
+      />
+
+      <Modal
+        centered
+        onCancel={() => setIsCouponIssuedModalVisible(false)}
+        onOk={() => setIsCouponIssuedModalVisible(false)}
+        open={isCouponIssuedModalVisible}
+        title="쿠폰이 이미 발급되었습니다."
       />
     </>
   );

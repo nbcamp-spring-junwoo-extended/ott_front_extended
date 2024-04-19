@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
 
+export type DateArray = [number, number, number, number, number, number, number] | [number, number, number];
+
 type Sort = {
   empty: boolean;
   sorted: boolean;
@@ -29,8 +31,8 @@ export type Page<T> = {
   totalPages: number;
 };
 
-export type CommonResponse<T> = {
-  data: T;
-};
-
-export type ApiResponse<T> = Promise<AxiosResponse<CommonResponse<T>>>;
+export type ApiResponse<T> = Promise<
+  AxiosResponse<{
+    data: T;
+  }>
+>;

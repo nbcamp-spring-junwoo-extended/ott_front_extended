@@ -4,7 +4,11 @@
 }
 
 .card {
-  background-color: magenta;
+  align-self: center;
+  aspect-ratio: 16/9;
+  background-color: #48D1CC;
+  margin: auto;
+  max-width: 420px;
 }
 
 .bg-color {

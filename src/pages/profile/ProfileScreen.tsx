@@ -2,6 +2,7 @@ import { Col, Row } from 'antd';
 import React from 'react';
 
 import CardListCard from './components/CardListCard.tsx';
+import CouponListCard from './components/CouponListCard.tsx';
 import ProfileCard from './components/ProfileCard.tsx';
 
 const ProfileScreen: React.FC = () => (
@@ -11,6 +12,9 @@ const ProfileScreen: React.FC = () => (
     </Col>
     <Col xl={12} xs={24}>
       <CardListCard />
+    </Col>
+    <Col xl={12} xs={24}>
+      <CouponListCard />
     </Col>
   </Row>
 );

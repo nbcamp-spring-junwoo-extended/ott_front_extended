@@ -4,13 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { myProfile } from '../../../core/apis/userApi.ts';
+import { DateArray } from '../../../core/types/common.ts';
 import { UserProfile } from '../../../core/types/user.ts';
+import { dateArrayToString } from '../../../utils/dateUtil.ts';
 import styles from '../Profile.module.css';
 import { ProfileCardTitle } from './components/ProfileCardTitle.tsx';
 
 const initialUserState = {
   authorityType: '',
-  born: '',
+  born: [9999, 12, 12] as DateArray,
   email: '',
   membershipType: '',
   userId: 0,
@@ -61,7 +63,7 @@ const ProfileCard: React.FC = () => {
       title: '이메일',
     },
     {
-      content: userProfile.born,
+      content: dateArrayToString(userProfile.born),
       title: '생년월일',
     },
     {

@@ -1,6 +1,8 @@
+import { CouponType } from './user.ts';
+
 export type CouponReadResponseDto = {
   couponId: number;
-  couponType: 'FIX' | 'RATIO';
+  couponType: CouponType;
   description: string;
   discount: number;
   endAt: string;

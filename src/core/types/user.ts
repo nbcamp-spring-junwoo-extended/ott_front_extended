@@ -1,3 +1,5 @@
+import { DateArray } from './common.ts';
+
 export type UserCard = {
   cardId: number;
   cardNickname: string;
@@ -10,17 +12,21 @@ export type UserCustomerKey = {
 
 export type UserProfile = {
   authorityType: string;
-  born: string;
+  born: DateArray;
   email: string;
   membershipType: string;
   userId: number;
   username: string;
 };
 
+export type CouponType = 'FIX' | 'RATIO';
+
 export type UserCoupon = {
   couponId: number;
-  couponType: string;
+  couponType: CouponType;
   description: string;
   discount: number;
+  endAt: DateArray;
   membershipType: string;
+  startAt: DateArray;
 };
