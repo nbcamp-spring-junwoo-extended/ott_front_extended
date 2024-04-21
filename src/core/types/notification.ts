@@ -1,3 +1,4 @@
+import { DateArray } from './common.ts';
 import { CouponType } from './user.ts';
 
 export type CouponReadResponseDto = {
@@ -5,15 +6,15 @@ export type CouponReadResponseDto = {
   couponType: CouponType;
   description: string;
   discount: number;
-  endAt: string;
+  endAt: DateArray;
   membershipType: string;
-  startAt: string;
+  startAt: DateArray;
 };
 
 export type AnnouncementReadResponseDto = {
   content: string;
   couponReadResponseDto: CouponReadResponseDto;
-  createdAt: string;
+  createdAt: DateArray;
   title: string;
 };
 

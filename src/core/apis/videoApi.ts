@@ -19,5 +19,6 @@ export const searchVideos = async (searchOption: string, title: string): ApiResp
       searchOption,
     },
   });
+export const getRandomVideos = async (): ApiResponse<VideoSearchResponseDto> => apiClient.get('/api/v2/videos/random');
 
 export const getRankingVideos = async (): ApiResponse<ChartResponseDto[]> => apiClient.get(`/api/v1/chart`);

@@ -36,7 +36,7 @@ const App: React.FC = () => {
         {contextHolder}
         <Layout className="default" style={{ alignItems: 'center' }}>
           <Routes>
-            <Route element={<LoginScreen messageApi={messageApi} />} path="/" />
+            <Route element={<LoginScreen />} path="/" />
             <Route element={<LogoutScreen />} path="/logout" />
             <Route element={<SignupScreen messageApi={messageApi} />} path="/signup" />
           </Routes>
@@ -71,13 +71,14 @@ const App: React.FC = () => {
               <Route element={<NotFound />} path="/*" />
 
               <Route element={<HomeScreen />} path="/" />
-              <Route element={<VideoScreen />} path="/videos/:id" />
-              <Route element={<ProfileScreen />} path="/profile" />
-              <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
-              <Route element={<RankingScreen />} path="/ranking" />
               <Route element={<NotificationScreen />} path="/notification" />
-              <Route element={<NotificationDetailsScreen />} path="/notification/:id" />
               <Route element={<VideoSearchScreen />} path="/search" />
+              <Route element={<RankingScreen />} path="/ranking" />
+              <Route element={<ProfileScreen />} path="/profile" />
+
+              <Route element={<VideoScreen />} path="/videos/:id" />
+              <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
+              <Route element={<NotificationDetailsScreen />} path="/notification/:id" />
               <Route element={<SubscriptionScreen />} path="/subscribe" />
             </Routes>
           </Content>

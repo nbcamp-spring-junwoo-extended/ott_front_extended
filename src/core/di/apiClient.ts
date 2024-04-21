@@ -23,26 +23,12 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     const accessToken = error?.response?.headers?.authorization?.slice(7);
-
     if (accessToken) {
       localStorage.setItem('access_token', accessToken);
       error.config.headers.Authorization = `Bearer ${accessToken}`;
-
-      const retry = async () => {
-        try {
-          return await apiClient.request(error.config);
-        } catch (e) {
-          console.error(e);
-          localStorage.removeItem('access_token');
-
-          return e;
-        }
-      };
-
-      return retry().then((r) => r);
     }
 
-    return error;
+    return Promise.reject(error);
   },
 );
 

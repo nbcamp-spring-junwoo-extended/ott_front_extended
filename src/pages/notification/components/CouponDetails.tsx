@@ -1,9 +1,7 @@
-import { Card, Modal, message } from 'antd';
+import { Card, Modal } from 'antd';
 import Meta from 'antd/es/card/Meta';
-import axios from 'axios';
 import React, { useState } from 'react';
 
-import { postCouponIssuance } from '../../../core/apis/notificationApi.ts';
 import { CouponReadResponseDto } from '../../../core/types/notification.ts';
 import CouponDetailsContent from './Components/CouponDetailsContent.tsx';
 import CouponDetailsTitle from './Components/CouponDetailsTitle.tsx';
@@ -15,33 +13,12 @@ type CouponDetailsProps = {
 };
 
 export const CouponDetails: React.FC<CouponDetailsProps> = ({ coupon }) => {
-  const { description, ...restProps } = coupon;
-  const [isPostCouponLoading, setIsPostCouponLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isCouponIssued, setIsCouponIssued] = useState(false);
   const [isCouponIssuedModalVisible, setIsCouponIssuedModalVisible] = useState(false);
+  const { description, ...restProps } = coupon;
 
-  const handleCouponClick = async () => {
-    if (isPostCouponLoading) return;
-    if (isCouponIssued) {
-      setIsCouponIssuedModalVisible(true);
-      return;
-    }
+  const handleModalOpen = () => {
     setIsModalVisible(true);
-    setIsPostCouponLoading(true);
-
-    try {
-      await postCouponIssuance(coupon.couponId);
-      setIsCouponIssued(true);
-    } catch (error) {
-      setIsCouponIssued(false);
-      if (axios.isAxiosError(error)) {
-        message.error(error.message);
-      }
-      console.error(error);
-    } finally {
-      setIsPostCouponLoading(false);
-    }
   };
 
   const handleModalClose = () => {
@@ -50,7 +27,7 @@ export const CouponDetails: React.FC<CouponDetailsProps> = ({ coupon }) => {
 
   return (
     <>
-      <Card className={styles.card} hoverable onClick={handleCouponClick} type="inner">
+      <Card className={styles.card} hoverable onClick={handleModalOpen} type="inner">
         <Meta
           className={styles.bgColor}
           description={<CouponDetailsContent {...restProps} style={{ height: '100%' }} />}
@@ -59,12 +36,7 @@ export const CouponDetails: React.FC<CouponDetailsProps> = ({ coupon }) => {
         />
       </Card>
 
-      <GetCouponLoadingModal
-        isCouponIssued={isCouponIssued}
-        isPostCouponLoading={isPostCouponLoading}
-        onCancel={handleModalClose}
-        open={isModalVisible}
-      />
+      {isModalVisible && <GetCouponLoadingModal coupon={coupon} onCancel={handleModalClose} open={isModalVisible} />}
 
       <Modal
         centered
