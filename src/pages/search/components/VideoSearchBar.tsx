@@ -2,7 +2,7 @@ import { Space } from 'antd';
 import React, { useState } from 'react';
 
 import { VideoSearchResultDto } from '../../../core/types/video.ts';
-import { AutoCompleteOption, useVideoSearchBar } from '../../../hooks/video/useVideoSearchBar.ts';
+import { useVideoSearchBar } from '../../../hooks/video/useVideoSearchBar.ts';
 import { SearchInput } from './components/SearchInput.tsx';
 import { SelectSearchType } from './components/SelectSearchType.tsx';
 
@@ -25,9 +25,7 @@ const VideoSearchBar: React.FC<VideoSearchBarProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSearchType, setSelectedSearchType] = useState('제목');
-  const [searchAutoComplete, setSearchAutoComplete] = useState<AutoCompleteOption[]>([]);
-
-  useVideoSearchBar(searchTerm, setSearchAutoComplete);
+  const searchAutoComplete = useVideoSearchBar(searchTerm);
 
   return (
     <Space.Compact style={{ alignItems: 'center' }}>

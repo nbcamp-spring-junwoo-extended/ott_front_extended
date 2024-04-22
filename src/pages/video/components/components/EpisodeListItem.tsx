@@ -10,7 +10,7 @@ type EpisodeListItemProps = {
 };
 
 export const EpisodeListItem: React.FC<EpisodeListItemProps> = ({ episode }) => {
-  const handleClick = (episode: Episode) => () => window.open(episode.episodeUrl, '_blank');
+  const handleClick = (e: Episode) => () => window.open(e.episodeUrl, '_blank');
 
   return (
     <List.Item className={styles.episodeListITem} onClick={handleClick(episode)}>

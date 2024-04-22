@@ -16,9 +16,9 @@ export const useFetchCards = () => {
 
     setIsLoading(true);
     try {
-      const responseCards = await myCards();
-      const cards = responseCards.data.data;
-      setCards(cards);
+      const response = await myCards();
+      const responseCards = response.data.data;
+      setCards(responseCards);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         message.error(e.response?.data?.message || e.message);

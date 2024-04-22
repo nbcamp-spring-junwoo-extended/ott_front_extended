@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
-  function handleHomeClick() {
+  const handleHomeClick = () => {
     navigate('/');
-  }
+  };
 
   return (
     <Result

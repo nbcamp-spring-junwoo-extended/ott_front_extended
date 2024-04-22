@@ -30,7 +30,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   stateLoading: { isLoading, setIsLoading },
   stateValidInput: { isValidInput, setIsValidInput },
 }) => {
-  const [_, setParams] = useSearchParams();
+  const [, setParams] = useSearchParams();
 
   const handleSearch = async (value: string) => {
     if (!value) return;

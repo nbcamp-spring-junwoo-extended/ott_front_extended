@@ -1,9 +1,9 @@
 import { Card, Typography } from 'antd';
 import React from 'react';
 
-import { useNotificationDetailsScreen } from './NotificationDetailsScreen.hooks.ts';
 import { CouponDetails } from './components/CouponDetails.tsx';
 import NotificationDetailsTitle from './components/NotificationDetailsTi tle.tsx';
+import { useNotificationDetailsScreen } from './useNotificationDetailsScreen.ts';
 
 const NotificationDetailsScreen: React.FC = () => {
   const { isLoading, notification } = useNotificationDetailsScreen();

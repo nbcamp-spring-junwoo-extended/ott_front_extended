@@ -26,7 +26,7 @@ const useFetchRankingVideos = () => {
 
   useEffect(() => {
     fetchVideos().then();
-  }, []);
+  }, [fetchVideos]);
 
   return { isLoading, videos };
 };

@@ -71,7 +71,6 @@ export const LoginForm: React.FC = () => {
         <Form.Item name="remember" noStyle valuePropName="checked">
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
-        <a className={styles.forgotPassword}>Forgot password?</a>
       </Form.Item>
 
       <Form.Item style={{ marginBottom: '0px' }}>

@@ -6,18 +6,18 @@ import { calculateDiscountedPrice, priceToKRW } from '../../../../../utils/curre
 import style from '../../SubscribeCard.module.css';
 
 type SubscriptionFormFooterProps = {
-  coupon?: UserCoupon | undefined;
+  coupon?: UserCoupon;
   price: number;
 };
 
-const SubscriptionFormFooter: React.FC<SubscriptionFormFooterProps> = ({ coupon, price }) => {
+const SubscriptionFormFooter: React.FC<SubscriptionFormFooterProps> = ({ coupon = {} as UserCoupon, price }) => {
   const discountedPrice = calculateDiscountedPrice(price, coupon);
 
   return (
     <Flex align="baseline" justify="flex-end">
       <Typography.Paragraph className={style.formTitle}>
         가격:{' '}
-        {discountedPrice != price && (
+        {discountedPrice !== price && (
           <>
             <del>{priceToKRW(price)}</del>
             &nbsp;→&nbsp;

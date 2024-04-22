@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { getSearchComplete } from '../../core/apis/videoApi.ts';
 import { useDebounce } from '../common/useDebounce.ts';
@@ -8,19 +8,27 @@ export interface AutoCompleteOption {
   value: string;
 }
 
-export const useVideoSearchBar = (searchTerm: string, setSearchAutoComplete: (value: AutoCompleteOption[]) => void) => {
+export const useVideoSearchBar = (searchTerm: string) => {
+  const [searchAutoComplete, setSearchAutoComplete] = useState<AutoCompleteOption[]>([]);
+
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  const fetchSearchComplete = useCallback(async () => {
+    const response = await getSearchComplete(debouncedSearchTerm);
+    const { titles } = response.data.data;
+    const newAutoComplete: AutoCompleteOption[] = titles.map((title) => ({
+      label: title,
+      value: title,
+    }));
+
+    setSearchAutoComplete(newAutoComplete);
+  }, [debouncedSearchTerm]);
+
   useEffect(() => {
     if (!debouncedSearchTerm) return;
 
-    getSearchComplete(debouncedSearchTerm).then((response) => {
-      const { titles } = response.data.data;
-      const newAutoComplete: AutoCompleteOption[] = titles.map((title) => ({
-        label: title,
-        value: title,
-      }));
+    fetchSearchComplete().then();
+  }, [fetchSearchComplete]);
 
-      setSearchAutoComplete(newAutoComplete);
-    });
-  }, [debouncedSearchTerm]);
+  return searchAutoComplete;
 };
