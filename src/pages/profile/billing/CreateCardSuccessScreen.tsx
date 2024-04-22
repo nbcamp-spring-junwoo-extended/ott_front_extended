@@ -16,20 +16,20 @@ export const CreateCardSuccessScreen: React.FC = () => {
       return;
     }
 
-    postBillingKey(customerKey, authKey)
+    postBillingKey(authKey, customerKey)
       .then(() => navigate('/profile'))
       .catch((error) => message.error(error));
   }, [navigate, searchParams]);
 
   const handleNavigateClick = () => {
-    navigate('/');
+    navigate('/profile');
   };
 
   return (
     <Result
       extra={[
         <Button key="console" onClick={handleNavigateClick} type="primary">
-          홈으로 이동
+          확인
         </Button>,
       ]}
       status="success"

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { myCustomerKey } from '../../../../core/apis/userApi.ts';
 
-type useCardListCardTitleProps = {
+type UseCardListCardTitleProps = {
   paymentSdk: any;
   stateCreateCardVisible: {
     isCreateCardVisible: boolean;
@@ -15,7 +15,7 @@ type useCardListCardTitleProps = {
 const useCardListCardTitle = ({
   paymentSdk,
   stateCreateCardVisible: { isCreateCardVisible, setIsCreateCardVisible },
-}: useCardListCardTitleProps) => {
+}: UseCardListCardTitleProps) => {
   useEffect(() => {
     if (paymentSdk == null || !isCreateCardVisible) {
       return;
@@ -27,7 +27,7 @@ const useCardListCardTitle = ({
         const { customerKey } = customerKeyResponse.data.data;
         await paymentSdk.requestBillingAuth('카드', {
           customerKey,
-          failUrl: `${window.location.origin}/profile/card/fail`,
+          failUrl: `${window.location.origin}/profile/newcard/fail`,
           successUrl: `${window.location.origin}/profile/newcard/success`,
         });
       } catch (error) {

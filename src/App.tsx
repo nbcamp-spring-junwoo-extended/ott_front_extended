@@ -19,6 +19,7 @@ import HomeScreen from './pages/home/HomeScreen.tsx';
 import NotificationDetailsScreen from './pages/notification/NotificationDetailsScreen.tsx';
 import NotificationScreen from './pages/notification/NotificationScreen.tsx';
 import ProfileScreen from './pages/profile/ProfileScreen.tsx';
+import { CreateCardFailScreen } from './pages/profile/billing/CreateCardFailScreen.tsx';
 import { CreateCardSuccessScreen } from './pages/profile/billing/CreateCardSuccessScreen.tsx';
 import RankingScreen from './pages/ranking/RankingScreen.tsx';
 import VideoSearchScreen from './pages/search/VideoSearchScreen.tsx';
@@ -75,9 +76,10 @@ const App: React.FC = () => {
               <Route element={<VideoSearchScreen />} path="/search" />
               <Route element={<RankingScreen />} path="/ranking" />
               <Route element={<ProfileScreen />} path="/profile" />
+              <Route element={<CreateCardFailScreen />} path="/profile/newcard/fail" />
+              <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
 
               <Route element={<VideoScreen />} path="/videos/:id" />
-              <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
               <Route element={<NotificationDetailsScreen />} path="/notification/:id" />
               <Route element={<SubscriptionScreen />} path="/subscribe" />
             </Routes>

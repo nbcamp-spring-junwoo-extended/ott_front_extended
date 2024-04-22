@@ -21,12 +21,7 @@ export const ProfileCardTitle: React.FC<ProfileCardTitleProps> = ({ userProfile 
   return (
     <>
       <Typography.Title level={5}>프로필</Typography.Title>
-      <Button
-        className={styles.postCards}
-        onClick={onEditClick}
-        type="primary"
-        // TODO: Implement the onClick event
-      >
+      <Button className={styles.postCards} onClick={onEditClick} type="primary">
         수정
       </Button>
 
