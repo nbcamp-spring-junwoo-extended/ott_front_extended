@@ -39,21 +39,15 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipT
   const navigate = useNavigate();
 
   const [form] = Form.useForm<SubscribeFromData>();
-  const couponId = Form.useWatch('couponId', form);
+  const watchCouponId = Form.useWatch('couponId', form);
 
   const handleOnfinish = ({ cardId, couponId }: SubscribeFromData) => {
-    console.group('SubscribeRequestForm');
-    console.log('userId: ', userId);
-    console.log('cardId: ', cardId);
-    console.log('couponId: ', couponId);
-    console.groupEnd();
-
     if (!cardId) {
       message.error('카드를 선택해주세요.').then();
     }
 
     setIsConfirmLoading(true);
-    requestSubscription(userId, cardId!, membershipType, couponId)
+    requestSubscription(userId, cardId, membershipType, couponId)
       .then(() => navigate('/profile'))
       .catch((error) => message.error(error.response.data.message))
       .finally(() => setIsConfirmLoading(false));
@@ -69,7 +63,7 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipT
 
       <CouponOptions coupons={coupons.filter((c) => c.membershipType === membershipType)} />
 
-      <SubscriptionFormFooter coupon={coupons.find((c) => c.couponId === couponId)} price={price} />
+      <SubscriptionFormFooter coupon={coupons.find((c) => c.couponId === watchCouponId)} price={price} />
     </Form>
   );
 };

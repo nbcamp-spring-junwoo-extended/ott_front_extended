@@ -1,29 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { Button, Typography } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 
-import useCardListCardTitle from '../../../../hooks/user/useCardListCardTitle.ts';
+import useTosspaymentsWidget from '../../../../hooks/user/useTosspaymentsWidget.ts';
 import style from '../../Profile.module.css';
 
-const CLIENT_KEY = import.meta.env.VITE_TOSSPAYMENTS_CLIENTKEY;
-
-const usePaymentWidget = (clientKey: string) =>
-  useQuery({
-    queryFn: () =>
-      // @docs https://docs.tosspayments.com/reference/widget-sdk#sdk-설치-및-초기화
-      loadTossPayments(clientKey),
-    queryKey: ['#payment-widget', clientKey],
-  });
-
 export const CardListCardTitle: React.FC = () => {
-  const { data: paymentSdk } = usePaymentWidget(CLIENT_KEY);
-  const [isCreateCardVisible, setIsCreateCardVisible] = useState<boolean>(false);
-
-  useCardListCardTitle({
-    paymentSdk,
-    stateCreateCardVisible: { isCreateCardVisible, setIsCreateCardVisible },
-  });
+  const { setIsCreateCardVisible } = useTosspaymentsWidget();
 
   const handleOnClick = () => setIsCreateCardVisible(true);
 
