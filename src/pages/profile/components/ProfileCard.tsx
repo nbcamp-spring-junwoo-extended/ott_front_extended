@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useFetchProfile from '../../../hooks/user/useFetchProfile.ts';
-import { dateArrayToString } from '../../../utils/dateUtil.ts';
+import { dateArrayToString } from '../../../utils/dateUtils.ts';
 import styles from '../Profile.module.css';
 import { ProfileCardTitle } from './components/ProfileCardTitle.tsx';
 

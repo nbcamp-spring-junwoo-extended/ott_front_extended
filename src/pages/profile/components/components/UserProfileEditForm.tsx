@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { updateProfile } from '../../../../core/apis/userApi.ts';
 import { UserProfile } from '../../../../core/types/user.ts';
-import { dateArrayToDayjs } from '../../../../utils/dateUtil.ts';
+import { dateArrayToDayjs } from '../../../../utils/dateUtils.ts';
 
 export type ProfileEditFormType = {
   born: dayjs.Dayjs;

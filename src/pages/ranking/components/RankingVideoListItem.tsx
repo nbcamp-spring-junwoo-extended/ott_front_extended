@@ -23,11 +23,15 @@ const RankingVideoListItem: React.FC<RankingVideoListItemProps> = ({ rank, video
       style={{ cursor: 'pointer' }}
     >
       <List.Item.Meta
-        avatar={<Typography.Title>{rank}.</Typography.Title>}
+        avatar={<Typography.Title style={{ display: 'flex', margin: 'auto' }}>{rank}.</Typography.Title>}
         description={
           <Typography.Paragraph style={{ textAlign: 'start' }}>{video.videoDescription}</Typography.Paragraph>
         }
-        title={<Typography.Title style={{ textAlign: 'start' }}>{video.videoTitle}</Typography.Title>}
+        title={
+          <Typography.Text style={{ display: 'flex', fontSize: 'xx-large', textAlign: 'start' }}>
+            {video.videoTitle}
+          </Typography.Text>
+        }
       />
     </List.Item>
   );

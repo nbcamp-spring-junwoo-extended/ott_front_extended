@@ -2,7 +2,7 @@ import { Image, List, Typography } from 'antd';
 import React from 'react';
 
 import { Episode } from '../../../../core/types/video.ts';
-import { videoUrlToThumbnailURl } from '../../../../utils/youtubeUtil.ts';
+import { videoUrlToThumbnailURl } from '../../../../utils/youtubeUtils.ts';
 import styles from '../EpisodeList.module.css';
 
 type EpisodeListItemProps = {

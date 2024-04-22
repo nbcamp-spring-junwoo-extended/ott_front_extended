@@ -1,7 +1,7 @@
 import { Image, Space, Typography } from 'antd';
 import React from 'react';
 
-import { calculateEndDate } from '../../utils/dateUtil.ts';
+import { calculateEndDate } from '../../utils/dateUtils.ts';
 import styles from './Auth.module.css';
 import { LoginForm } from './components/LoginForm.tsx';
 

@@ -13,7 +13,6 @@ const useFetchRankingVideos = () => {
     try {
       const response = await getRankingVideos();
       const responseVideos: ChartResponseDto[] = response.data.data;
-      console.log(responseVideos);
       setVideos(responseVideos);
     } catch (error) {
       message.open({

@@ -2,7 +2,7 @@ import { Flex, List, Typography } from 'antd';
 import React from 'react';
 
 import { UserCoupon } from '../../../../core/types/user.ts';
-import { dateArrayToString } from '../../../../utils/dateUtil.ts';
+import { dateArrayToString } from '../../../../utils/dateUtils.ts';
 
 type CouponItemProps = {
   coupon: UserCoupon;

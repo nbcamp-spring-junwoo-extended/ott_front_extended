@@ -1,25 +1,36 @@
 import { message } from 'antd';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { myCards } from '../../core/apis/userApi.ts';
 import { UserCard } from '../../core/types/user.ts';
 
-export const useFetchCards = (setCards: (value: UserCard[]) => void) => {
-  useEffect(() => {
-    const fetchProfileAndCards = async () => {
-      try {
-        const responseCards = await myCards();
-        const cards = responseCards.data.data;
-        setCards(cards);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          message.error(error.message);
-        }
-        console.log(error);
-      }
-    };
+export const useFetchCards = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [cards, setCards] = useState<UserCard[]>([]);
 
+  const fetchProfileAndCards = useCallback(async () => {
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const responseCards = await myCards();
+      const cards = responseCards.data.data;
+      setCards(cards);
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        message.error(e.response?.data?.message || e.message);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
     fetchProfileAndCards().then();
-  }, [setCards]);
+  }, [fetchProfileAndCards]);
+
+  return { cards, isLoading };
 };

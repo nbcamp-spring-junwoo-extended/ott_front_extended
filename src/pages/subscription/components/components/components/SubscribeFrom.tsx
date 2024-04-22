@@ -1,15 +1,12 @@
-import { Button, Flex, Form, Select, Typography, message } from 'antd';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { Form, Select, Typography, message } from 'antd';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { requestSubscription } from '../../../../../core/apis/subscriptionApi.ts';
-import { RootState } from '../../../../../core/reducer/store.ts';
-import { UserCard, UserCoupon } from '../../../../../core/types/user.ts';
-import style from '../../SubscribeCard.module.css';
 import { CardOptions } from './CardOptions.tsx';
 import { CouponOptions } from './CouponOptions.tsx';
-import { useSubscribeForm } from './SubscribeForm.hooks.ts';
+import SubscriptionFormFooter from './SubscriptionFormFooter.tsx';
+import useSubscribeForm from './useSubscribeForm.ts';
 
 const formItemLayout = {
   labelCol: {
@@ -23,8 +20,8 @@ const formItemLayout = {
 };
 
 export type SubscribeFromData = {
-  card: string;
-  coupon: string;
+  cardId: number;
+  couponId: number;
 };
 
 type SubscribeRequestFormProps = {
@@ -34,18 +31,22 @@ type SubscribeRequestFormProps = {
 };
 
 const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipType, price, setIsConfirmLoading }) => {
-  const [cards, setCards] = useState<UserCard[]>([]);
-  const [coupons, setCoupons] = useState<UserCoupon[]>([]);
-
-  const userId = useSelector((state: RootState) => state.user.userId);
+  const {
+    cards,
+    coupons,
+    userProfile: { userId },
+  } = useSubscribeForm();
   const navigate = useNavigate();
 
-  useSubscribeForm({ setCards, setCoupons });
+  const [form] = Form.useForm<SubscribeFromData>();
+  const couponId = Form.useWatch('couponId', form);
 
-  const handleOnfinish = (formData: SubscribeFromData) => {
-    console.log(formData);
-    const cardId = cards.find((card) => card.cardNumber === formData.card)?.cardId;
-    const couponId = coupons.find((coupon) => coupon.couponId.toString() == formData.coupon)?.couponId;
+  const handleOnfinish = ({ cardId, couponId }: SubscribeFromData) => {
+    console.group('SubscribeRequestForm');
+    console.log('userId: ', userId);
+    console.log('cardId: ', cardId);
+    console.log('couponId: ', couponId);
+    console.groupEnd();
 
     if (!cardId) {
       message.error('카드를 선택해주세요.').then();
@@ -59,7 +60,7 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipT
   };
 
   return (
-    <Form {...formItemLayout} onFinish={handleOnfinish}>
+    <Form {...formItemLayout} form={form} onFinish={handleOnfinish}>
       <Form.Item label="멤버쉽">
         <Select disabled placeholder={<Typography.Text underline>{membershipType.slice(5)}</Typography.Text>} />
       </Form.Item>
@@ -68,14 +69,7 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipT
 
       <CouponOptions coupons={coupons.filter((c) => c.membershipType === membershipType)} />
 
-      <Flex align="baseline" justify="flex-end">
-        <Typography.Title className={style.formTitle} level={5} underline>
-          가격: {new Intl.NumberFormat('ko', { currency: 'KRW', style: 'currency' }).format(price ?? 0)}
-        </Typography.Title>
-        <Button htmlType="submit" type="primary">
-          신청
-        </Button>
-      </Flex>
+      <SubscriptionFormFooter coupon={coupons.find((c) => c.couponId === couponId)} price={price} />
     </Form>
   );
 };

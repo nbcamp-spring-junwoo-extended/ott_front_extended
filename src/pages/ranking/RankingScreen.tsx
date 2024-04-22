@@ -6,7 +6,6 @@ import RankingVideoListItem from './components/RankingVideoListItem.tsx';
 
 const RankingScreen: React.FC = () => {
   const { isLoading, videos } = useFetchRankingVideos();
-  console.table(videos);
 
   return (
     <Card title={<Typography.Title>📈 랭킹</Typography.Title>}>

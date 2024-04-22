@@ -8,11 +8,11 @@ type CardOptionsProps = {
 };
 
 export const CardOptions: React.FC<CardOptionsProps> = ({ cards }) => (
-  <Form.Item label="카드" name="card" rules={[{ required: true }]}>
+  <Form.Item label="카드" name="cardId" rules={[{ required: true }]}>
     <Select placeholder={cards.length > 0 ? '카드를 선택 해주세요.' : '카드를 먼저 등록 해주세요'}>
-      {cards.map((card: UserCard) => (
-        <Select.Option key={card.cardNumber} value={card.cardNumber}>
-          {card.cardNickname}: {card.cardNumber}
+      {cards.map(({ cardId, cardNickname, cardNumber }) => (
+        <Select.Option key={cardId} value={cardId}>
+          {cardNickname}: {cardNumber}
         </Select.Option>
       ))}
     </Select>

@@ -31,6 +31,7 @@ const SubscribeCard: React.FC<SubscribeCardProps> = ({ subscriptionInfo }) => {
           ))}
         </Typography.Text>
       </Card>
+
       <SubscribeModal onCancel={() => setIsModalOpen(false)} open={isModalOpen} subscriptionInfo={subscriptionInfo} />
     </>
   );

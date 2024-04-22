@@ -1,19 +1,15 @@
 import { Card, List, Typography } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 
-import { UserCoupon } from '../../../core/types/user.ts';
 import { useFetchCoupons } from '../../../hooks/user/useFetchCoupons.ts';
 import { CouponItem } from './components/CouponItem.tsx';
 import { CouponListCardTitle } from './components/CouponListCardTitle.tsx';
 
 const CouponListCard: React.FC = () => {
-  const [coupons, setCoupons] = useState<UserCoupon[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useFetchCoupons(isLoading, setIsLoading, setCoupons);
+  const { coupons, isLoading } = useFetchCoupons();
 
   return (
-    <Card title={<CouponListCardTitle />}>
+    <Card loading={isLoading} title={<CouponListCardTitle />}>
       <List
         bordered
         dataSource={coupons}
