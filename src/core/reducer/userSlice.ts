@@ -28,6 +28,7 @@ const userSlice = createSlice({
     clearUser: (state) => {
       state.username = '';
       state.token = '';
+      state.userId = 0;
       localStorage.removeItem('access_token');
       state.isLogin = false;
 
@@ -35,6 +36,7 @@ const userSlice = createSlice({
     },
     login: (state, action) => {
       state.username = action.payload.username;
+      state.userId = action.payload.userId;
 
       state.token = action.payload.token;
       localStorage.setItem('access_token', state.token);
@@ -50,6 +52,7 @@ const userSlice = createSlice({
     },
     updateUserId: (state, action) => {
       state.userId = action.payload.userId;
+
       return state;
     },
   },
