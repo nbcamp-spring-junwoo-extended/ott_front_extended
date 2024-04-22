@@ -5,13 +5,13 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { searchVideos } from '../../../../core/apis/videoApi.ts';
-import { VideoSearchDto } from '../../../../core/types/video.ts';
+import { VideoSearchResultDto } from '../../../../core/types/video.ts';
 import { AutoCompleteOption } from '../useVideoSearchBar.hooks.tsx';
 
 type SearchInputProps = {
   searchAutoComplete: AutoCompleteOption[];
   selectedSearchType: string;
-  setSearchResults: (value: VideoSearchDto[]) => void;
+  setSearchResults: (value: VideoSearchResultDto[]) => void;
   setSearchTerm: (value: string) => void;
   stateLoading: {
     isLoading: boolean;
@@ -38,7 +38,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
     setIsLoading(true);
     try {
       const response = await searchVideos(selectedSearchType, value);
-      setSearchResults(response.data.data.videoReadResponseDtoList);
+      setSearchResults(response.data.data.videos);
       setParams({ input: value });
     } catch (e) {
       if (axios.isAxiosError(e)) message.error(e.message);

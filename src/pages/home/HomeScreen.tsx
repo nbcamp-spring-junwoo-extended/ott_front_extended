@@ -10,7 +10,7 @@ const HomeScreen: React.FC = () => {
 
   return (
     <Card classNames={{ body: styles.cardBody }} title={<Typography.Title>🔔 홈</Typography.Title>}>
-      <Card.Meta description={<Deck key={videos[0]?.video_id} reFetch={reFetch} videos={videos} />} />
+      <Card.Meta description={<Deck key={videos[0]?.videoId} reFetch={reFetch} videos={videos} />} />
     </Card>
   );
 };

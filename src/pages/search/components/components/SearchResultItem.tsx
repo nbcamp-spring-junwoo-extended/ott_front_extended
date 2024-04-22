@@ -3,17 +3,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FALLBACK_IMAGE } from '../../../../constants/global.ts';
-import { VideoSearchDto } from '../../../../core/types/video.ts';
+import { VideoSearchResultDto } from '../../../../core/types/video.ts';
 import styles from '../SearchResultList.module.css';
 
 interface SearchResultItemProps {
-  item: VideoSearchDto;
+  item: VideoSearchResultDto;
 }
 
 const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(`/videos/${item.video_id}`);
+  const handleClick = () => navigate(`/videos/${item.videoId}`);
 
   return (
     <List.Item className={styles.listItem} onClick={handleClick} style={{ padding: 2 }}>
@@ -23,7 +23,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
           <Image
             fallback={FALLBACK_IMAGE}
             preview={false}
-            src={item.poster_url}
+            src={item.posterUrl}
             style={{ height: 240, objectFit: 'cover', width: '100%' }}
           />
         }

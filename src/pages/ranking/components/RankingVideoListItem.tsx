@@ -17,7 +17,7 @@ const RankingVideoListItem: React.FC<RankingVideoListItemProps> = ({ rank, video
 
   return (
     <List.Item
-      extra={<Image height={280} preview={false} src={video.poster_url} />}
+      extra={<Image height={280} preview={false} src={video.posterUrl} />}
       key={video.videoId}
       onClick={handleOnClick}
       style={{ cursor: 'pointer' }}

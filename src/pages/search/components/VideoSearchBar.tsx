@@ -1,13 +1,13 @@
 import { Space } from 'antd';
 import React, { useState } from 'react';
 
-import { VideoSearchDto } from '../../../core/types/video.ts';
+import { VideoSearchResultDto } from '../../../core/types/video.ts';
 import { SearchInput } from './components/SearchInput.tsx';
 import { SelectSearchType } from './components/SelectSearchType.tsx';
 import { AutoCompleteOption, useVideoSearchBar } from './useVideoSearchBar.hooks.tsx';
 
 interface VideoSearchBarProps {
-  setSearchResults: (value: VideoSearchDto[]) => void;
+  setSearchResults: (value: VideoSearchResultDto[]) => void;
   stateLoading: {
     isLoading: boolean;
     setIsLoading: (value: boolean) => void;

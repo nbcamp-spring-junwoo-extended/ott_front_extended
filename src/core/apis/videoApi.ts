@@ -1,6 +1,12 @@
 import { apiClient } from '../di/apiClient.ts';
 import { ApiResponse } from '../types/common.ts';
-import { ChartResponseDto, SearchResponse, VideoDetailsResponse, VideoSearchResponseDto } from '../types/video.ts';
+import {
+  ChartResponseDto,
+  SearchResponse,
+  VideoDetailsResponse,
+  VideoRandomSearchResponseDto,
+  VideoSearchResponseDto,
+} from '../types/video.ts';
 
 export const getVideo = async (videoId: number): ApiResponse<VideoDetailsResponse> =>
   apiClient.get(`/api/v1/videos/${videoId}`);
@@ -19,6 +25,7 @@ export const searchVideos = async (searchOption: string, title: string): ApiResp
       searchOption,
     },
   });
-export const getRandomVideos = async (): ApiResponse<VideoSearchResponseDto> => apiClient.get('/api/v2/videos/random');
+export const getRandomVideos = async (): ApiResponse<VideoRandomSearchResponseDto> =>
+  apiClient.get('/api/v2/videos/random');
 
 export const getRankingVideos = async (): ApiResponse<ChartResponseDto[]> => apiClient.get(`/api/v1/chart`);

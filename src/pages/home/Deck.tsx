@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDrag } from 'react-use-gesture';
 
-import { VideoSearchDto } from '../../core/types/video.ts';
+import { VideoRandomSearchDto } from '../../core/types/video.ts';
 import styles from './Deck.module.css';
 
 const to = (i: number) => ({
@@ -21,7 +21,7 @@ const trans = (r: number, s: number) =>
 
 type DeckProps = {
   reFetch: () => Promise<void>;
-  videos: VideoSearchDto[];
+  videos: VideoRandomSearchDto[];
 };
 
 const Deck: React.FC<DeckProps> = ({ reFetch, videos }) => {
@@ -72,15 +72,15 @@ const Deck: React.FC<DeckProps> = ({ reFetch, videos }) => {
       {props.map(({ rot, scale, x, y }, i) => (
         <animated.div
           className={styles.deck}
-          id={videos[i].video_id.toString()}
-          key={videos[i].video_id}
+          id={videos[i].videoId.toString()}
+          key={videos[i].videoId}
           onDoubleClickCapture={handleOnclick}
           style={{ x, y }}
         >
           <animated.div
             {...bind(i)}
             style={{
-              backgroundImage: `url(${videos[i].poster_url})`,
+              backgroundImage: `url(${videos[i].posterUrl})`,
               transform: interpolate([rot, scale], trans),
             }}
           />

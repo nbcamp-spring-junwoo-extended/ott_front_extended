@@ -1,12 +1,4 @@
-import { Page } from './common.ts';
-
-export interface VideoType {
-  description: string;
-  poster?: string;
-  ratingType: string;
-  title: string;
-  videoId: number;
-}
+import { DateArray, Page } from './common.ts';
 
 export interface Episode {
   description: string;
@@ -27,7 +19,7 @@ export interface VideoDetailsResponse {
 }
 
 export interface ChartResponseDto {
-  poster_url: string;
+  posterUrl: string;
   videoDescription: string;
   videoId: number;
   videoTitle: string;
@@ -37,16 +29,26 @@ export interface SearchResponse {
   titles: string[];
 }
 
-export type VideoSearchDto = {
+export type VideoSearchResultDto = {
   description: string;
-  poster_url: string;
-  released_at: string;
+  posterUrl: string;
+  releaseAt: DateArray;
   title: string;
-  video_id: number;
+  videoId: number;
+};
+
+export type VideoRandomSearchDto = {
+  posterUrl: string;
+  title: string;
+  videoId: number;
+};
+
+export type VideoRandomSearchResponseDto = {
+  videos: VideoRandomSearchDto[];
 };
 
 export type VideoSearchResponseDto = {
   totalPage: number;
   totalSize: number;
-  videoReadResponseDtoList: VideoSearchDto[];
+  videos: VideoSearchResultDto[];
 };

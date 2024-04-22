@@ -2,11 +2,11 @@ import { Flex, List, Typography } from 'antd';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { VideoSearchDto } from '../../../core/types/video.ts';
+import { VideoSearchResultDto } from '../../../core/types/video.ts';
 import SearchResultItem from './components/SearchResultItem.tsx';
 
 interface SearchResultListProps {
-  searchResult: VideoSearchDto[];
+  searchResult: VideoSearchResultDto[];
 }
 
 const listGrid = {
@@ -22,7 +22,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({ searchResult }) => 
   const [params] = useSearchParams();
   const input = params.get('input');
 
-  const handleRenderItem = (item: VideoSearchDto) => <SearchResultItem item={item} />;
+  const handleRenderItem = (item: VideoSearchResultDto) => <SearchResultItem item={item} />;
 
   return (
     <List

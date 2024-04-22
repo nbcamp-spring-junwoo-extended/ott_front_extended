@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { getRandomVideos } from '../../core/apis/videoApi.ts';
-import { VideoSearchDto } from '../../core/types/video.ts';
+import { VideoRandomSearchDto } from '../../core/types/video.ts';
 
 export const useFetchRandomVideos = () => {
-  const [videos, setVideos] = useState<VideoSearchDto[]>([]);
+  const [videos, setVideos] = useState<VideoRandomSearchDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchRandomVideos = useCallback(async () => {
     try {
       const response = await getRandomVideos();
-      setVideos(response.data.data.videoReadResponseDtoList);
+      setVideos(response.data.data.videos);
     } finally {
       setIsLoading(false);
     }

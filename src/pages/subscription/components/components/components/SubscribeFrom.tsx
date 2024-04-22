@@ -43,14 +43,16 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipT
   useSubscribeForm({ setCards, setCoupons });
 
   const handleOnfinish = (formData: SubscribeFromData) => {
-    const selectedCard = cards.find((card) => card.cardNumber === formData.card);
-    if (!selectedCard) {
+    console.log(formData);
+    const cardId = cards.find((card) => card.cardNumber === formData.card)?.cardId;
+    const couponId = coupons.find((coupon) => coupon.couponId.toString() == formData.coupon)?.couponId;
+
+    if (!cardId) {
       message.error('카드를 선택해주세요.').then();
-      return;
     }
 
     setIsConfirmLoading(true);
-    requestSubscription(userId, selectedCard.cardId, membershipType)
+    requestSubscription(userId, cardId!, membershipType, couponId)
       .then(() => navigate('/profile'))
       .catch((error) => message.error(error.response.data.message))
       .finally(() => setIsConfirmLoading(false));
