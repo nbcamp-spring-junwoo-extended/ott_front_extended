@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { UserCoupon } from '../../../core/types/user.ts';
 import { CouponItem } from './components/CouponItem.tsx';
 import { CouponListCardTitle } from './components/CouponListCardTitle.tsx';
-import { useCouponListCard } from './useCouponListCard.ts';
+import { useFetchCoupons } from './hooks/useFetchCoupons.ts';
 
 const CouponListCard: React.FC = () => {
   const [coupons, setCoupons] = useState<UserCoupon[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useCouponListCard(isLoading, setIsLoading, setCoupons);
+  useFetchCoupons(isLoading, setIsLoading, setCoupons);
 
   return (
     <Card title={<CouponListCardTitle />}>

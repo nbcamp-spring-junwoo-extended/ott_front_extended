@@ -2,10 +2,10 @@ import { message } from 'antd';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-import { myCards } from '../../../core/apis/userApi.ts';
-import { UserCard } from '../../../core/types/user.ts';
+import { myCards } from '../../../../core/apis/userApi.ts';
+import { UserCard } from '../../../../core/types/user.ts';
 
-export const useCardListCard = (setCards: (value: UserCard[]) => void) => {
+export const useFetchCards = (setCards: (value: UserCard[]) => void) => {
   useEffect(() => {
     const fetchProfileAndCards = async () => {
       try {

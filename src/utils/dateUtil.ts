@@ -15,6 +15,13 @@ export const dateArrayToString = (dateArray: DateArray): string => {
   });
 };
 
+export const dateArrayToDayjs = (dateArray: DateArray): dayjs.Dayjs => {
+  if (!dateArray) return dayjs();
+
+  const [year, month, day, ...others] = dateArray;
+  return dayjs(new Date(year, month - 1, day, ...others));
+};
+
 export const calculateEndDate = (): string => {
   const endDate = dayjs('2024-05-2');
   const now = dayjs();
