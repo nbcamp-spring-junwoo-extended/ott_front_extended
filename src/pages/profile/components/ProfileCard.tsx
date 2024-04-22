@@ -2,10 +2,10 @@ import { Button, Card, List, Typography } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import useFetchProfile from '../../../hooks/user/useFetchProfile.ts';
 import { dateArrayToString } from '../../../utils/dateUtil.ts';
 import styles from '../Profile.module.css';
 import { ProfileCardTitle } from './components/ProfileCardTitle.tsx';
-import useFetchProfile from './hooks/useFetchProfile.ts';
 
 const ProfileCard: React.FC = () => {
   const navigation = useNavigate();

@@ -2,7 +2,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-import { myCustomerKey } from '../../../../core/apis/userApi.ts';
+import { myCustomerKey } from '../../core/apis/userApi.ts';
 
 type UseCardListCardTitleProps = {
   paymentSdk: any;

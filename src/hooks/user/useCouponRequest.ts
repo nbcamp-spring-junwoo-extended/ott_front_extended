@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 
-import { postCouponIssuance } from '../../../core/apis/notificationApi.ts';
+import { postCouponIssuance } from '../../core/apis/notificationApi.ts';
 
 const useCouponRequest = (couponId: number) => {
   const [isRequesting, setIsRequesting] = useState(false);

@@ -2,7 +2,7 @@ import { Button, Divider, Modal, Typography } from 'antd';
 import React from 'react';
 
 import { CouponReadResponseDto } from '../../../core/types/notification.ts';
-import useCouponRequest from '../hooks/useCouponRequest.ts';
+import useCouponRequest from '../../../hooks/user/useCouponRequest.ts';
 
 type GetCouponLoadingModalProps = {
   coupon: CouponReadResponseDto;

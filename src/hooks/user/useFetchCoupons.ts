@@ -2,8 +2,8 @@ import { message } from 'antd';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-import { myCoupons } from '../../../../core/apis/userApi.ts';
-import { UserCoupon } from '../../../../core/types/user.ts';
+import { myCoupons } from '../../core/apis/userApi.ts';
+import { UserCoupon } from '../../core/types/user.ts';
 
 export const useFetchCoupons = (
   isLoading: boolean,

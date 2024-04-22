@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { searchVideos } from '../../../../core/apis/videoApi.ts';
 import { VideoSearchResultDto } from '../../../../core/types/video.ts';
-import { AutoCompleteOption } from '../useVideoSearchBar.hooks.tsx';
+import { AutoCompleteOption } from '../../../../hooks/video/useVideoSearchBar.ts';
 
 type SearchInputProps = {
   searchAutoComplete: AutoCompleteOption[];

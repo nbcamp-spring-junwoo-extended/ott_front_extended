@@ -3,8 +3,8 @@ import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { Button, Typography } from 'antd';
 import React, { useState } from 'react';
 
+import useCardListCardTitle from '../../../../hooks/user/useCardListCardTitle.ts';
 import style from '../../Profile.module.css';
-import useCardListCardTitle from './useCardListCardTitle.tsx';
 
 const CLIENT_KEY = import.meta.env.VITE_TOSSPAYMENTS_CLIENTKEY;
 

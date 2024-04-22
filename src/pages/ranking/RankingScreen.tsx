@@ -1,8 +1,8 @@
 import { Card, List, Typography } from 'antd';
 import React from 'react';
 
+import useFetchRankingVideos from '../../hooks/video/useFetchRankingVideos.ts';
 import RankingVideoListItem from './components/RankingVideoListItem.tsx';
-import useFetchRankingVideos from './useFetchRankingVideos.ts';
 
 const RankingScreen: React.FC = () => {
   const { isLoading, videos } = useFetchRankingVideos();

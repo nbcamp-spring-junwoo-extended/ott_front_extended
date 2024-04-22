@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { getSearchComplete } from '../../../core/apis/videoApi.ts';
-import { useDebounce } from '../../../hooks/useDebounce.ts';
+import { getSearchComplete } from '../../core/apis/videoApi.ts';
+import { useDebounce } from '../common/useDebounce.ts';
 
 export interface AutoCompleteOption {
   label: string;

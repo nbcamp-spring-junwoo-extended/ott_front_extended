@@ -1,9 +1,9 @@
 import { Card, Typography } from 'antd';
 import React from 'react';
 
+import { useFetchRandomVideos } from '../../hooks/video/useFetchRandomVideos.ts';
 import styles from './Deck.module.css';
 import Deck from './Deck.tsx';
-import { useFetchRandomVideos } from './useFetchRandomVideos.ts';
 
 const HomeScreen: React.FC = () => {
   const { reFetch, videos } = useFetchRandomVideos();

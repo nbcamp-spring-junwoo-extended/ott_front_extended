@@ -2,9 +2,9 @@ import { Card, List, Typography } from 'antd';
 import React, { useState } from 'react';
 
 import { UserCoupon } from '../../../core/types/user.ts';
+import { useFetchCoupons } from '../../../hooks/user/useFetchCoupons.ts';
 import { CouponItem } from './components/CouponItem.tsx';
 import { CouponListCardTitle } from './components/CouponListCardTitle.tsx';
-import { useFetchCoupons } from './hooks/useFetchCoupons.ts';
 
 const CouponListCard: React.FC = () => {
   const [coupons, setCoupons] = useState<UserCoupon[]>([]);
