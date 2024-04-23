@@ -8,7 +8,7 @@ export interface AutoCompleteOption {
   value: string;
 }
 
-export const useVideoSearchBar = (searchTerm: string) => {
+export const useSearchInputTitle = (searchTerm: string) => {
   const [searchAutoComplete, setSearchAutoComplete] = useState<AutoCompleteOption[]>([]);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);

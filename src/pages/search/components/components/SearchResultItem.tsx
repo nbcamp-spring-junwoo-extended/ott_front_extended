@@ -3,17 +3,18 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FALLBACK_IMAGE } from '../../../../constants/global.ts';
-import { VideoSearchResultDto } from '../../../../core/types/video.ts';
+import { VideoResponseDto } from '../../../../core/types/video.ts';
 import styles from '../SearchResultList.module.css';
 
 interface SearchResultItemProps {
-  item: VideoSearchResultDto;
+  item: VideoResponseDto;
 }
 
 const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
   const navigate = useNavigate();
 
   const handleClick = () => navigate(`/videos/${item.videoId}`);
+  console.log('SearchResultItem', item);
 
   return (
     <List.Item className={styles.listItem} onClick={handleClick} style={{ padding: 2 }}>

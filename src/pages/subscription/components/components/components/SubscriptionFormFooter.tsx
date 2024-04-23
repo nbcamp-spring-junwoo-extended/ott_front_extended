@@ -10,7 +10,7 @@ type SubscriptionFormFooterProps = {
   price: number;
 };
 
-const SubscriptionFormFooter: React.FC<SubscriptionFormFooterProps> = ({ coupon = {} as UserCoupon, price }) => {
+const SubscriptionFormFooter: React.FC<SubscriptionFormFooterProps> = ({ coupon, price }) => {
   const discountedPrice = calculateDiscountedPrice(price, coupon);
 
   return (
@@ -30,6 +30,10 @@ const SubscriptionFormFooter: React.FC<SubscriptionFormFooterProps> = ({ coupon 
       </Button>
     </Flex>
   );
+};
+
+SubscriptionFormFooter.defaultProps = {
+  coupon: undefined,
 };
 
 export default SubscriptionFormFooter;

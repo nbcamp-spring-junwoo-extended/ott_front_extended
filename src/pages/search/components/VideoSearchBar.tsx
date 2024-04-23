@@ -1,43 +1,31 @@
 import { Space } from 'antd';
 import React, { useState } from 'react';
 
-import { VideoSearchResultDto } from '../../../core/types/video.ts';
-import { useVideoSearchBar } from '../../../hooks/video/useVideoSearchBar.ts';
+import { Page } from '../../../core/types/common.ts';
+import { SearchOptionLabel } from '../../../core/types/search.ts';
+import { VideoResponseDto } from '../../../core/types/video.ts';
 import { SearchInput } from './components/SearchInput.tsx';
-import { SelectSearchType } from './components/SelectSearchType.tsx';
+import { SelectSearchType } from './components/components/SelectSearchType.tsx';
+import { searchOptions } from './constants/searchOptions.ts';
 
 interface VideoSearchBarProps {
-  setSearchResults: (value: VideoSearchResultDto[]) => void;
+  setSearchResults: (value: Page<VideoResponseDto>) => void;
   stateLoading: {
     isLoading: boolean;
     setIsLoading: (value: boolean) => void;
   };
-  stateValidInput: {
-    isValidInput: boolean;
-    setIsValidInput: (value: boolean) => void;
-  };
 }
 
-const VideoSearchBar: React.FC<VideoSearchBarProps> = ({
-  setSearchResults,
-  stateLoading: { isLoading, setIsLoading },
-  stateValidInput: { isValidInput, setIsValidInput },
-}) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSearchType, setSelectedSearchType] = useState('제목');
-  const searchAutoComplete = useVideoSearchBar(searchTerm);
+const VideoSearchBar: React.FC<VideoSearchBarProps> = ({ setSearchResults, stateLoading }) => {
+  const [selectedSearchType, setSelectedSearchType] = useState<SearchOptionLabel>('제목');
 
   return (
     <Space.Compact style={{ alignItems: 'center' }}>
-      <SelectSearchType setSelectedSearchOption={setSelectedSearchType} />
-
+      <SelectSearchType searchOptions={searchOptions} stateSearchType={{ selectedSearchType, setSelectedSearchType }} />
       <SearchInput
-        searchAutoComplete={searchAutoComplete}
         selectedSearchType={selectedSearchType}
         setSearchResults={setSearchResults}
-        setSearchTerm={setSearchTerm}
-        stateLoading={{ isLoading, setIsLoading }}
-        stateValidInput={{ isValidInput, setIsValidInput }}
+        stateLoading={stateLoading}
       />
     </Space.Compact>
   );

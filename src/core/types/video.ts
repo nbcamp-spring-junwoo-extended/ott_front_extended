@@ -52,3 +52,10 @@ export type VideoSearchResponseDto = {
   totalSize: number;
   videos: VideoSearchResultDto[];
 };
+
+export type VideoResponseDto = {
+  membershipType: string;
+  posterUrl: URL;
+  title: string;
+  videoId: number;
+};
