@@ -13,33 +13,42 @@ import {
 export const getVideo = async (videoId: number): ApiResponse<VideoDetailsResponse> =>
   apiClient.get(`/api/v1/videos/${videoId}`);
 
-export const getSearchComplete = async (title: string): ApiResponse<SearchResponse> =>
+export const getSearchComplete = async (title: string, page: number = 0): ApiResponse<SearchResponse> =>
   apiClient.get('/api/v2/complete/search', {
     params: {
       input: title,
+      page,
     },
   });
 
-export const searchVideosByTitle = async (title: string): ApiResponse<Page<VideoResponseDto>> =>
+export const searchVideosByTitle = async (
+  title: string,
+  page?: number,
+  signal?: AbortSignal,
+): ApiResponse<Page<VideoResponseDto>> =>
   apiClient.get('/api/v2/videos/search', {
     params: {
       input: title,
+      page,
     },
+    signal,
   });
 
 export const searchVideosByGenre = async (
   operation: OperationLabel,
   genre: GenreLabel[],
   page: number = 0,
+  signal?: AbortSignal,
 ): ApiResponse<Page<VideoResponseDto>> => {
-  const genreParam = genre.map(genreToEng).join(',');
+  const genreParam: string = genre.map(genreToEng).join(',');
 
   return apiClient.get('/api/v1/videos', {
     params: {
       g: genreParam,
-      o: operation === '또는',
+      o: operation !== '또는',
       page,
     },
+    signal,
   });
 };
 

@@ -14,7 +14,6 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
   const navigate = useNavigate();
 
   const handleClick = () => navigate(`/videos/${item.videoId}`);
-  console.log('SearchResultItem', item);
 
   return (
     <List.Item className={styles.listItem} onClick={handleClick} style={{ padding: 2 }}>
@@ -24,7 +23,7 @@ const SearchResultItem: React.FC<SearchResultItemProps> = ({ item }) => {
           <Image
             fallback={FALLBACK_IMAGE}
             preview={false}
-            src={item.posterUrl}
+            src={item.posterUrl.toString()}
             style={{ height: 240, objectFit: 'cover', width: '100%' }}
           />
         }

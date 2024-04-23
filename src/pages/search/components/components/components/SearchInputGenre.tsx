@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Page } from '../../../../../core/types/common.ts';
 import { GenreLabel, OperationLabel } from '../../../../../core/types/search.ts';
 import { VideoResponseDto } from '../../../../../core/types/video.ts';
+import { useDidMountEffect } from '../../../../../hooks/common/useDidMountEffect.ts';
 import { useSearchVideosByGenre } from '../../../../../hooks/video/useSearchVideosByGenre.ts';
 import styles from '../../SearchResultList.module.css';
 import { genreOptions, operationOptions } from '../../constants/searchOptions.ts';
@@ -14,20 +15,29 @@ const MAX_COUNT: number = 3;
 interface SearchInputGenreProps {
   setSearchResults: (value: Page<VideoResponseDto>) => void;
   stateLoading: { isLoading: boolean; setIsLoading: (value: boolean) => void };
+  statePage: {
+    page: number;
+    setPage: (value: number) => void;
+  };
 }
 
 export const SearchInputGenre: React.FC<SearchInputGenreProps> = ({
   setSearchResults,
   stateLoading: { setIsLoading },
+  statePage: { page, setPage },
 }) => {
   const [selectedOperation, setSelectedOperation] = useState<OperationLabel>(operationOptions[0].label);
   const [selectedGenres, setSelectedGenres] = useState<GenreLabel[]>([]);
 
-  const { isLoading: isSearching, onSearch, pagedVideos } = useSearchVideosByGenre();
-  setIsLoading(isSearching);
-  setSearchResults(pagedVideos);
+  const { isSearching, onSearch, pagedVideos } = useSearchVideosByGenre(selectedOperation, selectedGenres, page);
+
+  useDidMountEffect(() => {
+    setIsLoading(isSearching);
+    setSearchResults(pagedVideos);
+  }, [isSearching, pagedVideos, setIsLoading, setSearchResults]);
 
   const handleSearchClick = () => {
+    setPage(0);
     onSearch(selectedOperation, selectedGenres).then();
   };
 

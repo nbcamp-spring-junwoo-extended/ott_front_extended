@@ -1,13 +1,12 @@
-import { AutoComplete, message } from 'antd';
+import { AutoComplete } from 'antd';
 import Search from 'antd/es/input/Search';
-import axios from 'axios';
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
-import { searchVideosByTitle } from '../../../../../core/apis/videoApi.ts';
 import { Page } from '../../../../../core/types/common.ts';
 import { VideoResponseDto } from '../../../../../core/types/video.ts';
+import { useDidMountEffect } from '../../../../../hooks/common/useDidMountEffect.ts';
 import { useSearchInputTitle } from '../../../../../hooks/video/useSearchInputTitle.ts';
+import useSearchVideosByTitle from '../../../../../hooks/video/useSearchVideosByTitle.ts';
 
 type SearchInputProps = {
   setSearchResults: (value: Page<VideoResponseDto>) => void;
@@ -15,43 +14,42 @@ type SearchInputProps = {
     isLoading: boolean;
     setIsLoading: (value: boolean) => void;
   };
+  statePage: {
+    page: number;
+    setPage: (value: number) => void;
+  };
 };
 export const SearchInputTitle: React.FC<SearchInputProps> = ({
   setSearchResults,
-  stateLoading: { isLoading, setIsLoading },
+  stateLoading: { setIsLoading },
+  statePage: { page, setPage },
 }) => {
-  const [, setParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState('');
-  const searchAutoComplete = useSearchInputTitle(searchTerm);
   const [isValidInput, setIsValidInput] = useState<boolean>(true);
+  const searchAutoComplete = useSearchInputTitle(searchTerm);
+  const { isSearching, onSearch, pagedVideos } = useSearchVideosByTitle(searchTerm, page);
 
-  const handleSearch = async (value: string) => {
-    if (!value) return;
-
-    setIsLoading(true);
-    try {
-      const response = await searchVideosByTitle(value);
-      setSearchResults(response.data.data);
-      setParams({ input: value });
-    } catch (e) {
-      if (axios.isAxiosError(e)) message.error(e.message);
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  useDidMountEffect(() => {
+    setIsLoading(isSearching);
+    setSearchResults(pagedVideos);
+  }, [isSearching, pagedVideos, setIsLoading, setSearchResults]);
 
   const handleSearchTermChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(value);
     setIsValidInput(Boolean(value.length));
   };
 
+  const handleSearch = () => {
+    setPage(0);
+    onSearch(searchTerm).then();
+  };
+
   return (
-    <AutoComplete options={searchAutoComplete}>
+    <AutoComplete onChange={(value) => setSearchTerm(value)} options={searchAutoComplete}>
       <Search
         allowClear
         enterButton="Search"
-        loading={isLoading}
+        loading={isSearching}
         onChange={handleSearchTermChange}
         onClick={() => setIsValidInput(false)}
         onSearch={handleSearch}

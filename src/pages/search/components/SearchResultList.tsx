@@ -1,4 +1,4 @@
-import { Flex, List, Typography } from 'antd';
+import { Flex, List, Pagination, Typography } from 'antd';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -17,34 +17,56 @@ const listGrid = {
 };
 
 interface SearchResultListProps {
-  isLoading?: boolean;
+  isLoading: boolean;
   pagedVideos: Page<VideoResponseDto>;
+  statePage: {
+    page: number;
+    setPage: (value: number) => void;
+  };
 }
 
-const SearchResultList: React.FC<SearchResultListProps> = ({ isLoading, pagedVideos }) => {
+const SearchResultList: React.FC<SearchResultListProps> = ({
+  isLoading,
+  pagedVideos: { content, totalElements },
+  statePage: { page, setPage },
+}) => {
   const [params] = useSearchParams();
   const input = params.get('input');
 
   const handleRenderItem = (item: VideoResponseDto) => <SearchResultItem item={item} />;
 
+  const handleOnChangePage = (page: number) => {
+    console.log('page', page);
+    setPage(page - 1);
+  };
+
   return (
-    <List
-      bordered
-      dataSource={pagedVideos.content}
-      grid={listGrid}
-      header={
-        input && (
-          <Flex vertical>
-            <Typography.Title level={3}>&quot;{input}&quot; 에 대한 검색 결과</Typography.Title>
-            <Typography.Text style={{ textAlign: 'right' }}>총 {pagedVideos?.size}건의 검색 결과</Typography.Text>
-          </Flex>
-        )
-      }
-      loading={isLoading}
-      renderItem={handleRenderItem}
-      size="large"
-      style={{ padding: 24, width: '100%' }}
-    />
+    <>
+      <Pagination
+        defaultCurrent={page}
+        onChange={handleOnChangePage}
+        showSizeChanger={false}
+        showTotal={(totalElements) => `총 ${totalElements}건`}
+        total={totalElements}
+      />
+      <List
+        bordered
+        dataSource={content}
+        grid={listGrid}
+        header={
+          input && (
+            <Flex vertical>
+              <Typography.Title level={3}>&quot;{input}&quot; 에 대한 검색 결과</Typography.Title>
+            </Flex>
+          )
+        }
+        loading={isLoading}
+        renderItem={handleRenderItem}
+        size="large"
+        style={{ padding: 24, width: '100%' }}
+      />
+      <Pagination defaultCurrent={page} showSizeChanger={false} />
+    </>
   );
 };
 

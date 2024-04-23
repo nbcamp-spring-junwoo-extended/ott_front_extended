@@ -13,14 +13,23 @@ export type SearchInputProps = {
     isLoading: boolean;
     setIsLoading: (value: boolean) => void;
   };
+  statePage: {
+    page: number;
+    setPage: (value: number) => void;
+  };
 };
 
-export const SearchInput: React.FC<SearchInputProps> = ({ selectedSearchType, setSearchResults, stateLoading }) => {
+export const SearchBarInput: React.FC<SearchInputProps> = ({
+  selectedSearchType,
+  setSearchResults,
+  stateLoading,
+  statePage,
+}) => {
   switch (selectedSearchType) {
     case '장르':
-      return <SearchInputGenre setSearchResults={setSearchResults} stateLoading={stateLoading} />;
+      return <SearchInputGenre setSearchResults={setSearchResults} stateLoading={stateLoading} statePage={statePage} />;
     case '제목':
     default:
-      return <SearchInputTitle setSearchResults={setSearchResults} stateLoading={stateLoading} />;
+      return <SearchInputTitle setSearchResults={setSearchResults} stateLoading={stateLoading} statePage={statePage} />;
   }
 };

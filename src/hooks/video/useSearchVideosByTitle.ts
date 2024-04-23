@@ -2,36 +2,28 @@ import { message } from 'antd';
 import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { searchVideosByGenre } from '../../core/apis/videoApi.ts';
+import { searchVideosByTitle } from '../../core/apis/videoApi.ts';
 import { Page } from '../../core/types/common.ts';
-import { GenreLabel, OperationLabel } from '../../core/types/search.ts';
 import { VideoResponseDto } from '../../core/types/video.ts';
 
-export const useSearchVideosByGenre = (operation: OperationLabel = '또는', genres: GenreLabel[] = [], page: number) => {
+const useSearchVideosByTitle = (searchTerm: string, page: number = 0) => {
   const [isLoading, setIsLoading] = useState(false);
   const [pagedVideos, setPagedVideos] = useState<Page<VideoResponseDto>>({} as Page<VideoResponseDto>);
 
   const abortController = useRef<AbortController | null>(null);
 
   const fetchVideos = useCallback(
-    async (operationParam: OperationLabel, genresParam: GenreLabel[], page = 0) => {
-      console.log(genresParam);
-      if (!genresParam.length) {
-        return;
-      }
-
+    async (searchTerm: string) => {
       abortController.current?.abort();
       abortController.current = new AbortController();
 
       setIsLoading(true);
-
       try {
-        const response = await searchVideosByGenre(operationParam, genresParam, page, abortController.current.signal);
+        const response = await searchVideosByTitle(searchTerm, page, abortController.current?.signal);
         setPagedVideos(response.data.data);
       } catch (e) {
-        if (axios.isAxiosError(e)) {
-          message.error(e.response?.data.message || e?.message || '영상을 검색하는 도중 오류가 발생했습니다.');
-        }
+        if (axios.isAxiosError(e))
+          message.error(e.response?.data.message || e.message || '검색 중 오류가 발생했습니다.');
         console.error(e);
       } finally {
         setIsLoading(false);
@@ -41,8 +33,12 @@ export const useSearchVideosByGenre = (operation: OperationLabel = '또는', gen
   );
 
   useEffect(() => {
-    fetchVideos(operation, genres, page).then();
+    if (!searchTerm) return;
+
+    fetchVideos(searchTerm).then();
   }, [fetchVideos]);
 
   return { isSearching: isLoading, onSearch: fetchVideos, pagedVideos };
 };
+
+export default useSearchVideosByTitle;

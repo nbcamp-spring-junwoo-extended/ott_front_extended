@@ -4,7 +4,6 @@ export const searchOptions: SearchOptionType[] = [
   { label: '제목', value: '제목' },
   { label: '장르', value: '장르' },
   { disabled: true, label: '내용', value: '내용' },
-  { disabled: true, label: '카테고리', value: '카테고리' },
 ];
 
 export const operationOptions: OperationType[] = [

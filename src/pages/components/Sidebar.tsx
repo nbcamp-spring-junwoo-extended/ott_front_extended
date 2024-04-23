@@ -6,15 +6,14 @@ import {
   SearchOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Flex, Menu } from 'antd';
-import { ItemType } from 'antd/es/menu/hooks/useItems';
+import { Flex, Menu, MenuProps } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { userActions } from '../../core/reducer/userSlice.ts';
 
-const items: ItemType[] = [
+const items: MenuProps['items'] = [
   {
     icon: <HomeOutlined />,
     key: '/',
@@ -69,7 +68,7 @@ const Sidebar: React.FC = () => {
         <div>Sidebar</div>
       </Flex>
 
-      <Menu className="menu-bar" defaultSelectedKeys={['/']} items={items} mode="inline" onClick={handleNavigate} />
+      <Menu className="menu-bar" items={items} mode="inline" onClick={handleNavigate} />
     </div>
   );
 };
