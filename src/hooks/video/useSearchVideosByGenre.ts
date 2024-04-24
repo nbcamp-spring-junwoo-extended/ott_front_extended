@@ -7,14 +7,14 @@ import { Page } from '../../core/types/common.ts';
 import { GenreLabel, OperationLabel } from '../../core/types/search.ts';
 import { VideoResponseDto } from '../../core/types/video.ts';
 
-export const useSearchVideosByGenre = (operation: OperationLabel = '또는', genres: GenreLabel[] = [], page: number) => {
+export const useSearchVideosByGenre = (page: number, operation: OperationLabel = '또는', genres: GenreLabel[] = []) => {
   const [isLoading, setIsLoading] = useState(false);
   const [pagedVideos, setPagedVideos] = useState<Page<VideoResponseDto>>({} as Page<VideoResponseDto>);
 
   const abortController = useRef<AbortController | null>(null);
 
   const fetchVideos = useCallback(
-    async (operationParam: OperationLabel, genresParam: GenreLabel[], page = 0) => {
+    async (operationParam: OperationLabel, genresParam: GenreLabel[], changedPage = 0) => {
       console.log(genresParam);
       if (!genresParam.length) {
         return;
@@ -26,7 +26,12 @@ export const useSearchVideosByGenre = (operation: OperationLabel = '또는', gen
       setIsLoading(true);
 
       try {
-        const response = await searchVideosByGenre(operationParam, genresParam, page, abortController.current.signal);
+        const response = await searchVideosByGenre(
+          operationParam,
+          genresParam,
+          changedPage,
+          abortController.current.signal,
+        );
         setPagedVideos(response.data.data);
       } catch (e) {
         if (axios.isAxiosError(e)) {

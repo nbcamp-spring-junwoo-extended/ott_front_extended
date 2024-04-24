@@ -13,13 +13,13 @@ const useSearchVideosByTitle = (searchTerm: string, page: number = 0) => {
   const abortController = useRef<AbortController | null>(null);
 
   const fetchVideos = useCallback(
-    async (searchTerm: string) => {
+    async (term: string) => {
       abortController.current?.abort();
       abortController.current = new AbortController();
 
       setIsLoading(true);
       try {
-        const response = await searchVideosByTitle(searchTerm, page, abortController.current?.signal);
+        const response = await searchVideosByTitle(term, page, abortController.current?.signal);
         setPagedVideos(response.data.data);
       } catch (e) {
         if (axios.isAxiosError(e))

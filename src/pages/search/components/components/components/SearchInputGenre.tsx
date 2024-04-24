@@ -29,7 +29,7 @@ export const SearchInputGenre: React.FC<SearchInputGenreProps> = ({
   const [selectedOperation, setSelectedOperation] = useState<OperationLabel>(operationOptions[0].label);
   const [selectedGenres, setSelectedGenres] = useState<GenreLabel[]>([]);
 
-  const { isSearching, onSearch, pagedVideos } = useSearchVideosByGenre(selectedOperation, selectedGenres, page);
+  const { isSearching, onSearch, pagedVideos } = useSearchVideosByGenre(page, selectedOperation, selectedGenres);
 
   useDidMountEffect(() => {
     setIsLoading(isSearching);

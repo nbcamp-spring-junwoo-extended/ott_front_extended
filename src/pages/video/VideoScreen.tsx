@@ -1,27 +1,14 @@
 import { Card, Col, Image, Row, Typography } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { FALLBACK_IMAGE } from '../../constants/global.ts';
-import { getVideo } from '../../core/apis/videoApi.ts';
-import { VideoDetailsResponse } from '../../core/types/video.ts';
 import EpisodeList from './components/EpisodeList.tsx';
+import { useVideoDetails } from './useVideoDetails.ts';
 
 const VideoScreen: React.FC = () => {
   const { id } = useParams();
-  const [videoDetails, setVideoDetails] = useState<VideoDetailsResponse>();
-  const [isCardLoading, setIsCardLoading] = useState(false);
-
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    setIsCardLoading(true);
-    getVideo(Number(id))
-      .then((r): VideoDetailsResponse => r.data.data)
-      .then(setVideoDetails)
-      .then(() => setIsCardLoading(false));
-  }, [id]);
+  const { isCardLoading, videoDetails } = useVideoDetails(id ?? '');
 
   return (
     videoDetails && (

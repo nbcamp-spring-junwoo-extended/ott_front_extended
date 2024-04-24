@@ -8,12 +8,12 @@ import SearchResultItem from './components/SearchResultItem.tsx';
 
 const listGrid = {
   gutter: 4,
-  lg: 2,
-  md: 2,
+  lg: 4,
+  md: 4,
   sm: 2,
-  xl: 4,
+  xl: 6,
   xs: 1,
-  xxl: 2,
+  xxl: 8,
 };
 
 interface SearchResultListProps {
@@ -35,9 +35,9 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
 
   const handleRenderItem = (item: VideoResponseDto) => <SearchResultItem item={item} />;
 
-  const handleOnChangePage = (page: number) => {
-    console.log('page', page);
-    setPage(page - 1);
+  const handleOnChangePage = (clickedPage: number) => {
+    console.log('page', clickedPage);
+    setPage(clickedPage - 1);
   };
 
   return (
@@ -46,7 +46,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
         defaultCurrent={page}
         onChange={handleOnChangePage}
         showSizeChanger={false}
-        showTotal={(totalElements) => `총 ${totalElements}건`}
+        showTotal={(count) => `총 ${count}건`}
         total={totalElements}
       />
       <List
@@ -68,10 +68,6 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
       <Pagination defaultCurrent={page} showSizeChanger={false} />
     </>
   );
-};
-
-SearchResultList.defaultProps = {
-  isLoading: false,
 };
 
 export default SearchResultList;
