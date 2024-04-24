@@ -23,6 +23,7 @@ export type CouponType = 'FIX' | 'RATIO';
 
 export type UserCoupon = {
   couponId: number;
+  couponIssuanceId: number;
   couponType: CouponType;
   description: string;
   discount: number;

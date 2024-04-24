@@ -11,12 +11,12 @@ export const requestSubscription = async (
   userId: number,
   cardId: number,
   membershipType: string,
-  couponId?: number,
+  couponIssuanceId?: number,
 ): ApiResponse<null> =>
   apiClient.post(`/api/v1/users/${userId}/subscriptions`, null, {
     params: {
       card: cardId,
-      coupon: couponId,
+      coupon: couponIssuanceId,
       membership: membershipType,
     },
   });

@@ -21,7 +21,7 @@ const formItemLayout = {
 
 export type SubscribeFromData = {
   cardId: number;
-  couponId: number;
+  couponIssuanceId: number;
 };
 
 type SubscribeRequestFormProps = {
@@ -39,15 +39,15 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipT
   const navigate = useNavigate();
 
   const [form] = Form.useForm<SubscribeFromData>();
-  const watchCouponId = Form.useWatch('couponId', form);
+  const watchCouponIssuanceId = Form.useWatch('couponIssuanceId', form);
 
-  const handleOnfinish = ({ cardId, couponId }: SubscribeFromData) => {
+  const handleOnfinish = ({ cardId, couponIssuanceId }: SubscribeFromData) => {
     if (!cardId) {
       message.error('카드를 선택해주세요.').then();
     }
 
     setIsConfirmLoading(true);
-    requestSubscription(userId, cardId, membershipType, couponId)
+    requestSubscription(userId, cardId, membershipType, couponIssuanceId)
       .then(() => navigate('/profile'))
       .catch((error) => message.error(error.response.data.message))
       .finally(() => setIsConfirmLoading(false));
@@ -63,7 +63,10 @@ const SubscribeRequestForm: React.FC<SubscribeRequestFormProps> = ({ membershipT
 
       <CouponOptions coupons={coupons.filter((c) => c.membershipType === membershipType)} />
 
-      <SubscriptionFormFooter coupon={coupons.find((c) => c.couponId === watchCouponId)} price={price} />
+      <SubscriptionFormFooter
+        coupon={coupons.find((c) => c.couponIssuanceId === watchCouponIssuanceId)}
+        price={price}
+      />
     </Form>
   );
 };
