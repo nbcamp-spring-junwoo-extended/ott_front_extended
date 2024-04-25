@@ -1,7 +1,7 @@
 import { genreToEng } from '../../utils/videoUtils.ts';
 import { apiClient } from '../di/apiClient.ts';
 import { ApiResponse, Page } from '../types/common.ts';
-import { GenreLabel, OperationLabel } from '../types/search.ts';
+import { GenreLabel, OperationLabel, SearchType } from '../types/search.ts';
 import {
   ChartResponseDto,
   SearchResponse,
@@ -21,15 +21,17 @@ export const getSearchComplete = async (title: string, page: number = 0): ApiRes
     },
   });
 
-export const searchVideosByTitle = async (
-  title: string,
+export const searchVideosByInput = async (
+  input: string,
   page?: number,
+  type: SearchType = 'TITLE',
   signal?: AbortSignal,
 ): ApiResponse<Page<VideoResponseDto>> =>
   apiClient.get('/api/v2/videos/search', {
     params: {
-      input: title,
+      input,
       page,
+      type,
     },
     signal,
   });

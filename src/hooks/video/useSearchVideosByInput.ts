@@ -2,11 +2,12 @@ import { message } from 'antd';
 import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { searchVideosByTitle } from '../../core/apis/videoApi.ts';
+import { searchVideosByInput } from '../../core/apis/videoApi.ts';
 import { Page } from '../../core/types/common.ts';
+import { SearchType } from '../../core/types/search.ts';
 import { VideoResponseDto } from '../../core/types/video.ts';
 
-const useSearchVideosByTitle = (searchTerm: string, page: number = 0) => {
+const useSearchVideosByInput = (searchTerm: string, type: SearchType, page: number = 0) => {
   const [isLoading, setIsLoading] = useState(false);
   const [pagedVideos, setPagedVideos] = useState<Page<VideoResponseDto>>({} as Page<VideoResponseDto>);
 
@@ -19,7 +20,7 @@ const useSearchVideosByTitle = (searchTerm: string, page: number = 0) => {
 
       setIsLoading(true);
       try {
-        const response = await searchVideosByTitle(term, page, abortController.current?.signal);
+        const response = await searchVideosByInput(term, page, type, abortController.current?.signal);
         setPagedVideos(response.data.data);
       } catch (e) {
         if (axios.isAxiosError(e))
@@ -41,4 +42,4 @@ const useSearchVideosByTitle = (searchTerm: string, page: number = 0) => {
   return { isSearching: isLoading, onSearch: fetchVideos, pagedVideos };
 };
 
-export default useSearchVideosByTitle;
+export default useSearchVideosByInput;

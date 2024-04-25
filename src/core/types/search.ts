@@ -4,6 +4,8 @@ type SelectType<T> = {
   value: T;
 };
 
+export type SearchType = 'DESCRIPTION' | 'TITLE';
+
 export type SearchOptionLabel = '내용' | '장르' | '제목' | '카테고리';
 export type SearchOptionType = SelectType<SearchOptionLabel>;
 

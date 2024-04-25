@@ -36,7 +36,6 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
   const handleRenderItem = (item: VideoResponseDto) => <SearchResultItem item={item} />;
 
   const handleOnChangePage = (clickedPage: number) => {
-    console.log('page', clickedPage);
     setPage(clickedPage - 1);
   };
 
@@ -65,7 +64,7 @@ const SearchResultList: React.FC<SearchResultListProps> = ({
         size="large"
         style={{ padding: 24, width: '100%' }}
       />
-      <Pagination defaultCurrent={page} showSizeChanger={false} />
+      <Pagination defaultCurrent={page} onChange={handleOnChangePage} showSizeChanger={false} total={totalElements} />
     </>
   );
 };

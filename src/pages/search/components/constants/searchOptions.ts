@@ -2,8 +2,8 @@ import { GenreType, OperationType, SearchOptionType } from '../../../../core/typ
 
 export const searchOptions: SearchOptionType[] = [
   { label: '제목', value: '제목' },
+  { label: '내용', value: '내용' },
   { label: '장르', value: '장르' },
-  { disabled: true, label: '내용', value: '내용' },
 ];
 
 export const operationOptions: OperationType[] = [

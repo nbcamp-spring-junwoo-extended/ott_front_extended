@@ -8,9 +8,7 @@ import { useDidMountEffect } from '../../../../../hooks/common/useDidMountEffect
 import { useSearchInputTitle } from '../../../../../hooks/video/useSearchInputTitle.ts';
 import useSearchVideosByInput from '../../../../../hooks/video/useSearchVideosByInput.ts';
 
-const MIN_SEARCH_TERM_LENGTH = 1;
-
-type SearchInputTitleProps = {
+type SearchInputDescriptionProps = {
   setSearchResults: (value: Page<VideoResponseDto>) => void;
   stateLoading: {
     isLoading: boolean;
@@ -21,7 +19,8 @@ type SearchInputTitleProps = {
     setPage: (value: number) => void;
   };
 };
-export const SearchInputTitle: React.FC<SearchInputTitleProps> = ({
+
+export const SearchInputDescription: React.FC<SearchInputDescriptionProps> = ({
   setSearchResults,
   stateLoading: { setIsLoading },
   statePage: { page, setPage },
@@ -29,7 +28,7 @@ export const SearchInputTitle: React.FC<SearchInputTitleProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [isValidInput, setIsValidInput] = useState<boolean>(true);
   const searchAutoComplete = useSearchInputTitle(searchTerm);
-  const { isSearching, onSearch, pagedVideos } = useSearchVideosByInput(searchTerm, 'TITLE', page);
+  const { isSearching, onSearch, pagedVideos } = useSearchVideosByInput(searchTerm, 'DESCRIPTION', page);
 
   useDidMountEffect(() => {
     setIsLoading(isSearching);
@@ -37,13 +36,11 @@ export const SearchInputTitle: React.FC<SearchInputTitleProps> = ({
   }, [isSearching, pagedVideos, setIsLoading, setSearchResults]);
 
   const handleSearchTermChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    setIsValidInput(value.length >= MIN_SEARCH_TERM_LENGTH);
     setSearchTerm(value);
+    setIsValidInput(Boolean(value.length));
   };
 
   const handleSearch = () => {
-    if (!isValidInput) return;
-
     setPage(0);
     onSearch(searchTerm).then();
   };
