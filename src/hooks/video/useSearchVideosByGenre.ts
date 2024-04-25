@@ -15,7 +15,6 @@ export const useSearchVideosByGenre = (page: number, operation: OperationLabel =
 
   const fetchVideos = useCallback(
     async (operationParam: OperationLabel, genresParam: GenreLabel[], changedPage = 0) => {
-      console.log(genresParam);
       if (!genresParam.length) {
         return;
       }

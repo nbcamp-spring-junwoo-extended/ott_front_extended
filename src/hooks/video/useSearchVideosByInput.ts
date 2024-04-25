@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { searchVideosByInput } from '../../core/apis/videoApi.ts';
 import { Page } from '../../core/types/common.ts';
@@ -10,6 +11,7 @@ import { VideoResponseDto } from '../../core/types/video.ts';
 const useSearchVideosByInput = (searchTerm: string, type: SearchType, page: number = 0) => {
   const [isLoading, setIsLoading] = useState(false);
   const [pagedVideos, setPagedVideos] = useState<Page<VideoResponseDto>>({} as Page<VideoResponseDto>);
+  const [, setSearchParams] = useSearchParams();
 
   const abortController = useRef<AbortController | null>(null);
 
@@ -17,6 +19,8 @@ const useSearchVideosByInput = (searchTerm: string, type: SearchType, page: numb
     async (term: string) => {
       abortController.current?.abort();
       abortController.current = new AbortController();
+
+      setSearchParams({ page: page?.toString(), term, type });
 
       setIsLoading(true);
       try {
