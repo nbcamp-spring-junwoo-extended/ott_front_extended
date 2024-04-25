@@ -6,7 +6,7 @@ import { getVideo } from '../../core/apis/videoApi.ts';
 import { VideoDetailsResponse } from '../../core/types/video.ts';
 
 export const useVideoDetails = (id: string) => {
-  const [videoDetails, setVideoDetails] = useState<VideoDetailsResponse | null>(null);
+  const [videoDetails, setVideoDetails] = useState<VideoDetailsResponse>({} as VideoDetailsResponse);
   const [isCardLoading, setIsCardLoading] = useState(false);
 
   const fetchVideoDetails = useCallback(async () => {

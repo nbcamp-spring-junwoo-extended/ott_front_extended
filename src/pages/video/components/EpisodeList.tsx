@@ -10,7 +10,7 @@ interface EpisodeListProps {
 
 const EpisodeList: React.FC<EpisodeListProps> = ({ videoDetails }) => (
   <List
-    dataSource={videoDetails.episodeResponseDtoPage.content}
+    dataSource={videoDetails?.episodeResponseDtoPage?.content}
     header={<Typography.Title level={3}>에피소드 목록</Typography.Title>}
     itemLayout="vertical"
     renderItem={(episode: Episode) => <EpisodeListItem episode={episode} />}

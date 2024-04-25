@@ -25,3 +25,7 @@ const genreToEngMap: Record<GenreLabel, GenreLabelEng> = {
 export const genreToEng = (kor: GenreLabel): GenreLabelEng => {
   return genreToEngMap[kor];
 };
+
+export const genreToKor = (eng: GenreLabelEng): GenreLabel => {
+  return Object.keys(genreToEngMap).find((key) => genreToEngMap[key as GenreLabel] === eng) as GenreLabel;
+};

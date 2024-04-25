@@ -1,19 +1,20 @@
 import { DateArray, Page } from './common.ts';
+import { GenreLabelEng } from './search.ts';
 
 export interface Episode {
   description: string;
   episodeId: number;
   episodeUrl: string;
-  releasedAt: string;
+  releasedAt: DateArray;
   title: string;
 }
 
 export interface VideoDetailsResponse {
   description: string;
   episodeResponseDtoPage: Page<Episode>;
-  genreTypeList: string[];
+  genreTypeList: GenreLabelEng[];
   posterUrl: string;
-  releasedAt: string;
+  releasedAt: DateArray;
   title: string;
   videoId: number;
 }
@@ -29,14 +30,6 @@ export interface SearchResponse {
   titles: string[];
 }
 
-export type VideoSearchResultDto = {
-  description: string;
-  posterUrl: string;
-  releaseAt: DateArray;
-  title: string;
-  videoId: number;
-};
-
 export type VideoRandomSearchDto = {
   posterUrl: string;
   title: string;
@@ -45,12 +38,6 @@ export type VideoRandomSearchDto = {
 
 export type VideoRandomSearchResponseDto = {
   videos: VideoRandomSearchDto[];
-};
-
-export type VideoSearchResponseDto = {
-  totalPage: number;
-  totalSize: number;
-  videos: VideoSearchResultDto[];
 };
 
 export type VideoResponseDto = {
