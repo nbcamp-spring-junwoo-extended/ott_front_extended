@@ -47,7 +47,7 @@ export const searchVideosByGenre = async (
   return apiClient.get('/api/v1/videos', {
     params: {
       g: genreParam,
-      o: operation !== '또는',
+      o: operation === '그리고',
       page,
     },
     signal,

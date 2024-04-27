@@ -1,5 +1,6 @@
 import { apiClient } from '../di/apiClient.ts';
 import { ApiResponse } from '../types/common.ts';
+import { OrderHistory } from '../types/payment.ts';
 
 export const postBillingKey = async (authKey: string, customerKey: string = ''): ApiResponse<null> =>
   apiClient.post('/api/v1/users/me/billing/key', {
@@ -20,3 +21,6 @@ export const requestSubscription = async (
       membership: membershipType,
     },
   });
+
+export const getOrderHistory = async (orderId: string, signal?: AbortSignal): ApiResponse<OrderHistory> =>
+  apiClient.get(`/api/v1/orders/${orderId}`, { signal });

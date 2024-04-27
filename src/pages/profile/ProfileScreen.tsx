@@ -4,6 +4,7 @@ import React from 'react';
 import CardListCard from './components/CardListCard.tsx';
 import CouponListCard from './components/CouponListCard.tsx';
 import ProfileCard from './components/ProfileCard.tsx';
+import { SubscriptionHistory } from './components/SubscriptionHistory.tsx';
 
 const ProfileScreen: React.FC = () => (
   <Row gutter={[16, 16]}>
@@ -11,10 +12,13 @@ const ProfileScreen: React.FC = () => (
       <ProfileCard />
     </Col>
     <Col xl={12} xs={24}>
+      <CouponListCard />
+    </Col>
+    <Col xl={12} xs={24}>
       <CardListCard />
     </Col>
     <Col xl={12} xs={24}>
-      <CouponListCard />
+      <SubscriptionHistory />
     </Col>
   </Row>
 );

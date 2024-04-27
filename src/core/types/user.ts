@@ -1,5 +1,12 @@
 import { DateArray } from './common.ts';
 
+export enum MembershipType {
+  'ROLE_BRONZE' = 'ROLE_BRONZE',
+  'ROLE_GOLD' = 'ROLE_GOLD',
+  'ROLE_NORMAL' = 'ROLE_NORMAL',
+  'ROLE_SILVER' = 'ROLE_SILVER',
+}
+
 export type UserCard = {
   cardId: number;
   cardNickname: string;
@@ -14,7 +21,7 @@ export type UserProfile = {
   authorityType: string;
   born: DateArray;
   email: string;
-  membershipType: string;
+  membershipType: MembershipType;
   userId: number;
   username: string;
 };
@@ -28,6 +35,15 @@ export type UserCoupon = {
   description: string;
   discount: number;
   endAt: DateArray;
-  membershipType: string;
+  membershipType: MembershipType;
   startAt: DateArray;
+};
+
+export type UserSubscriptionHistory = {
+  expireAt: DateArray;
+  membershipType: MembershipType;
+  orderId: string;
+  startAt: DateArray;
+  status: string;
+  subscriptionHistoryId: number;
 };
