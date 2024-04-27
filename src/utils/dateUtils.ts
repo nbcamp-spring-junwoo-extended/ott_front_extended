@@ -29,8 +29,12 @@ export const dateArrayToDayjs = (dateArray: DateArray): dayjs.Dayjs => {
 };
 
 export const calculateCommerceDate = (): string => {
-  const endDate = dayjs('2024-05-2');
+  const endDate = dayjs('2024-05-1');
   const now = dayjs();
+
+  if (endDate.isSame(now)) {
+    return ' 상폐 D-Day';
+  }
 
   if (endDate.isBefore(now)) {
     return ' 상폐 -완-';
