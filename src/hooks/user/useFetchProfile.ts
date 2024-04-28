@@ -6,13 +6,13 @@ import { useDispatch } from 'react-redux';
 import { myProfile } from '../../core/apis/userApi.ts';
 import { userActions } from '../../core/reducer/userSlice.ts';
 import { DateArray } from '../../core/types/common.ts';
-import { UserProfile } from '../../core/types/user.ts';
+import { MembershipType, UserProfile } from '../../core/types/user.ts';
 
-const initialUserState = {
+const initialUserState: UserProfile = {
   authorityType: '',
   born: [9999, 12, 31] as DateArray,
   email: '',
-  membershipType: '',
+  membershipType: MembershipType.ROLE_NORMAL,
   userId: 0,
   username: '',
 };
