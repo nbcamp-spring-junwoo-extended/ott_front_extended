@@ -1,34 +1,36 @@
-# React + TypeScript + Vite
+### 📄 개요
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+<div align="center">
+    <img src="https://github.com/nbcamp-spring-junwoo/orz/assets/48433827/8ef8251e-4199-46b2-846b-de67d10978d1" width="25%"  alt=""/>
+    <h1>JunWoo Ott</h1>
+    <p> 내일 배움 캠프 최종 프로젝트 </p>
+    <p> 2024.03.26 ~ 2024.05.01 </p>
+        <a href="https://github.com/nbcamp-spring-junwoo/orz" style="margin-right: 1rem;">백엔드</a>
+        <a href="https://www.junwoo.click" >홈페이지</a>
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md)
-  uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast
-  Refresh
+### ⚙️ 개발환경
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- ![Node][Node]
+- ![Vite]![React][React]
+- ![JavaScript]![TypeScript]
 
-- Configure the top-level `parserOptions` property like this:
+---
+<!-- Hyperlinks -->
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+[Node]: https://img.shields.io/badge/20.12.x-gray?style=for-the-badge&logo=node.js&logoColor=white&label=node.js&labelColor=6DA55F
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked`
-  or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and
-  add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+[React]: https://img.shields.io/badge/18.2.x-gray?style=for-the-badge&logo=react&logoColor=%2361DAFB&label=React&labelColor=282c34
+
+[Vite]: https://img.shields.io/badge/5.2-gray?style=for-the-badge&logo=vite&logoColor=white&label=vite&labelColor=646CFF
+
+[JavaScript]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
+
+[TypeScript]: https://img.shields.io/badge/typescript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+
+<!-- github -->
+
