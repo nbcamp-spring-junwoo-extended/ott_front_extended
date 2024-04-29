@@ -1,0 +1,16 @@
+.card {
+  max-width: 600px;
+}
+
+.item {
+  min-height: 50px;
+  align-items: flex-start;
+  margin: 0 20px;
+}
+
+.postCards {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+

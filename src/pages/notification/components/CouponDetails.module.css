@@ -1,0 +1,22 @@
+.title {
+  font-family: BaeMinJua, serif;
+  text-align: start;
+}
+
+.card {
+  align-self: center;
+  aspect-ratio: 16/9;
+  background-color: #48D1CC;
+  margin: auto;
+  max-width: 420px;
+}
+
+.cardIcon {
+  font-size: 100px;
+}
+
+.cardExtra {
+  color: whitesmoke;
+  font-size: 18px;
+  font-family: BaeMinJua, serif;
+}

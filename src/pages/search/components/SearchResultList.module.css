@@ -1,0 +1,12 @@
+.listItem:hover {
+  scale: 1.05;
+  transition: 0.3s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.searchBar {
+  min-height: 40px;
+  min-width: 100px;
+  top: 4px;
+  width: fit-content
+}
