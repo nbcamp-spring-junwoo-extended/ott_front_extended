@@ -4,6 +4,7 @@ import { ApiResponse, Page } from '../types/common.ts';
 import { GenreLabel, OperationLabel, SearchType } from '../types/search.ts';
 import {
   ChartResponseDto,
+  LikeReadResponseDto,
   SearchResponse,
   VideoDetailsResponse,
   VideoRandomSearchResponseDto,
@@ -56,6 +57,14 @@ export const searchVideosByGenre = async (
 
 export const getRandomVideos = async (): ApiResponse<VideoRandomSearchResponseDto> =>
   apiClient.get('/api/v2/videos/random');
+
+export const getLikedVideos = async (page: number, signal: AbortSignal): ApiResponse<Page<LikeReadResponseDto>> =>
+  apiClient.get('/api/v1/me/likes', {
+    params: {
+      page,
+    },
+    signal,
+  });
 
 export const getVideoRanking = async (): ApiResponse<ChartResponseDto[]> => apiClient.get(`/api/v1/chart`);
 

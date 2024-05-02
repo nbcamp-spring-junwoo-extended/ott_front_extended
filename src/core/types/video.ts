@@ -46,3 +46,9 @@ export type VideoResponseDto = {
   title: string;
   videoId: number;
 };
+
+export type LikeReadResponseDto = {
+  posterUrl: URL;
+  title: string;
+  videoId: number;
+};
