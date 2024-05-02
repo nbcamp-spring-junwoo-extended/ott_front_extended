@@ -4,6 +4,7 @@ import { ApiResponse, Page } from '../types/common.ts';
 import { GenreLabel, OperationLabel, SearchType } from '../types/search.ts';
 import {
   ChartResponseDto,
+  LikeReadResponseDto,
   SearchResponse,
   VideoDetailsResponse,
   VideoRandomSearchResponseDto,
@@ -13,12 +14,17 @@ import {
 export const getVideo = async (videoId: number): ApiResponse<VideoDetailsResponse> =>
   apiClient.get(`/api/v1/videos/${videoId}`);
 
-export const getSearchComplete = async (title: string, page: number = 0): ApiResponse<SearchResponse> =>
+export const getSearchComplete = async (
+  title: string,
+  page: number = 0,
+  signal?: AbortSignal,
+): ApiResponse<SearchResponse> =>
   apiClient.get('/api/v2/complete/search', {
     params: {
       input: title,
       page,
     },
+    signal,
   });
 
 export const searchVideosByInput = async (
@@ -54,7 +60,22 @@ export const searchVideosByGenre = async (
   });
 };
 
-export const getRandomVideos = async (): ApiResponse<VideoRandomSearchResponseDto> =>
-  apiClient.get('/api/v2/videos/random');
+export const getRandomVideos = async (signal?: AbortSignal): ApiResponse<VideoRandomSearchResponseDto> =>
+  apiClient.get('/api/v2/videos/random', { signal });
 
-export const getRankingVideos = async (): ApiResponse<ChartResponseDto[]> => apiClient.get(`/api/v1/chart`);
+export const getLikedVideos = async (page: number, signal?: AbortSignal): ApiResponse<Page<LikeReadResponseDto>> =>
+  apiClient.get('/api/v1/me/likes', {
+    params: {
+      page,
+    },
+    signal,
+  });
+
+export const getVideoRanking = async (signal?: AbortSignal): ApiResponse<ChartResponseDto[]> =>
+  apiClient.get(`/api/v1/chart`, { signal });
+
+export const getLike = async (videoId: number, signal?: AbortSignal): ApiResponse<boolean> =>
+  apiClient.get(`/api/v1/videos/${videoId}/like`, { signal });
+
+export const toggleLike = async (videoId: number, signal?: AbortSignal): ApiResponse<void> =>
+  apiClient.post(`/api/v1/videos/${videoId}/like`, null, { signal });

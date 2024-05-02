@@ -9,11 +9,14 @@ type PutUserRequestDto = {
   newPassword?: string;
 };
 
-export const myProfile = async (): ApiResponse<UserProfile> => apiClient.get('/api/v1/users/me');
+export const myProfile = async (signal?: AbortSignal): ApiResponse<UserProfile> =>
+  apiClient.get('/api/v1/users/me', { signal });
 
-export const myCards = async (): ApiResponse<UserCard[]> => apiClient.get('/api/v1/users/me/cards');
+export const myCards = async (signal?: AbortSignal): ApiResponse<UserCard[]> =>
+  apiClient.get('/api/v1/users/me/cards', { signal });
 
-export const myCoupons = async (): ApiResponse<Page<UserCoupon>> => apiClient.get('/api/v1/users/me/coupons');
+export const myCoupons = async (signal?: AbortSignal): ApiResponse<Page<UserCoupon>> =>
+  apiClient.get('/api/v1/users/me/coupons', { signal });
 
 export const myCustomerKey = async (): ApiResponse<UserCustomerKey> => apiClient.get('/api/v1/users/me/key');
 

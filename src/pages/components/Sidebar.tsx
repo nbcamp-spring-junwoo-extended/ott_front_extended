@@ -1,5 +1,6 @@
 import {
   BellOutlined,
+  HeartOutlined,
   HomeOutlined,
   LogoutOutlined,
   RiseOutlined,
@@ -28,6 +29,11 @@ const items: MenuProps['items'] = [
     icon: <SearchOutlined />,
     key: '/search',
     label: 'Search',
+  },
+  {
+    icon: <HeartOutlined />,
+    key: '/like',
+    label: 'Like',
   },
   {
     icon: <RiseOutlined />,

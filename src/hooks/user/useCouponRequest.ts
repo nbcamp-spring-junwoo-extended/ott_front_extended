@@ -1,22 +1,23 @@
-import axios from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { postCouponIssuance } from '../../core/apis/notificationApi.ts';
+import { notifyIfAxiosError } from '../../utils/axiosUtils.ts';
 
 const useCouponRequest = (couponId: number) => {
   const [isRequesting, setIsRequesting] = useState(false);
-  const [requestError, setRequestError] = useState('');
+
+  const abortController = useRef<AbortController | null>(null);
 
   const requestCoupon = useCallback(async () => {
+    abortController?.current?.abort();
+    abortController.current = new AbortController();
+    const { signal } = abortController.current;
+
     setIsRequesting(true);
     try {
-      await postCouponIssuance(couponId);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        setRequestError(error.response?.data.message || error.message);
-      } else {
-        setRequestError('알 수 없는 오류가 발생했습니다.');
-      }
+      await postCouponIssuance(couponId, signal);
+    } catch (e) {
+      notifyIfAxiosError(e as Error);
     } finally {
       setIsRequesting(false);
     }
@@ -26,7 +27,7 @@ const useCouponRequest = (couponId: number) => {
     requestCoupon().then();
   }, [requestCoupon]);
 
-  return { isRequesting, requestError };
+  return { isRequesting };
 };
 
 export default useCouponRequest;

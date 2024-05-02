@@ -16,6 +16,7 @@ import NotFound from './pages/common/NotFound.tsx';
 import Sidebar from './pages/components/Sidebar.tsx';
 import Topbar from './pages/components/Topbar.tsx';
 import HomeScreen from './pages/home/HomeScreen.tsx';
+import { LikeScreen } from './pages/like/LikeScreen.tsx';
 import NotificationDetailsScreen from './pages/notification/NotificationDetailsScreen.tsx';
 import NotificationScreen from './pages/notification/NotificationScreen.tsx';
 import ProfileScreen from './pages/profile/ProfileScreen.tsx';
@@ -27,7 +28,7 @@ import SubscriptionScreen from './pages/subscription/SubscriptionScreen.tsx';
 import VideoScreen from './pages/video/VideoScreen.tsx';
 
 const App: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(window.innerWidth < 768);
   const user: UserSlice = useSelector((state: RootState) => state.user);
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -75,13 +76,15 @@ const App: React.FC = () => {
               <Route element={<NotificationScreen />} path="/notification" />
               <Route element={<VideoSearchScreen />} path="/search" />
               <Route element={<RankingScreen />} path="/ranking" />
+              <Route element={<LikeScreen />} path="/like" />
               <Route element={<ProfileScreen />} path="/profile" />
+
+              <Route element={<NotificationDetailsScreen />} path="/notification/:id" />
+              <Route element={<VideoScreen />} path="/videos/:id" />
+              <Route element={<SubscriptionScreen />} path="/subscribe" />
+
               <Route element={<CreateCardFailScreen />} path="/profile/newcard/fail" />
               <Route element={<CreateCardSuccessScreen />} path="/profile/newcard/success" />
-
-              <Route element={<VideoScreen />} path="/videos/:id" />
-              <Route element={<NotificationDetailsScreen />} path="/notification/:id" />
-              <Route element={<SubscriptionScreen />} path="/subscribe" />
             </Routes>
           </Content>
         </Layout>

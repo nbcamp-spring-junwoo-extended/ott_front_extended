@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { getSearchComplete } from '../../core/apis/videoApi.ts';
+import { notifyIfAxiosError } from '../../utils/axiosUtils.ts';
 import { useDebounce } from '../common/useDebounce.ts';
 
 export interface AutoCompleteOption {
@@ -9,26 +10,38 @@ export interface AutoCompleteOption {
 }
 
 export const useSearchInputTitle = (searchTerm: string) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [searchAutoComplete, setSearchAutoComplete] = useState<AutoCompleteOption[]>([]);
-
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const fetchSearchComplete = useCallback(async () => {
-    const response = await getSearchComplete(debouncedSearchTerm);
-    const { titles } = response.data.data;
-    const newAutoComplete: AutoCompleteOption[] = titles.map((title) => ({
-      label: title,
-      value: title,
-    }));
+  const abortController = useRef<AbortController | null>(null);
 
-    setSearchAutoComplete(newAutoComplete);
+  const fetchSearchComplete = useCallback(async () => {
+    if (!debouncedSearchTerm) return;
+
+    abortController?.current?.abort();
+    abortController.current = new AbortController();
+    const { signal } = abortController.current;
+
+    setIsLoading(true);
+    try {
+      const response = await getSearchComplete(debouncedSearchTerm, 0, signal);
+      const { titles } = response.data.data;
+      const newAutoComplete: AutoCompleteOption[] = titles.map((title) => ({
+        label: title,
+        value: title,
+      }));
+      setSearchAutoComplete(newAutoComplete);
+    } catch (e) {
+      notifyIfAxiosError(e as Error);
+    } finally {
+      setIsLoading(false);
+    }
   }, [debouncedSearchTerm]);
 
   useEffect(() => {
-    if (!debouncedSearchTerm) return;
-
     fetchSearchComplete().then();
   }, [fetchSearchComplete]);
 
-  return searchAutoComplete;
+  return { isLoading, searchAutoComplete };
 };

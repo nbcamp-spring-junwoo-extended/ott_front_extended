@@ -17,6 +17,7 @@ const NotFound: React.FC = () => {
         </Button>
       }
       status="404"
+      subTitle="Sorry, the page you visited does not exist."
       title="404"
     />
   );

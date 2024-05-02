@@ -1,28 +1,25 @@
-import { message } from 'antd';
-import axios from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { myCards } from '../../core/apis/userApi.ts';
 import { UserCard } from '../../core/types/user.ts';
+import { notifyIfAxiosError } from '../../utils/axiosUtils.ts';
 
 export const useFetchCards = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [cards, setCards] = useState<UserCard[]>([]);
 
+  const abortController = useRef<AbortController | null>(null);
   const fetchProfileAndCards = useCallback(async () => {
-    if (isLoading) {
-      return;
-    }
+    abortController?.current?.abort();
+    abortController.current = new AbortController();
+    const { signal } = abortController.current;
 
     setIsLoading(true);
     try {
-      const response = await myCards();
-      const responseCards = response.data.data;
-      setCards(responseCards);
+      const response = await myCards(signal);
+      setCards(response.data.data);
     } catch (e) {
-      if (axios.isAxiosError(e)) {
-        message.error(e.response?.data?.message || e.message);
-      }
+      notifyIfAxiosError(e as Error);
     } finally {
       setIsLoading(false);
     }

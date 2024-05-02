@@ -1,27 +1,27 @@
-import { message } from 'antd';
-import axios from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { myCoupons } from '../../core/apis/userApi.ts';
 import { UserCoupon } from '../../core/types/user.ts';
+import { notifyIfAxiosError } from '../../utils/axiosUtils.ts';
 
 export const useFetchCoupons = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [coupons, setCoupons] = useState<UserCoupon[]>([]);
 
-  const fetchCoupons = useCallback(async () => {
-    if (isLoading) return;
-    setIsLoading(true);
+  const abortController = useRef<AbortController | null>(null);
 
+  const fetchCoupons = useCallback(async () => {
+    abortController?.current?.abort();
+    abortController.current = new AbortController();
+    const { signal } = abortController.current;
+
+    setIsLoading(true);
     try {
-      const response = await myCoupons();
+      const response = await myCoupons(signal);
       const responseCoupons = response.data.data.content;
       setCoupons(responseCoupons);
     } catch (e) {
-      if (axios.isAxiosError(e)) {
-        message.error(e.response?.data?.message || e.message || '알 수 없는 오류가 발생했습니다.');
-      }
-      console.error(e);
+      notifyIfAxiosError(e as Error);
     } finally {
       setIsLoading(false);
     }
