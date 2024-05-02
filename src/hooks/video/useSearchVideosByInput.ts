@@ -19,12 +19,13 @@ const useSearchVideosByInput = (searchTerm: string, type: SearchType, page: numb
     async (term: string) => {
       abortController.current?.abort();
       abortController.current = new AbortController();
+      const { signal } = abortController.current;
 
       setSearchParams({ page: page?.toString(), term, type });
 
       setIsLoading(true);
       try {
-        const response = await searchVideosByInput(term, page, type, abortController.current?.signal);
+        const response = await searchVideosByInput(term, page, type, signal);
         setPagedVideos(response.data.data);
       } catch (e) {
         if (axios.isAxiosError(e))

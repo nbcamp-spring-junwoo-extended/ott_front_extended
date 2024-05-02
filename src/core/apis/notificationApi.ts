@@ -10,5 +10,5 @@ export const getNotification = async (announcementId: number): ApiResponse<Notif
 export const getNotifications = async (): ApiResponse<Page<AnnouncementsReadResponseDto>> =>
   apiClient.get('/api/v1/announcement', {});
 
-export const postCouponIssuance = async (couponId: number): ApiResponse<unknown> =>
-  apiClient.post(`/api/v1/coupons/get-coupon/${couponId}`);
+export const postCouponIssuance = async (couponId: number, signal?: AbortSignal): ApiResponse<unknown> =>
+  apiClient.post(`/api/v1/coupons/get-coupon/${couponId}`, null, { signal });

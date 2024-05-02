@@ -1,11 +1,10 @@
-import { message } from 'antd';
-import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { searchVideosByGenre } from '../../core/apis/videoApi.ts';
 import { Page } from '../../core/types/common.ts';
 import { GenreLabel, OperationLabel } from '../../core/types/search.ts';
 import { VideoResponseDto } from '../../core/types/video.ts';
+import { notifyIfAxiosError } from '../../utils/axiosUtils.ts';
 
 export const useSearchVideosByGenre = (page: number, operation: OperationLabel = '또는', genres: GenreLabel[] = []) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,22 +20,14 @@ export const useSearchVideosByGenre = (page: number, operation: OperationLabel =
 
       abortController.current?.abort();
       abortController.current = new AbortController();
+      const { signal } = abortController.current;
 
       setIsLoading(true);
-
       try {
-        const response = await searchVideosByGenre(
-          operationParam,
-          genresParam,
-          changedPage,
-          abortController.current.signal,
-        );
+        const response = await searchVideosByGenre(operationParam, genresParam, changedPage, signal);
         setPagedVideos(response.data.data);
       } catch (e) {
-        if (axios.isAxiosError(e)) {
-          message.error(e.response?.data.message || e?.message || '영상을 검색하는 도중 오류가 발생했습니다.');
-        }
-        console.error(e);
+        notifyIfAxiosError(e as Error);
       } finally {
         setIsLoading(false);
       }
