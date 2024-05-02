@@ -57,4 +57,10 @@ export const searchVideosByGenre = async (
 export const getRandomVideos = async (): ApiResponse<VideoRandomSearchResponseDto> =>
   apiClient.get('/api/v2/videos/random');
 
-export const getRankingVideos = async (): ApiResponse<ChartResponseDto[]> => apiClient.get(`/api/v1/chart`);
+export const getVideoRanking = async (): ApiResponse<ChartResponseDto[]> => apiClient.get(`/api/v1/chart`);
+
+export const getLike = async (videoId: number, signal: AbortSignal): ApiResponse<boolean> =>
+  apiClient.get(`/api/v1/videos/${videoId}/like`, { signal });
+
+export const toggleLike = async (videoId: number, signal: AbortSignal): ApiResponse<void> =>
+  apiClient.post(`/api/v1/videos/${videoId}/like`, null, { signal });

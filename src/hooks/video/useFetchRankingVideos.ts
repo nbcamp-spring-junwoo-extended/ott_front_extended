@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 
-import { getRankingVideos } from '../../core/apis/videoApi.ts';
+import { getVideoRanking } from '../../core/apis/videoApi.ts';
 import { ChartResponseDto } from '../../core/types/video.ts';
 
 const useFetchRankingVideos = () => {
@@ -11,7 +11,7 @@ const useFetchRankingVideos = () => {
   const fetchVideos = useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await getRankingVideos();
+      const response = await getVideoRanking();
       const responseVideos: ChartResponseDto[] = response.data.data;
       setVideos(responseVideos);
     } catch (error) {
