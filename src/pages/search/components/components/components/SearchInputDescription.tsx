@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Page } from '../../../../../core/types/common.ts';
 import { VideoResponseDto } from '../../../../../core/types/video.ts';
 import { useDidMountEffect } from '../../../../../hooks/common/useDidMountEffect.ts';
-import { useSearchInputTitle } from '../../../../../hooks/video/useSearchInputTitle.ts';
+import { useSearchAutoComplete } from '../../../../../hooks/video/useSearchAutoComplete.ts';
 import useSearchVideosByInput from '../../../../../hooks/video/useSearchVideosByInput.ts';
 
 type SearchInputDescriptionProps = {
@@ -27,7 +27,7 @@ export const SearchInputDescription: React.FC<SearchInputDescriptionProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isValidInput, setIsValidInput] = useState<boolean>(true);
-  const searchAutoComplete = useSearchInputTitle(searchTerm);
+  const { searchAutoComplete } = useSearchAutoComplete(searchTerm);
   const { isSearching, onSearch, pagedVideos } = useSearchVideosByInput(searchTerm, 'DESCRIPTION', page);
 
   useDidMountEffect(() => {

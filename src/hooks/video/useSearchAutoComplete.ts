@@ -9,7 +9,7 @@ export interface AutoCompleteOption {
   value: string;
 }
 
-export const useSearchInputTitle = (searchTerm: string) => {
+export const useSearchAutoComplete = (searchTerm: string) => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchAutoComplete, setSearchAutoComplete] = useState<AutoCompleteOption[]>([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);

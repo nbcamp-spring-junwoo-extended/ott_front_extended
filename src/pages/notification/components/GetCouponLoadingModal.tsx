@@ -12,13 +12,13 @@ type GetCouponLoadingModalProps = {
 
 export const GetCouponLoadingModal: React.FC<GetCouponLoadingModalProps> = ({ coupon, onCancel, open }) => {
   const { couponId, couponType, description, discount, endAt, membershipType, startAt } = coupon;
-  const { isRequesting, requestError } = useCouponRequest(couponId);
+  const { isError, isRequesting } = useCouponRequest(couponId);
 
   let title: string;
   if (isRequesting) {
     title = '쿠폰 발급 중';
   } else {
-    title = requestError ? `쿠폰 발급 실패: ${requestError}` : '쿠폰 발급 완료';
+    title = isError ? `쿠폰 발급 실패: ${isError}` : '쿠폰 발급 완료';
   }
 
   return (
@@ -36,7 +36,7 @@ export const GetCouponLoadingModal: React.FC<GetCouponLoadingModalProps> = ({ co
       title={title}
     >
       <Divider style={{ margin: '0.5rem 0' }} />
-      {!isRequesting && !requestError && (
+      {!isRequesting && !isError && (
         <Typography.Paragraph>
           {description} 쿠폰이 발급되었습니다.
           <br />
