@@ -5,6 +5,7 @@ import { notifyIfAxiosError } from '../../utils/axiosUtils.ts';
 
 const useCouponRequest = (couponId: number) => {
   const [isRequesting, setIsRequesting] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const abortController = useRef<AbortController | null>(null);
 
@@ -17,6 +18,7 @@ const useCouponRequest = (couponId: number) => {
     try {
       await postCouponIssuance(couponId, signal);
     } catch (e) {
+      setIsError(true);
       notifyIfAxiosError(e as Error);
     } finally {
       setIsRequesting(false);
@@ -27,7 +29,7 @@ const useCouponRequest = (couponId: number) => {
     requestCoupon().then();
   }, [requestCoupon]);
 
-  return { isRequesting };
+  return { isError, isRequesting };
 };
 
 export default useCouponRequest;
